@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.success</groupId>
+    <groupId>com.github.btamilselvan</groupId>
     <artifactId>hellowebparent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
@@ -32,7 +32,7 @@
   </dependencies>
   <build>
     <finalName>hellowebchild1</finalName>
-    <plugins>
+    <!-- <plugins>
         <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
@@ -40,6 +40,6 @@
                 <target>1.8</target>
             </configuration>
         </plugin>
-    </plugins>
+    </plugins> -->
   </build>
 </project>
