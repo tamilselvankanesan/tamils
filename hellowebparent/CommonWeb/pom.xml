@@ -7,10 +7,13 @@
     <artifactId>hellowebparent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>hellowebchild1</artifactId>
-  <packaging>war</packaging>
-  <name>hellowebchild1 Maven Webapp</name>
+  <artifactId>CommonWeb</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>CommonWeb</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -18,23 +21,5 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-    	<groupId>com.github.btamilselvan</groupId>
-    	<artifactId>hellowebchild2</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    	<type>war</type>
-    </dependency>
   </dependencies>
-  <build>
-    <finalName>hellowebchild1</finalName>
-    <!-- <plugins>
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
-    </plugins> -->
-  </build>
 </project>
