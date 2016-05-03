@@ -7,7 +7,6 @@
   <modules>
   	<module>hellowebchild1</module>
   	<module>hellowebchild2</module>
-  	<module>CommonUI</module>
   </modules>
   <dependencies>
     <dependency>
