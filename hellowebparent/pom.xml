@@ -62,7 +62,7 @@
   <organization>
   	<name>Tamils</name>
   </organization>
-  <distributionManagement>
+  <!-- <distributionManagement>
     <repository>
       <id>nexus</id>
       <name>Releases</name>
@@ -72,7 +72,17 @@
       <id>nexus</id>
       <name>Snapshot</name>
       	<url>http://localhost:8081/repository/maven-snapshots/</url>
-     <!-- <url>https://oss.sonatype.org/content/repositories/snapshots</url> -->
+     <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
-  </distributionManagement>
+  </distributionManagement> -->
+	<distributionManagement>
+  		<snapshotRepository>
+    		<id>ossrh</id>
+    		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  		</snapshotRepository>
+  		<repository>
+    		<id>ossrh</id>
+    		<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  		</repository>
+	</distributionManagement>
 </project>
