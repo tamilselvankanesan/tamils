@@ -1,20 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myangular">
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-	<script src="scripts/my.angular.js"></script>
+	<script src="../scripts/my.angular.js" type="text/javascript"></script>
 	<!-- <script src="scripts/angular.min.js"></script> -->
 <title>Hello Angular</title>
 </head>
 <body>
-	<div ng-app="myangular" ng-controller="myctrl">
+	<div ng-controller="myctrl">
+		<h3>Text box ng-model and ng-bind</h3>
          <label>Name :</label> 
          <input type = "text" ng-model = "yourName" placeholder = "Enter a name here">
-         <hr />
-         <h1>Hello {{yourName}}!</h1>
-         <hr/>
-         <input type="text" ng-model="name" >
-         <div>{{name}}</div>
+         Hello {{yourName}}
+      </div>
+      <hr/>
+      <div ng-controller="dd">
+      	<h3>drop down using ng-options</h3>
+      	<select ng-model="selectedOption" ng-options="x for x in ddOptions"></select>
+      	<br/>
+      	<p>Selected Option: {{selectedOption}}</p>
+      	<h3>drop down using ng-repeat</h3>
+      	<select ng-model="selectedOption1">
+			<option ng-repeat="y in ddOptions">{{y}}</option>      	
+      	</select>
+      	
+      	<br/>
+      	<p>Selected Option: {{selectedOption1}}</p>
+      	<h3>drop down using ng-repeat arr</h3>
+      	<select ng-model="selectedOption2">
+			<option ng-repeat="y in ddOptionsArr" value="{{y.val}}">{{y.label}}</option>      	
+      	</select>
+      	<br/>
+      	<p>Selected Option: {{selectedOption2}}</p>
+      	
+      	<h3>drop down using ng-options arr - When using the ng-options directive, the selected value can be an object</h3>
+      	<select ng-model="selectedOption3" ng-options="z.label for z in ddOptionsArr">
+      	</select>
+      	<br/>
+      	<p>Selected Option: {{selectedOption3}}</p>
       </div>
       
       
