@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="myangular">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<!-- <script src="../scripts/angular.min.js"></script> -->
+<title>Hello Angular</title>
+</head>
+<body>
+	<div>
+         <label>Name:</label>
+         <input type = "text" ng-model = "yourName" placeholder = "Enter a name here">
+         <hr />
+         <h1>Hello {{yourName}}!</h1>
+         <hr/>
+         <input type="text" ng-model="hello">
+         <div>{{hello}}</div>
+      </div>
+</body>
+</html>
