@@ -7,6 +7,7 @@
 <title>Hello Angular</title>
 </head>
 <body>
+<form>
 	<div ng-controller="myctrl">
 		<h3>Text box ng-model and ng-bind</h3>
          <label>Name :</label> 
@@ -40,5 +41,34 @@
       	<p>Selected Option: {{selectedOption3}}</p>
       </div>
       
+      <div ng-controller="packet">
+      <h3>Call webservices to get packets</h3>
+      <input type="radio" ng-model="selectedSearch" value="schByIpParam">Send just one param
+      <input type="radio" ng-model="selectedSearch" value="schByJson">Send Json
+      <br/>
+      Case Number : 
+      <input type="text" ng-model="caseNum"/>
+      <br/>
+      Packet Name :
+      <input type="text" ng-model="pName"/>
+      
+      <br/>
+      Doc# :
+      <input type="text" ng-model="docNum"/>
+      
+      <button ng-click="getPackets()" ng-show="selectedSearch=='schByIpParam'">Search by param</button>
+      <button ng-click="getPacketsUsingJson()" ng-show="selectedSearch=='schByJson'">Search by JSON</button>
+      	<table>
+      		<tr ng-repeat="packet in packetDTO">
+      			<td>{{packet.packetName}}</td>
+      			<td>{{packet.docNum}}</td>
+      			<td>{{packet.event}}</td>
+      			<td>{{packet.createdBy}}</td>
+      			<td>{{packet.createdDate}}</td>
+      		</tr>
+      		
+      	</table>
+      </div>
+  </form>    
 </body>
 </html>
