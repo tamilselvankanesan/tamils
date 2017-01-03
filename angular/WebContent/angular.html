@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+		<script>
+			var myappObj = angular.module("myapp", []);
+			myappObj.controller("myctrl", function($scope,$http) {
+				$scope.mytext = "John";
+				$scope.clickHere = function(){
+					$scope.sometext = "something else";
+					/*$scope.myTable = [{'name':'Tamil', 'id':'83', 'address': 'virginia'},
+									{'name':'Selvan', 'id':'76', 'address': 'Texas'}];*/
+					$http.get('http://www.w3schools.com/angular/customers.php').then(function(response){
+						//alert(response.data.records);
+						$scope.myTable = response.data.records;
+					});
+					$http.get('http://services.groupkt.com/country/get/all').then(function(response){
+						//alert(response.data.RestResponse.result);
+						$scope.countries = response.data.RestResponse.result;
+						//$scope.myTable = response.data.records;
+					});
+				};
+				$scope.coutrySelect = function(){
+					var url = "http://services.groupkt.com/state/get/";
+					url = url +$scope.selectedCountry.alpha3_code;
+					url = url+"/all";
+					alert(url);
+					$http.get(url).then(function(response){
+						alert(response.data.RestResponse.result);
+					});
+				};
+			});
+			
+			myappObj.controller("myctrl1", function($scope) {
+				$scope.mytext = "Tamil";
+			});
+		</script>
+	</head>
+	<body>
+		<div ng-controller="myctrl"> 
+			<h1>Test</h1>
+			<input type="text" ng-model="sometext"/>
+			<p>{{mytext}}</p>
+			<p ng-bind="mytext"></p>
+			<select>	
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
+			<br/><br/>
+			<button ng-click="clickHere()">Click Here</button>
+			<table>
+				<thead>
+					<th>Name</th>
+					<th>City</th>
+					<th>Country</th>
+				</thead>
+				<tr ng-repeat="obj in myTable">
+					<td>{{obj.Name}}</td>
+					<td>{{obj.City}}</td>
+					<td>{{obj.Country}}</td>
+				<tr>
+			</table>
+			<br/><br/>
+			<!--<select ng-model="selectedCountry" ng-change="coutrySelect()">
+				<option ng-repeat="country in countries" value="{{country}}">{{country.name}}</option>
+			</select>-->
+			<select ng-model="selectedCountry" ng-change="coutrySelect()" ng-options="country.name for country in countries">
+			</select>
+			<p>Selected Country: {{selectedCountry.name}}</p>
+			<p>Selected Country code: {{selectedCountry.alpha3_code}}</p>
+			
+		</div>
+		<div ng-controller="myctrl1">
+			<h1>Test</h1>
+			
+			<p>{{mytext}}</p>
+			<p ng-bind="mytext"></p>
+			<select>	
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
+		</div>
+	</body>
+</html>
