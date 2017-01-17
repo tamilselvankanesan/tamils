@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="myangular">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<script src="../scripts/my.angular.js" type="text/javascript"></script>
+	<!-- <script src="scripts/angular.min.js"></script> -->
+<title>Hello Angular</title>
+</head>
+<body>
+<form>
+	<div ng-controller="myctrl">
+		<h3>Text box ng-model and ng-bind</h3>
+         <label>Name :</label> 
+         <input type = "text" ng-model = "yourName" placeholder = "Enter a name here">
+         Hello {{yourName}}
+      </div>
+      <hr/>
+      <div ng-controller="dd">
+      	<h3>drop down using ng-options</h3>
+      	<select ng-model="selectedOption" ng-options="x for x in ddOptions"></select>
+      	<br/>
+      	<p>Selected Option: {{selectedOption}}</p>
+      	<h3>drop down using ng-repeat</h3>
+      	<select ng-model="selectedOption1">
+			<option ng-repeat="y in ddOptions">{{y}}</option>      	
+      	</select>
+      	
+      	<br/>
+      	<p>Selected Option: {{selectedOption1}}</p>
+      	<h3>drop down using ng-repeat arr</h3>
+      	<select ng-model="selectedOption2">
+			<option ng-repeat="y in ddOptionsArr" value="{{y.val}}">{{y.label}}</option>      	
+      	</select>
+      	<br/>
+      	<p>Selected Option: {{selectedOption2}}</p>
+      	
+      	<h3>drop down using ng-options arr - When using the ng-options directive, the selected value can be an object</h3>
+      	<select ng-model="selectedOption3" ng-options="z.label for z in ddOptionsArr">
+      	</select>
+      	<br/>
+      	<p>Selected Option: {{selectedOption3}}</p>
+      </div>
+      
+      <div ng-controller="packet">
+      <h3>Call webservices to get packets</h3>
+      <input type="radio" ng-model="selectedSearch" value="schByIpParam">Send just one param
+      <input type="radio" ng-model="selectedSearch" value="schByJson">Send Json
+      <br/>
+      Case Number : 
+      <input type="text" ng-model="caseNum"/>
+      <br/>
+      Packet Name :
+      <input type="text" ng-model="pName"/>
+      
+      <br/>
+      Doc# :
+      <input type="text" ng-model="docNum"/>
+      
+      <button ng-click="getPackets()" ng-show="selectedSearch=='schByIpParam'">Search by param</button>
+      <button ng-click="getPacketsUsingJson()" ng-show="selectedSearch=='schByJson'">Search by JSON</button>
+      	<table>
+      		<tr ng-repeat="packet in packetDTO">
+      			<td>{{packet.packetName}}</td>
+      			<td>{{packet.docNum}}</td>
+      			<td>{{packet.event}}</td>
+      			<td>{{packet.createdBy}}</td>
+      			<td>{{packet.createdDate}}</td>
+      		</tr>
+      		
+      	</table>
+      </div>
+  </form>    
+</body>
+</html>
