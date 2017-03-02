@@ -1,0 +1,486 @@
+>
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN" "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Copyright (C) 2000 Tivoli Systems, Inc. -->
+<!-- Copyright (C) 1999 IBM Corporation -->
+<!-- Copyright (C) 1998 Dascom, Inc. -->
+<!-- All Rights Reserved. -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible"
+	content="IE=edge, chrome1, EmulateIE7 " />
+<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<title>JENIE Single Sign On</title>
+<script language="JavaScript" type="text/javascript">
+<!--function setUsernameCookie(c_name,value,exdays){var exdate=new Date();exdate.setDate(exdate.getDate() + exdays);var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());document.cookie=c_name + "=" + c_value +"; Path=/; Domain=.ao.dcn";}function getUsernameCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1)  {  c_start = c_value.indexOf(c_name + "=");  }if (c_start == -1)  {  c_value = null;  }else  {  c_start = c_value.indexOf("=", c_start) + 1;  var c_end = c_value.indexOf(";", c_start);  if (c_end == -1)  {c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));var new_c_value = c_value.replace("&#039;","'"); c_value = new_c_value;}return c_value;}      function checkUsernameCookie()  {               var username=getUsernameCookie("JENIEUserName");          if (username!=null && username!="")      {       document.getElementById("usernameCookieValue").innerHTML = username;    document.form.usernameEntered.value = username;         hideUsernameEntry();    }              else      {     showUsernameEntry();      }     }       function clearUsernameCookie()          {               var username=getUsernameCookie("JENIEUserName");setUsernameCookie("JENIEUserName",username,-365);                        document.location.reload(true); }       function hideUsernameEntry() {                  if (document.getElementById) { // DOM3 = IE5, NS6                                document.getElementById('usernameEntry').style.display = 'none';                                document.getElementById('usernameCookie').style.display = 'inline';                      } else {                                if (document.layers) { // Netscape 4                            document.hideshow.visibility = 'hidden';                         } else { // IE 4                                        document.all.hideshow.style.visibility = 'hidden';      }}               }               function showUsernameEntry() {                  if (document.getElementById) { // DOM3 = IE5, NS6                               document.getElementById('usernameEntry').style.display = 'inline';                               document.getElementById('usernameCookie').style.display = 'none';                       } else {if (document.layers) { // Netscape 4                                     document.hideshow.visibility = 'visible';                               } else { // IE 4                document.all.hideshow.style.visibility = 'visible';                              }                       }       }               if (location.href.toLowerCase()                 .indexOf('tjenie.ao.dcn/jenieportalv8/wpset/myportal') > 0) {                    if (location.href != 'https://tjenie.ao.dcn/jenieportalv8/wpset/myportal') {                    location.href = 'https://tjenie.ao.dcn/jenieportalv8/wpset/myportal';                    }               }       function Username_Trim() {              var username = document.form.usernameEntered.value;              document.form.username.value = username.replace(/^\s+|\s+$/g, '');      }       function Password_Validator() {         Username_Trim();document.form.username.value = document.form.username.value.toLowerCase();               if (document.form.username.value.length == 0                            || document.form.password.value.length == 0) {                   var warningString = "Please enter your Username and Password to log in.";                       document.getElementById('cookieError').innerHTML = warningString;                        document.getElementById('websealError').innerHTML = '';                 return false;           }       }       function resetpass() {           Username_Trim();                if (document.form.username.value.length > 0) {                  document.form.action = "https://tjenie.ao.dcn/jeniesc/selfcareservices/ForgotPasswordServlet";                   document.form.noSecret.value = "noSecret";                      document.form.submit();         } else {                var warningString = "Please enter your Username and press the \"Forgot Password\" link.";                        document.getElementById('cookieError').innerHTML = warningString;document.getElementById('websealError').innerHTML = '';         }       }//--></script>
+<script language="JavaScript" type="text/javascript">    function hideHelp() {           if (document.getElementById) { // DOM3 = IE5, NS6                        document.getElementById('Help').style.display = 'none';                 document.getElementById('Login').style.display = 'inline';               } else {                        if (document.layers) { // Netscape 4                            document.hideshow.visibility = 'hidden';} else { // IE 4                         document.all.hideshow.style.visibility = 'hidden';                      }               }       }       function showHelp() {           if (document.getElementById) { // DOM3 = IE5, NS6                        document.getElementById('Help').style.display = 'inline';                       document.getElementById('Login').style.display = 'none';         } else {                        if (document.layers) { // Netscape 4                            document.hideshow.visibility = 'visible';} else { // IE 4                                document.all.hideshow.style.visibility = 'visible';                     }               }       }</script>
+<style type="text/css">
+<!--
+html {
+	overflow-y: scroll;
+}
+
+.warningtext {
+	color: #BE0101;
+	font-style: italic;
+	font-size: 12px;
+	text-align: center;
+	width: auto;
+	margin-bottom: -15px;
+}
+
+body.jenieui { /*color:#222;*/
+	background-color: #f2f2f2;
+	font: 100%/1.0em Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+a,input {
+	transition: all .12s linear;
+	-o-transition: all .12s linear;
+	-moz-transition: all .12s linear;
+	-webkit-transition: all .12s linear;
+}
+
+hr {
+	border: 0;
+	height: 0;
+	border-top: 0;
+	border-bottom: 1px solid #ccc;
+	clear: both;
+}
+
+h1,h2 {
+	letter-spacing: -1.0;
+}
+
+.dot {
+	border: none;
+	border-top: dotted 1px #ccc;
+	padding: 0 0 8px 0;
+	color: #E9E9E9;
+	background-color: #E9E9E9;
+}
+
+.footer {
+	min-width: 240px;
+	max-width: 980px;
+	overflow: hidden;
+	padding: 10px 0 0 0;
+	margin: 0 auto;
+	position: relative;
+	text-align: right;
+	font-size: 13px;
+	font-weight: normal;
+	color: #888;
+	font-style: italic;
+	letter-spacing: 0.075em;;
+}
+
+.access {
+	min-width: 240px;
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 15px 0 15px 0;
+	text-align: center;
+	font-family: Georgia;
+	font-style: italic;
+	font-size: 11.5pt;
+	letter-spacing: 1.15px;
+	color: #444;
+	line-height: 1.25em;
+}
+
+.alert {
+	font: Arial,;
+	font-size: 24px;
+	font-weight: bold;
+	color: #BE0101;
+	line-height: 25px;
+}
+
+.jenieFrame {
+	width: auto;
+	min-width: 240px;
+	max-width: 980px;
+	overflow: hidden;
+	padding: 0;
+	*padding: 8px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.jenieui .signonbg {
+	width: 330px;
+	*width: 330px;
+	margin: 26px 45px 0 0;
+	overflow: hidden;
+	padding: 35px 35px 20px 35px;
+	position: relative;
+	background: #E9E9E9;
+	border: 1px solid #ccc;
+	float: left;
+}
+
+.jenieui .right {
+	text-align: center;
+	margin: 26px 0 0 20px;
+}
+
+.jenieBanner { /*background-color: #011D4C;*/
+	overflow: hidden; /*padding: 5px 10px 5px 20px;*/
+	text-align: left; /*padding: 0 10px;*/
+	height: auto;
+}
+
+.jenieui .jenieAccess {
+	position: absolute;
+	top: -3000px;
+	width: 500px;
+}
+
+.jenieui a,.jenieui a:visited {
+	color: #105CB6;
+	text-decoration: none;
+}
+
+.jenieui a:hover {
+	color: #921B14;
+	text-decoration: underline;
+}
+
+.jenieui img {
+	border: 0 none;
+	vertical-align: middle;
+}
+
+.jenieBanner .jenieLogo { /*margin-left: 5px;*/ /*margin-top: 7px;*/
+	float: left;
+	position: absolute; /*margin-right: 20px;*/
+}
+
+.jenieui .header {
+	width: 100%;
+	background: #012E65;
+	border-bottom: 5px solid #921B14;
+	height: 90px;
+}
+
+.jenieui .signonbg h1 {
+	font-family: Georgia;
+	font-size: 28px; letter-spacing; -2 px;
+	font-weight: normal;
+	margin-top: -2px;
+	padding-bottom: 7px;
+}
+
+label {
+	float: left;
+	margin-right: 15px;
+	text-align: right;
+	font-family: Arial;
+	font-size: 15px; letter-spacing; -2 px;
+	font-weight: bold;
+	color: #333;
+	width: 85px;
+	height: 34px;
+	margin-top: 8px;
+	position: relative;
+	clear: right;
+}
+
+.clear {
+	clear: both;
+}
+
+.jenieui .signonbg a {
+	font-size: 13px;
+	padding: 5px 0 0 0;
+	float: right;
+}
+
+.jenieui .headerwrap {
+	min-width: 240px;
+	max-width: 980px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0 auto;
+	position: relative;
+}
+
+.jenieui .headergrad {
+	background-image: url("https://tjenie.ao.dcn/_images/hdr-grad.gif")
+		!important;
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 20px;
+	margin-top: 1px;
+}
+
+.jenieui input {
+	width: 200px;
+	*width: 200px;
+	height: 34px;
+	*height: 34px;
+	border: 1px solid #ccc;
+	background: #F4EFDC;
+	padding-left: 8px;
+	float: right;
+}
+
+.jenieui input:focus {
+	border: 1px solid #333;
+	background: #fff;
+	box-shadow: 0 0 2px rgb(212, 82, 82);
+}
+
+.jenieui .formbtn {
+	width: 140px;
+	height: 47px;
+	background: #012E65;
+	font-family: Arial;
+	font-size: 14pt;
+	margin: 10px 0 15px 0;
+	color: #fff;
+	clear: both;
+}
+
+.jenieui .formbtn:focus {
+	background: #921B14;
+}
+
+.jenieui .formbtn:hover {
+	width: 140px;
+	height: 47px;
+	background: #921B14;
+	font: Arial 18pt;
+	cursor: pointer;
+	-moz-box-shadow: 1px 1px 1px rgb(204, 204, 204);
+	-webkit-box-shadow: 1px 1px 1px rgb(204, 204, 204);
+	box-shadow: 1px 1px 1px rgb(204, 204, 204);
+}
+
+.jenieui .formbtn:active {
+	background: #640C0E;
+	-moz-box-shadow: inset 2px 1px 8px rgba(0, 0, 0, 0.35);
+	-webkit-box-shadow: inset 2px 1px 8px rgba(0, 0, 0, 0.35);
+	box-shadow: inner 2px 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.jenieui .help a {
+	float: left;
+	text-align: left;
+}
+
+.jenieui .jenieLogo,.jenieLoginLogo {
+	background-image: url("https://tjenie.ao.dcn//_images/jenielogo.gif")
+		!important;
+	background-repeat: no-repeat;
+	height: 58px; /*margin-top: 11px;*/
+	width: 600px;
+	margin: 19px 0 0 0;
+	padding: 0;
+}
+
+.jenieBanner .jenieAltText {
+	color: #EEEEEE;
+}
+
+.jenieui .jenieAltText {
+	display: none;
+}
+
+.inputText_Error {
+	border-style: solid;
+	border-color: #DE5C5C;
+}
+
+.jenieui .selfact {
+	background: #D4DCE2;
+	float: right;
+	text-align: center;
+	padding: 6px 12px;
+	font-size: 11px;
+	*margin-top: -5px;
+}
+
+.jenieui .selfact:hover {
+	background: #921B14;
+	color: #fff;
+	text-decoration: none;
+	-moz-box-shadow: 1px 1px 1px rgb(204, 204, 204);
+	-webkit-box-shadow: 1px 1px 1px rgb(204, 204, 204);
+	box-shadow: 1px 1px 1px rgb(204, 204, 204);
+}
+
+.jenieui .selfact:active {
+	background: #640C0E;
+	-moz-box-shadow: inset 2px 1px 8px rgba(0, 0, 0, 0.35);
+	-webkit-box-shadow: inset 2px 1px 8px rgba(0, 0, 0, 0.35);
+	box-shadow: inner 2px 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+#Help {
+	min-width: 240px;
+	max-width: 980px;
+	overflow: hidden;
+	padding: 40px;
+	margin: 0 auto;
+	position: relative;
+	display: none;
+}
+
+#usernameCookie {
+	display: none;
+}
+
+#usernameCookieValue {
+	margin-top: -8px;
+	text-align: left;
+}
+
+#usernameEntry {
+	
+}
+-->
+</style>
+</head>
+<body
+	onload="document.form.usernameEntered.focus();checkUsernameCookie()"
+	class="jenieui">
+	<div class="header">
+		<div class="headerwrap">
+			<p class="jenieLogo">
+			<p class="jenieAltText">JENIE logo</p>
+			</p>
+		</div>
+	</div>
+	<div class="headergrad"></div>
+	<!--- DO NOT TRANSLATE OR MODIFY any part of the hidden parameter(s) =-->
+	<!---  The following block of code provides users with a warning message  if they do not have cookies configured on their browsers.  If this environment does not use cookies to maintain login sessions,  simply remove or comment out the block below.=-->
+	<!--- END Cookie check block =-->
+	<div class="jenieFrame">
+		<div class="jenieClear"></div>
+		<form method="post" name="form" id="loginForm"
+			action="/pkmslogin.form" onsubmit="return Password_Validator();">
+			<div id="Help">
+				<a href="javascript:hideHelp();" class="selfact">&laquo; back</a>
+				<h1>Single Sign On Help</h1>
+				<hr />
+				<h2>This is my first time to JENIE (Single Sign On).</h2>
+				<p>
+					At this point you need to self activate to establish your JENIE
+					account. To do this, please follow this <a
+						href="https://tjenie.ao.dcn/jeniesc/selfcareservices/selfactivation.jsp"
+						target="_self">Self Activation</a> link. When you are done with
+					this step, you will be directed back to the log in page.
+				</p>
+				<hr />
+				<h2>This is my first time signing into JENIE (Single Sign On).</h2>
+				<p>
+					At this point you have self activated and/or changed your system
+					generated password to establish your JENIE account. If you have not
+					self activated, please follow this <a
+						href="https://tjenie.ao.dcn/jeniesc/selfcareservices/selfactivation.jsp"
+						target="_blank">Self Activation</a> link.
+				</p>
+				<hr />
+				<h2>I have forgotten my username.</h2>
+				<p>Your username is typically your FirstName LastName (Example:
+					John Smith). User names may also contain initials, a middle name or
+					an appended number (Examples: John W Smith, John W. Smith, J
+					William Smith, J Smith or John Smith1).</p>
+				<p>
+					If you cannot log in because you have lost or forgotten your
+					username please use the automated process by clicking the <a
+						href="https://tjenie.ao.dcn/jeniesc/selfcareservices/forgotusername.jsp"
+						target="_blank">Forgot Username</a> link.
+				</p>
+				<hr />
+				<h2>I need to reset my password?</h2>
+				<p>If you do not remember your password, or your password is not
+					working, you can reset your password to something you know. To do
+					this, on the log-in screen enter your Username, leave the password
+					field blank, and click the Forgot Password link.The challenge
+					questions you selected during self activation will be displayed.
+					Once you have answered the questions, you will be prompted to
+					change your password.</p>
+				<hr />
+				<h2>I need to contact the JENIE Help Desk.</h2>
+				<p>
+					If you have any questions, please contact the JENIE Help Desk at: <strong>210-301-6322</strong>
+					or via email at <a href="mailto:jenie@support.aotx.uscourts.gov">jenie@support.aotx.uscourts.gov</a>.
+				</p>
+				<hr />
+				<hr/ >
+				<p class="access">Access to this system is limited to use by
+					only those authorized by the United States Courts. If evidence of
+					unauthorized or criminal activity is detected, systems personnel
+					may provide that evidence to law enforcement officials.</p>
+			</div>
+			<div id="Login">
+				<div class="signonbg">
+					<h1>US Courts Single Sign On</h1>
+					<hr />
+					<div id="cookieError" class="warningtext"></div>
+					<br />
+					<p>
+						<label>User Name</label>
+					<div id="usernameEntry">
+						<input placeholder="( e.g. John Smith )" name="usernameEntered"
+							size="25" tabindex=1 /><input type="hidden" name="username">
+						<a href="/jeniesc/selfcareservices/forgotusername.jsp"
+							style="float: right; padding-bottom: 10px;">Forgot User Name</a>
+					</div>
+					<div style="clear: right; padding-left: 14px;" id="usernameCookie">
+						<div id="usernameCookieValue"></div>
+						<a href="#" onClick="return clearUsernameCookie();"
+							style="float: right; padding-bottom: 10px;">Change User Name</a>
+					</div>
+					</p>
+					<label>Password</label><input type="password" name="password"
+						id="password" autocomplete="off" size="25" tabindex=2 /><a
+						href="javascript:resetpass();"
+						style="display: block; float: right;">Forgot Password</a><br />
+					<p>
+						<input type="hidden" name="login-form-type" value="pwd"> <input
+							id="SUBMIT2" type="submit" name="SUBMIT2" value="SIGN ON"
+							class="formbtn" onsubmit="return Password_Validator();"
+							tabindex=3 disabled="true" />
+					</p>
+					<hr class="dot">
+					<input type="hidden" name="noSecret" value=""><a
+						href="/jeniesc/selfcareservices/selfactivation.jsp"
+						class="selfact" style="padding: 8px 15px">Self Activation</a><a
+						href="javascript:showHelp();" class="help" style="float: left;">Help</a>
+				</div>
+		</form>
+		<div class="right">
+			<img src="https://tjenie.ao.dcn/_images/scale.gif"
+				style="margin: 0 auto;" alt="justice scales"><br />
+			<br />
+			<noscript>
+				<span class="warningtext">WARNING: Please ensure Javascript
+					is enabled in your browser.</span>
+			</noscript>
+			<br />
+			<!--- BEGIN Cookie check block =-->
+			<!---DO NOT TRANSLATE anything inside the SCRIPT tag except the quotedstring warningString.  i.e. var warningString = "Translate this string";=-->
+			<script language="JavaScript" type="text/javascript">var warningString = "WARNING: To maintain your session, make sure that your browser is configured to accept Cookies.";document.cookie = 'acceptsCookies=yes';  if (document.cookie == '') {    // document.write(warningString);document.getElementById('cookieError').innerHTML = warningString;document.getElementById('SUBMIT2').disabled = true;    } else {document.cookie = 'acceptsCookies=yes; expires=Fri, 13-Apr-1970 00:00:00 GMT';document.getElementById('SUBMIT2').disabled = false;}</script>
+			<p id="websealError" class="warningtext"></p>
+			<p class="access">Access to this system is limited to use by only
+				those authorized by the United States Courts. If evidence of
+				unauthorized or criminal activity is detected, systems personnel may
+				provide that evidence to law enforcement officials.</p>
+		</div>
+		<divclass"clear"></div>
+	</div></div>
+	<div class="footer">
+		<hr>
+		JENIE is best viewed in: MSIE 8/Compatibility Mode, MSIE 9, Chrome 20,
+		Safari 5+, and Firefox 18+
+	</div>
+</body>
+</html>
