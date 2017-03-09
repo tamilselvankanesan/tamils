@@ -25,4 +25,22 @@ public class RulesProcessor {
 			logger.error(e);
 		}
 	}
+	public void addToRulesQueue(String entryId, String caseId){
+		try {
+			logger.info("put it in the queue");
+			//add to the DB and add to the queue
+			queue.put(entryId);
+		} catch (InterruptedException e) {
+			logger.error(e);
+		}
+	}
+	public void addToRulesQueue(String entryId, String caseId, String ripeMotionEntryId){
+		try {
+			logger.info("put it in the queue");
+			//add to the DB and add to the queue
+			queue.put(entryId);
+		} catch (InterruptedException e) {
+			logger.error(e);
+		}
+	}
 }

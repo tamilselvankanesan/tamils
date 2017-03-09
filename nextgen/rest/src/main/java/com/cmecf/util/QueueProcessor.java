@@ -24,5 +24,6 @@ public class QueueProcessor extends Thread{
 	}
 	private void processRules(String entryId){
 		//call rules controller composite facade and process rules
+		//when the process is successful, delete the entry from the DB
 	}
 }
