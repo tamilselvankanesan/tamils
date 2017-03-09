@@ -11,6 +11,7 @@ public class QueueProcessor extends Thread{
 		this.queue = queue;
 	}
 	public void run(){
+		logger.info("QueueProcessor is running....");
 		String entryId;
 		try {
 			while((entryId = queue.take())!=null){
@@ -18,7 +19,7 @@ public class QueueProcessor extends Thread{
 				processRules(entryId);
 			}
 		} catch (InterruptedException e) {
-			logger.error(e);
+			logger.error("Queue interrupted.. restart thread?? ....", e);
 			//restart thread ???
 		}
 	}

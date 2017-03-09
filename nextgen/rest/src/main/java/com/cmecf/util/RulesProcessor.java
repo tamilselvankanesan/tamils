@@ -10,13 +10,20 @@ public class RulesProcessor {
 	private final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 	private static RulesProcessor rulesProcessor = new RulesProcessor();
 	private RulesProcessor(){
+		logger.info("Initialize RulesProcessor....");
+		loadQueueFromDatabase();
 		QueueProcessor queueProcessor = new QueueProcessor(queue);
 		queueProcessor.start();
+		logger.info("RulesProcessor initialization successful");
+	}
+	private void loadQueueFromDatabase(){
+		logger.info("loading persisted queue from DB");
+		//read persisted queue from DB and add it to queue before starting the thread.
 	}
 	public static RulesProcessor getInstance(){
 		return rulesProcessor;
 	}
-	public void addToRulesQueue(String entryId){
+	public synchronized void addToRulesQueue(String entryId){
 		try {
 			logger.info("put it in the queue");
 			//add to the DB and add to the queue
@@ -25,7 +32,7 @@ public class RulesProcessor {
 			logger.error(e);
 		}
 	}
-	public void addToRulesQueue(String entryId, String caseId){
+	public synchronized void addToRulesQueue(String entryId, String caseId){
 		try {
 			logger.info("put it in the queue");
 			//add to the DB and add to the queue
@@ -34,7 +41,7 @@ public class RulesProcessor {
 			logger.error(e);
 		}
 	}
-	public void addToRulesQueue(String entryId, String caseId, String ripeMotionEntryId){
+	public synchronized void addToRulesQueue(String entryId, String caseId, String ripeMotionEntryId){
 		try {
 			logger.info("put it in the queue");
 			//add to the DB and add to the queue
