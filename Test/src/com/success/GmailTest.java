@@ -17,9 +17,11 @@ public class GmailTest {
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(new File( "F:\\Tamil\\GIT_Repository\\Remote\\just-another\\Test\\src\\mail.properties" )));
+			props.put("mail.smtp.ssl.trust", "*");
 			Session session = Session.getDefaultInstance(props, null);
+			session.setDebug(true);
 			Store store = session.getStore("imaps");
-			store.connect("smtp.gmail.com", "tamil.ts@gmail.com","muruga_muruga_21ts21");
+			store.connect("smtp.gmail.com", "tamil.ts@gmail.com","ittozjkjglgdyeqqx");
 			Folder inbox = store.getFolder("inbox");
 			inbox.open(Folder.READ_ONLY);
 			int messageCount = inbox.getMessageCount(); 
