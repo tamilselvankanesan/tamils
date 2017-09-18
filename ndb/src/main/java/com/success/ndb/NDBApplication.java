@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAutoConfiguration
 @EnableJpaRepositories
 @EntityScan(basePackages={"com.success.ndb.entities"})
-public class NdbApplication extends SpringBootServletInitializer{
+public class NDBApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
-		SpringApplication.run(NdbApplication.class, args);
+		SpringApplication.run(NDBApplication.class, args);
 	}
 }
