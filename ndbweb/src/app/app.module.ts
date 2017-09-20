@@ -1,11 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {AppRoutingModule} from './app-routing.module';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { CountryComponent } from './country/country.component';
-import { CountryService } from './country/country.service';
-import { StateComponent } from './state/state.component';
-import { RouterModule } from '@angular/router';
+import {AppComponent} from './app.component';
+import {CountryComponent} from './country/country.component';
+import {CountryService} from './country/country.service';
+import {StateComponent} from './state/state.component';
+import {StateService} from './state/state.service';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,9 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-    {path: 'states/:id', component: StateComponent}
-    ])
+    AppRoutingModule
   ],
-  providers: [CountryService],
+  providers: [CountryService, StateService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

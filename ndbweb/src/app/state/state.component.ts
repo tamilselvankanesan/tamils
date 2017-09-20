@@ -1,8 +1,10 @@
 import {Country} from '../country/country';
+import {CountryService} from '../country/country.service';
 import {State} from './state';
 import {StateService} from './state.service';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Params} from '@angular/router';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-sate',
@@ -17,20 +19,11 @@ export class StateComponent implements OnInit {
 
   constructor(
     private stateService: StateService,
+    private countryService: CountryService,
     private route: ActivatedRoute) {}
 
   ngOnInit() {
-    console.log(this.route.snapshot.paramMap.get('id'));
-
-    //    this.route.paramMap.switch
-    this.route.params.forEach((params: Params) => {
-      this.selectedCountryId = params['id'];
-    });
-    console.log('testing');
-    this.getStates();
-  }
-  getStates(): void {
-    this.stateService.getAllStates().then(states => this.states = states);
-    //    this.stateService.getStates(this.selectedCountryId).then(states => this.states = states);
+    this.route.paramMap.switchMap((params: Params) =>
+      this.stateService.getStates(params.get('id'))).subscribe(states => this.states = states);
   }
 }
