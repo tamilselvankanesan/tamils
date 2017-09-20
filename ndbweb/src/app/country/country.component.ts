@@ -1,16 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-
-const COUNTRIES: Country[] = [
-  {id: 1, name: 'India'},
-  {id: 2, name: 'USA'},
-  {id: 3, name: 'Russia'},
-  {id: 4, name: 'China'}
-];
-
-export class Country {
-  id: number;
-  name: string;
-}
+import {Country} from './country';
+import {CountryService} from './country.service';
 
 @Component({
   selector: 'app-country',
@@ -18,10 +8,16 @@ export class Country {
   styleUrls: ['./country.component.css']
 })
 export class CountryComponent implements OnInit {
-
-  constructor() {}
+  countries: Country[];
+  constructor(private countryService: CountryService) {
+  }
 
   ngOnInit() {
+    this.getCountries();
+  }
+
+  getCountries(): void {
+    this.countryService.getCountries().then(countries => this.countries = countries);
   }
 
 }
