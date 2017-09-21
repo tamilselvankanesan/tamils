@@ -8,6 +8,7 @@ import {CountryService} from './country/country.service';
 import {StateComponent} from './state/state.component';
 import {StateService} from './state/state.service';
 import {RouterModule} from '@angular/router';
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {RouterModule} from '@angular/router';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule
   ],
   providers: [CountryService, StateService],
   bootstrap: [AppComponent]

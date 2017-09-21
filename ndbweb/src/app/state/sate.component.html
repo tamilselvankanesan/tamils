@@ -1,6 +1,7 @@
 <p>
-  The list of States in 
+  The list of States in {{selectedCountry.name}}
 </p>
 <div *ngFor="let state of states">
 	<h4>{{state.id}} : {{state.name}}</h4>
 </div>
+<button (click)="goBack()">Back</button>

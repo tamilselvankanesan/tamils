@@ -6,23 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity(name="country")
+@Entity(name = "country")
 @Table
 @XmlRootElement
 public class Country {
 
 	@Id
 	@Column
-	private int id;
+	private String code;
 	@Column
 	private String name;
 
-	public int getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {

@@ -1,5 +1,6 @@
 import {State} from './state';
 import {Injectable} from '@angular/core';
+
 const STATES: State[] = [
   {id: 1, name: 'Tamil Nadu', country_id: 1},
   {id: 2, name: 'Andhra Pradesh', country_id: 2},

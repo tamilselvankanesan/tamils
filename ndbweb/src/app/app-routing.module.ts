@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 const routes: Route[] = [
   {
-    path: 'states/:id',
+    path: 'states/:code',
     component: StateComponent
   },
   {
-    path: '',
+    path: 'countries',
     component: CountryComponent
   }
 ];
