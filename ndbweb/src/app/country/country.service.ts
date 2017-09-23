@@ -15,12 +15,11 @@ const COUNTRIES: Country[] = [
 export class CountryService {
   private header = new Headers({'Content-type': 'application/json'});
   private countryURL = 'http://localhost:8080/ndb/rest/countries';
-  private countries: Country[];
 
   constructor(private http: Http) {}
   getCountries(): Promise<Country[]> {
-    return this.http.get(this.countryURL).toPromise().then(response => response.json().data as Country[]).catch(this.handleError);
-    //    return Promise.resolve(COUNTRIES);
+    console.log('test');
+    return this.http.get(this.countryURL).toPromise().then(response => response.json() as Country[]).catch(this.handleError);
   }
 
   getCountry(code: string): Promise<Country> {

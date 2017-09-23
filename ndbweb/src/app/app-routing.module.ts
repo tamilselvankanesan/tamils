@@ -1,3 +1,4 @@
+import { AdminComponent } from './admin/admin.component';
 import {CountryComponent} from './country/country.component';
 import {StateComponent} from './state/state.component';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,10 @@ const routes: Route[] = [
   {
     path: 'countries',
     component: CountryComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
   }
 ];
 

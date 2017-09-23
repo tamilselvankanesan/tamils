@@ -7,4 +7,5 @@ import com.success.ndb.entities.Country;
 public interface CountryService {
 
 	List<Country> getAllCountries();
+	void importCountries();
 }

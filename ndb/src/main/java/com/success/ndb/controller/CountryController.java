@@ -2,10 +2,9 @@ package com.success.ndb.controller;
 
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +14,7 @@ import com.success.ndb.service.CountryService;
 
 @RestController
 @RequestMapping(path="/rest/countries")
+@CrossOrigin
 public class CountryController {
 
 	@Autowired	
@@ -22,5 +22,11 @@ public class CountryController {
 	@RequestMapping(produces=MediaType.APPLICATION_JSON_VALUE, method=RequestMethod.GET)
 	public List<Country> getCountries(){
 		return countryService.getAllCountries();
+	}
+	@RequestMapping(method=RequestMethod.POST, path="/import")
+	public void importCountriesToNDB(){
+		countryService.importCountries();
+		System.out.println("Testing");
+		
 	}
 }
