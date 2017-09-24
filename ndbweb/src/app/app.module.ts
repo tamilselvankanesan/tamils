@@ -10,7 +10,7 @@ import {StateService} from './state/state.service';
 import {RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
 import { CountryFilterPipe } from './country/country-filter.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { AdminService } from './admin/admin.service';
 
@@ -26,7 +26,8 @@ import { AdminService } from './admin/admin.service';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [CountryService, StateService, AdminService],
   bootstrap: [AppComponent]

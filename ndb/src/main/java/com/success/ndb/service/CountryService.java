@@ -8,4 +8,5 @@ public interface CountryService {
 
 	List<Country> getAllCountries();
 	void importCountries();
+	List<Country> getAllCountries(String filter);
 }

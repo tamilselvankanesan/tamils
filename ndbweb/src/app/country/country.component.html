@@ -1,4 +1,15 @@
 <h2>Here are the list of Countries</h2>
+
+<!-- <input type="text" [formControl]="term">
+
+<table>
+      <tr *ngFor="let country of countries1">
+        <td><a routerLink="/states/{{country.code}}">{{country.name}}</a></td>
+      </tr>
+    </table>
+
+<br/><br/> -->
+
 <input [(ngModel)]="searchText" placeholder="Filter countries">
 
 <table>
@@ -6,4 +17,3 @@
         <td><a routerLink="/states/{{country.code}}">{{country.name}}</a></td>
       </tr>
     </table>
-<button routerLink="/">Home</button>

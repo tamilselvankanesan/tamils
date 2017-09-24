@@ -14,7 +14,7 @@ import com.success.ndb.external.dto.Countries;
 @Service
 public class CountryServiceImpl implements CountryService {
 
-//	@Autowired
+	@Autowired
 	private CountryDao countryDao;
 
 	@Override
@@ -27,7 +27,7 @@ public class CountryServiceImpl implements CountryService {
 		RestTemplate client = new RestTemplate();
 		Countries countries = client.getForObject("http://vocab.nic.in/rest.php/country/json", Countries.class);
 		if (countries != null) {
-			for(com.success.ndb.external.dto.Country source: countries.getCountries()){
+			for (com.success.ndb.external.dto.Country source : countries.getCountries()) {
 				Country target = new Country();
 				target.setCode(source.getCountry_id());
 				target.setName(source.getCountry_name());
@@ -42,12 +42,17 @@ public class CountryServiceImpl implements CountryService {
 	public void importCountries() {
 		List<Country> importedCountries = fetchFromExternalSource();
 		long existingCount = countryDao.count();
-		if(importedCountries.size()>existingCount){
-			for(Country c : importedCountries){
-				if(!countryDao.exists(c.getCode())){
+		if (importedCountries.size() > existingCount) {
+			for (Country c : importedCountries) {
+				if (!countryDao.exists(c.getCode())) {
 					countryDao.save(c);
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<Country> getAllCountries(String filter) {
+		return countryDao.findCountries(filter);
 	}
 }

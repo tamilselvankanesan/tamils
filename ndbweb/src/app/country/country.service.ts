@@ -22,6 +22,10 @@ export class CountryService {
     return this.http.get(this.countryURL).toPromise().then(response => response.json() as Country[]).catch(this.handleError);
   }
 
+  searchCountries(searchTerm: String): Promise<Country[]> {
+    return this.http.get(this.countryURL + '/' + searchTerm).toPromise().then(response => response.json() as Country[]).catch(this.handleError);
+  }
+
   getCountry(code: string): Promise<Country> {
     return this.getCountries().then(countries => countries.find(country => country.code === code));
   }
