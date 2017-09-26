@@ -13,6 +13,7 @@ import { CountryFilterPipe } from './country/country-filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { AdminService } from './admin/admin.service';
+import { AddStateComponent } from './state/add-state/add-state.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AdminService } from './admin/admin.service';
     CountryComponent,
     StateComponent,
     CountryFilterPipe,
-    AdminComponent
+    AdminComponent,
+    AddStateComponent
   ],
   imports: [
     BrowserModule,
