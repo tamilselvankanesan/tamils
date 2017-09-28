@@ -20,7 +20,8 @@ public class StateServiceImpl implements StateService{
 
 	@Override
 	public List<State> getStates(String countryCode) {
-		return stateDao.findByCountryCode(countryCode);
+		List<State>  states = stateDao.findByCountryCode(countryCode); 
+		return states;
 	}
 
 	@Override

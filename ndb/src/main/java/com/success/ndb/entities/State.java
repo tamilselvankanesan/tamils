@@ -1,7 +1,10 @@
 package com.success.ndb.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="state")
-public class State {
+public class State implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -21,7 +25,7 @@ public class State {
 	private String code;
 	@Column
 	private String name;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="country_code")
 	private Country country;
 	

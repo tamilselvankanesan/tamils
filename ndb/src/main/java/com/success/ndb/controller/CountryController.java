@@ -36,4 +36,9 @@ public class CountryController {
 	public List<Country> getCountries(@PathVariable String filter) {
 		return countryService.getAllCountries(filter.toLowerCase());
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, path = "/find/{code}")
+	public Country getCountry(@PathVariable String code){
+		return countryService.findOne(code);
+	}
 }

@@ -55,4 +55,9 @@ public class CountryServiceImpl implements CountryService {
 	public List<Country> getAllCountries(String filter) {
 		return countryDao.findCountries(filter);
 	}
+
+	@Override
+	public Country findOne(String code) {
+		return countryDao.findOne(code);
+	}
 }

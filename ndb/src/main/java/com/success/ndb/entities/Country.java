@@ -1,5 +1,6 @@
 package com.success.ndb.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,16 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "country")
-public class Country {
+public class Country implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column
 	private String code;
 	@Column
 	private String name;
 	@OneToMany(mappedBy="country", fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<State> states;
 
 	public String getCode() {

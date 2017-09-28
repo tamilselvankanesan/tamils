@@ -16,8 +16,13 @@ export class CountryService {
   searchCountries(searchTerm: String): Promise<Country[]> {
     return this.http.get(this.countryURL + '/' + searchTerm).toPromise().then(response => response.json() as Country[]).catch(this.handleError);
   }
+
+  getCountry(code: string): Promise<Country> {
+    console.log('code->' + code);
+    return this.http.get(this.countryURL + '/find/' + code).toPromise().then(response => response.json() as Country).catch(this.handleError);
+  }
+
   handleError(error: any): Promise<any> {
-    console.log('eeeeeee');
     console.error('error occured', error);
     return Promise.reject(error.message || error);
   }
