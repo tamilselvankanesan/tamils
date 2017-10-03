@@ -1,0 +1,13 @@
+<p>
+  admin works!
+</p>
+<a (click)="importCountriesToNDB()">Import Countries from external source</a>
+<br/><br/>
+<a (click)="addState()">Add State</a>
+<br/><br/>
+<a (click)="addCity()">Add City</a>
+<div *ngIf="stateFlag">
+	<br/><br/><br/>
+	Add State
+	<app-add-state></app-add-state>
+</div>

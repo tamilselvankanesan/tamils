@@ -17,10 +17,10 @@ export class StateService {
   constructor(private http: Http) {}
   getAllStates(): Promise<State[]> {
     return Promise.resolve(STATES);
+
   }
   getStates(countryCode: string): Promise<State[]> {
-    this.http.get(this.statesURL + countryCode).toPromise().then(response => response.json() as State[]).catch(this.handleError);
-    return null;
+    return this.http.get(this.statesURL + 'country/' + countryCode).toPromise().then(response => response.json() as State[]).catch(this.handleError);
   }
   handleError(error: any): Promise<any> {
     console.error('error occured', error);

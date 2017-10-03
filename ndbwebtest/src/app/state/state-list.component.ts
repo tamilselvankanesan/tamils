@@ -24,6 +24,6 @@ export class StateListComponent implements OnInit, OnChanges {
   }
 
   getStates(countryCode: string): Promise<State[]> {
-    return this.stateService.getAllStates();
+    return this.stateService.getStates(countryCode);
   }
 }
