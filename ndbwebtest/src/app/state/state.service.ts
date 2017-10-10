@@ -13,6 +13,9 @@ const STATES: State[] = [
 export class StateService {
 
   private statesURL = 'http://localhost:8080/ndb/rest/state/';
+  headers = new Headers({
+    'Content-Type': 'application/json'
+  });
 
   constructor(private http: Http) {}
   getAllStates(): Promise<State[]> {
@@ -25,5 +28,11 @@ export class StateService {
   handleError(error: any): Promise<any> {
     console.error('error occured', error);
     return Promise.reject(error.message || error);
+  }
+
+  createState(state: State) {
+    console.log(state.code);
+    console.log(JSON.stringify(state));
+    this.http.post(this.statesURL + 'add', JSON.stringify(state), this.headers).subscribe(data => console.log(data), error => {this.handleError(error); });
   }
 }

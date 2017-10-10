@@ -10,3 +10,8 @@ create table state (
 );
 alter table state add constraint fk_country_code foreign key 
 (country_code) references country(code);
+
+insert into state values (1, 'TN', 'Tamil Nadu', 'IN');
+insert into state values (2, 'KL', 'Kerala', 'IN' );
+insert into state values (3, 'AP', 'Andhara Pradesh', 'IN');
+insert into state values (4, 'KA', 'Karnataka', 'IN');

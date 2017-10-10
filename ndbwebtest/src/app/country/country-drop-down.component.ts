@@ -9,14 +9,14 @@ import {FormsModule, NgModel} from '@angular/forms';
 })
 
 export class CountryDropDownComponent {
-  @Input() countries: Country[];
+  countries: Country[];
   @Output() selectedCountry = new EventEmitter();
 
   constructor(private countryService: CountryService) {
     this.countryService.getCountries().then(countries => this.countries = countries);
   }
-  onCountryChange(value) {
-    console.log(value);
-    this.selectedCountry.emit(value);
+  onCountryChange(event) {
+    console.log(event);
+    this.selectedCountry.emit(event);
   }
 }

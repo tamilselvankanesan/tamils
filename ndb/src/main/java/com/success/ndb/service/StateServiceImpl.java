@@ -29,4 +29,9 @@ public class StateServiceImpl implements StateService{
 		return null;
 	}
 
+	@Override
+	public State findByCode(String code) {
+		return stateDao.findByCode(code);
+	}
+
 }

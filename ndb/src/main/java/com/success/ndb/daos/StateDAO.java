@@ -14,4 +14,7 @@ public interface StateDAO extends CrudRepository<State, Integer> {
 	List<State> findByCountryCode(@Param("countryCode") String countryCode);
 	
 	List<State> findAll();
+	
+	@Query("select a from State a where a.code = :stateCode")
+	State findByCode(@Param("stateCode") String stateCode);
 }

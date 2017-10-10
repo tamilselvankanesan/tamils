@@ -1,3 +1,4 @@
+import {AdminService} from './admin.service';
 import {Component, OnInit} from '@angular/core';
 
 @Component({
@@ -9,11 +10,13 @@ export class AdminComponent implements OnInit {
   stateFlag: boolean;
   cityFlag: boolean;
 
-  constructor() {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
   }
-  importCountriesToNDB(): void {}
+  importCountriesToNDB(): void {
+    this.adminService.importCountriesToNDB();
+  }
 
   addState(): void {
     this.stateFlag = true;

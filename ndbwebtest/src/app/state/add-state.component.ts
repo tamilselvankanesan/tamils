@@ -1,4 +1,6 @@
 import {Country} from '../country/country';
+import {State} from './state';
+import {StateService} from './state.service';
 import {Component} from '@angular/core';
 @Component({
   selector: 'app-add-state',
@@ -7,9 +9,16 @@ import {Component} from '@angular/core';
 
 export class AddStateComponent {
   selectedCountry: Country;
+  newState = new State();
+  constructor(private stateService: StateService) {}
   countryChanged(newCountry) {
     this.selectedCountry = newCountry;
-    console.log(this.selectedCountry);
+    console.log(this.selectedCountry.code);
+  }
+  addNewState() {
+    console.log(this.newState.name);
+    this.newState.country = this.selectedCountry;
+    this.stateService.createState(this.newState);
   }
 }
 

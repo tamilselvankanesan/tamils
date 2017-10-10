@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.success.ndb.entities.Country;
+import com.success.ndb.assemblers.CountryAssembler;
+import com.success.ndb.dto.CountryDTO;
 import com.success.ndb.service.CountryService;
 
 @RestController
@@ -21,7 +22,7 @@ public class CountryController {
 	@Autowired
 	private CountryService countryService;
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	/*@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public List<Country> getCountries() {
 		return countryService.getAllCountries();
 	}
@@ -40,5 +41,25 @@ public class CountryController {
 	@RequestMapping(method = RequestMethod.GET, path = "/find/{code}")
 	public Country getCountry(@PathVariable String code){
 		return countryService.findOne(code);
+	}*/
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public List<CountryDTO> getCountries() {
+		return CountryAssembler.assemble(countryService.getAllCountries());
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/import")
+	public void importCountriesToNDB() {
+		countryService.importCountries();
+		System.out.println("Testing");
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "{filter}")
+	public List<CountryDTO> getCountries(@PathVariable String filter) {
+		return CountryAssembler.assemble(countryService.getAllCountries(filter.toLowerCase()));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path = "/find/{code}")
+	public CountryDTO getCountry(@PathVariable String code){
+		return CountryAssembler.assemble(countryService.findOne(code));
 	}
 }

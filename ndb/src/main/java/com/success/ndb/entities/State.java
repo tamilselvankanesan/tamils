@@ -14,9 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="state")
-public class State implements Serializable{
+public class State{
 
-	private static final long serialVersionUID = 1L;
 	@Id
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO)

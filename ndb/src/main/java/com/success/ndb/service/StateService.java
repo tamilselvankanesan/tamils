@@ -11,4 +11,6 @@ public interface StateService {
 	List<State> getStates(String countryCode);
 	
 	State save(State state);
+	
+	State findByCode(String code);
 }

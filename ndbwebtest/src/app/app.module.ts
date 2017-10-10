@@ -9,6 +9,7 @@ import { CountryService } from './country/country.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { AdminComponent } from './admin/admin/admin.component';
+import { AdminService } from './admin/admin/admin.service';
 import { CountryDropDownComponent } from './country/country-drop-down.component';
 import { AddStateComponent } from './state/add-state.component';
 import { HandsOnComponent } from './handson/hands-on/hands-on.component';
@@ -25,7 +26,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule
   ],
-  providers: [],
+  providers: [AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
