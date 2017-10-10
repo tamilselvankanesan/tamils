@@ -13,10 +13,8 @@ export class AddStateComponent {
   constructor(private stateService: StateService) {}
   countryChanged(newCountry) {
     this.selectedCountry = newCountry;
-    console.log(this.selectedCountry.code);
   }
   addNewState() {
-    console.log(this.newState.name);
     this.newState.country = this.selectedCountry;
     this.stateService.createState(this.newState);
   }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ import com.success.ndb.service.StateService;
 
 @RestController
 @RequestMapping(path="/rest/state")
-@CrossOrigin(methods={RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin
 public class StateController {
 
 	@Autowired
@@ -31,9 +32,8 @@ public class StateController {
 	public List<StateDTO> getStates(@PathVariable String countryCode){
 		return StateAssembler.assemble(stateService.getStates(countryCode));
 	}
-	@RequestMapping(method=RequestMethod.POST, path="/add", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void addState(StateDTO state){
+	@RequestMapping(method=RequestMethod.POST, path="/add", consumes={MediaType.APPLICATION_JSON_VALUE})
+	public void addState(@RequestBody StateDTO state){
 		System.out.println(state.getCode());
-		System.out.println(state.getCountry().getName());
 	}
 }

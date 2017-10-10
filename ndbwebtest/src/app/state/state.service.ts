@@ -1,7 +1,7 @@
 import {Country} from '../country/country';
 import {State} from './state';
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Headers} from '@angular/http';
 
 const STATES: State[] = [
   {id: 1, name: 'Tamil Nadu', code: 'TN', country: null},
@@ -31,8 +31,6 @@ export class StateService {
   }
 
   createState(state: State) {
-    console.log(state.code);
-    console.log(JSON.stringify(state));
-    this.http.post(this.statesURL + 'add', JSON.stringify(state), this.headers).subscribe(data => console.log(data), error => {this.handleError(error); });
+    this.http.post(this.statesURL + 'add', JSON.stringify(state), {headers: this.headers}).subscribe(data => console.log(data), error => {this.handleError(error); });
   }
 }

@@ -16,7 +16,7 @@ export class CountryDropDownComponent {
     this.countryService.getCountries().then(countries => this.countries = countries);
   }
   onCountryChange(event) {
-    console.log(event);
+    console.log('event' + event);
     this.selectedCountry.emit(event);
   }
 }
