@@ -34,4 +34,14 @@ public class CountryAssembler {
 	public static CountryDTO assemble(Country country){
 		return assemble(country, false);
 	}
+	
+	public static Country assemble(CountryDTO countryDTO){
+		if(countryDTO!=null){
+			Country country = new Country();
+			country.setCode(countryDTO.getCode());
+			country.setName(country.getName());
+			return country;
+		}
+		return null;
+	}
 }

@@ -1,12 +1,19 @@
+<h1>Add a new state</h1>
 select a country: 
 <app-countries (selectedCountry)="countryChanged($event)"></app-countries>
-<h2>selected country: {{selectedCountry?.name}}</h2>
-<form *ngIf="selectedCountry" (submit)="addNewState()">
+<form *ngIf="selectedCountry" (ngSubmit)="addNewState()" #addStateForm="ngForm">
+	<h2>selected country: {{selectedCountry?.name}}</h2>
 	<label for="code">Code: </label>
-	<input type="text" id="code" [(ngModel)]="newState.code" required name="code">
+	<input type="text" id="code" [(ngModel)]="newState.code" required name="code" #code="ngModel">
+	<div [hidden]="code.valid ">
+		Code is required.
+	</div>
 	<br><br>
 	<label for="name">Name: </label>
-	<input type="text" id="name" [(ngModel)]="newState.name" required name="name">
+	<input type="text" id="name" [(ngModel)]="newState.name" required name="name" #name="ngModel">
+	<div [hidden]="name.valid">
+		Name is required.
+	</div>
 	<br><br>
-	<input type="submit" value="Add State">
+	<input type="submit" value="Add State" [disabled]="!addStateForm.valid">
 </form>

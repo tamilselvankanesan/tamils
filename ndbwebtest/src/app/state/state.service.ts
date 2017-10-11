@@ -30,7 +30,8 @@ export class StateService {
     return Promise.reject(error.message || error);
   }
 
-  createState(state: State) {
-    this.http.post(this.statesURL + 'add', JSON.stringify(state), {headers: this.headers}).subscribe(data => console.log(data), error => {this.handleError(error); });
+  createState(state: State): Promise<State> {
+    // this.http.post(this.statesURL + 'add', JSON.stringify(state), {headers: this.headers}).subscribe(data => console.log(data), error => {this.handleError(error); });
+    return this.http.post(this.statesURL + 'add', JSON.stringify(state), {headers: this.headers}).toPromise().then(data => data.json() as State).catch(this.handleError);
   }
 }

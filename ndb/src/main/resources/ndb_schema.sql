@@ -3,10 +3,10 @@ create table country (
     name varchar(50) 
 );
 create table state (
-	id int primary key,
-	code varchar(10),
-    name varchar(50) ,
-    country_code varchar(50) 
+	id int primary key auto_increment,
+	code varchar(10) not null,
+    name varchar(50) not null,
+    country_code varchar(50) not null
 );
 alter table state add constraint fk_country_code foreign key 
 (country_code) references country(code);

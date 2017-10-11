@@ -37,4 +37,11 @@ public class StateAssembler {
 	public static StateDTO assemble(State state) {
 		return assemble(state, true);
 	}
+	public static State assemble(StateDTO stateDTO){
+		State state = new State();
+		state.setCode(stateDTO.getCode());
+		state.setName(stateDTO.getName());
+		state.setCountry(CountryAssembler.assemble(stateDTO.getCountry()));
+		return state;
+	}
 }

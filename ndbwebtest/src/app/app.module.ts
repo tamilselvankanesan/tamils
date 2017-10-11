@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { AdminComponent } from './admin/admin/admin.component';
 import { AdminService } from './admin/admin/admin.service';
+import { AddCityComponent } from './city/add-city.component';
 import { CountryDropDownComponent } from './country/country-drop-down.component';
 import { AddStateComponent } from './state/add-state.component';
 import { HandsOnComponent } from './handson/hands-on/hands-on.component';
@@ -21,7 +22,8 @@ import { CommonModule } from '@angular/common';
     AdminComponent,
     AddStateComponent,
     CountryDropDownComponent,
-    HandsOnComponent
+    HandsOnComponent,
+    AddCityComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule

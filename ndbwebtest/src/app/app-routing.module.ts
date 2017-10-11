@@ -1,6 +1,8 @@
 import {AdminComponent} from './admin/admin/admin.component';
+import { AddCityComponent } from './city/add-city.component';
 import {CountryListComponent} from './country/country-list.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
+import { AddStateComponent } from './state/add-state.component';
 import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 
@@ -10,7 +12,16 @@ const appRoutes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    children: [{
+        path: 'add-state',
+        component: AddStateComponent
+      },
+      {
+        path: 'add-city',
+        component: AddCityComponent
+      }
+    ]
   },
   {
     path: 'hands-on',
