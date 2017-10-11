@@ -12,15 +12,16 @@ import {FormsModule, FormControl, ReactiveFormsModule} from '@angular/forms';
 export class StateListComponent implements OnInit, OnChanges {
   states: State[];
   @Input('selCountry') selCountry: Country;
+  hidden = false;
 
   constructor(private stateService: StateService) {}
 
   ngOnInit(): void {
+    console.log('selected country code->' + this.selCountry.code);
+    this.getStates(this.selCountry.code).then(states => this.states = states);
   }
 
   ngOnChanges(changes: any) {
-    console.log('selected country code->' + this.selCountry.code);
-    this.getStates(this.selCountry.code).then(states => this.states = states);
   }
 
   getStates(countryCode: string): Promise<State[]> {

@@ -10,10 +10,3 @@
 
 <br/><br/>
 
-<input [(ngModel)]="searchText" placeholder="Filter countries">
-
-<table>
-      <tr *ngFor="let country of countries | countryfilter : searchText">
-        <td><a routerLink="/states/{{country.code}}">{{country.name}}</a></td>
-      </tr>
-    </table>

@@ -2,6 +2,9 @@
 select a country: 
 <app-countries (selectedCountry)="countryChanged($event)"></app-countries>
 <form *ngIf="selectedCountry" (ngSubmit)="addNewState()" #addStateForm="ngForm">
+
+	<app-state-list [selCountry]="selectedCountry"></app-state-list>
+	
 	<h2>selected country: {{selectedCountry?.name}}</h2>
 	<label for="code">Code: </label>
 	<input type="text" id="code" [(ngModel)]="newState.code" required name="code" #code="ngModel">

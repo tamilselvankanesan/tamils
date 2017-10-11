@@ -1,4 +1,4 @@
-import {AdminComponent} from './admin/admin/admin.component';
+import {AdminComponent} from './admin/admin.component';
 import { AddCityComponent } from './city/add-city.component';
 import {CountryListComponent} from './country/country-list.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';

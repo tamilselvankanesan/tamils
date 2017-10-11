@@ -1,2 +1,4 @@
-<h2>Selected Country: {{selectedCountry.name}}</h2>
+<h2>Selected Country: {{selectedCountry?.name}}</h2>
+<div *ngIf="selectedCountry">
 <app-state-list [selCountry]="selectedCountry"></app-state-list>
+</div>  

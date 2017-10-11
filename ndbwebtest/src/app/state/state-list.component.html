@@ -1,8 +1,10 @@
-<h2>Here are the list of States in {{selCountry.name}}</h2>
-
-
-<table *ngIf="states">
-	<tr *ngFor="let state of states">
-		<td> {{state.name}} </td>
-	</tr>
-</table>
+<div *ngIf="states?.length > 0">
+	<h2>Here are the list of States in {{selCountry.name}}</h2>
+	
+	
+	<table *ngIf="states">
+		<tr *ngFor="let state of states">
+			<td> {{state.name}} </td>
+		</tr>
+	</table>
+</div>
