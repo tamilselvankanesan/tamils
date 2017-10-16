@@ -4,35 +4,32 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the state database table.
  * 
  */
 @Entity
-@NamedQuery(name="State.findAll", query="SELECT s FROM State s")
 public class State implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	private String code;
 
 	private String name;
 
-	//bi-directional many-to-one association to Person
-	@OneToMany(mappedBy="state")
+	// bi-directional many-to-one association to District
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+	private List<District> districts;
+
+	// bi-directional many-to-one association to Person
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private List<Person> persons;
 
-	//bi-directional many-to-one association to Country
-	@ManyToOne(fetch=FetchType.LAZY)
+	// bi-directional many-to-one association to Country
+	@ManyToOne
 	private Country country;
-
-	//bi-directional many-to-one association to District
-	@OneToMany(mappedBy="state")
-	private List<District> districts;
 
 	public State() {
 	}
@@ -61,6 +58,14 @@ public class State implements Serializable {
 		this.name = name;
 	}
 
+	public List<District> getDistricts() {
+		return this.districts;
+	}
+
+	public void setDistricts(List<District> districts) {
+		this.districts = districts;
+	}
+
 	public List<Person> getPersons() {
 		return this.persons;
 	}
@@ -77,11 +82,4 @@ public class State implements Serializable {
 		this.country = country;
 	}
 
-	public List<District> getDistricts() {
-		return this.districts;
-	}
-
-	public void setDistricts(List<District> districts) {
-		this.districts = districts;
-	}
 }

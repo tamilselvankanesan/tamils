@@ -60,4 +60,5 @@ public abstract class ReviewDTO {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
 }

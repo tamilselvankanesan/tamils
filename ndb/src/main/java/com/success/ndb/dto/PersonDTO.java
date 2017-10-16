@@ -2,7 +2,10 @@ package com.success.ndb.dto;
 
 import java.util.List;
 
+import com.success.ndb.entities.City;
+import com.success.ndb.entities.Country;
 import com.success.ndb.entities.Review;
+import com.success.ndb.entities.State;
 import com.success.ndb.entities.Timeline;
 
 public class PersonDTO {
@@ -11,14 +14,14 @@ public class PersonDTO {
 	private String about;
 	private String address1;
 	private String address2;
-	private String city;
-	private String countryCode;
 	private String district;
 	private String firstName;
 	private String lastName;
-	private String state;
 	private String village;
 	private int zipCode;
+	private City city;
+	private Country country;
+	private State state;
 	private List<Review> reviews;
 	private List<Timeline> timelines;
 
@@ -54,22 +57,6 @@ public class PersonDTO {
 		this.address2 = address2;
 	}
 
-	public String getCity() {
-		return this.city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCountryCode() {
-		return this.countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
-
 	public String getDistrict() {
 		return this.district;
 	}
@@ -94,14 +81,6 @@ public class PersonDTO {
 		this.lastName = lastName;
 	}
 
-	public String getState() {
-		return this.state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public String getVillage() {
 		return this.village;
 	}
@@ -116,6 +95,30 @@ public class PersonDTO {
 
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public City getCity() {
+		return this.city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public Country getCountry() {
+		return this.country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	public State getState() {
+		return this.state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	public List<Review> getReviews() {
@@ -133,4 +136,5 @@ public class PersonDTO {
 	public void setTimelines(List<Timeline> timelines) {
 		this.timelines = timelines;
 	}
+
 }
