@@ -1,53 +1,87 @@
 package com.success.ndb.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the state database table.
+ * 
+ */
 @Entity
-@Table(name="state")
-public class State{
+@NamedQuery(name="State.findAll", query="SELECT s FROM State s")
+public class State implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@Column
+
 	private String code;
-	@Column
+
 	private String name;
+
+	//bi-directional many-to-one association to Person
+	@OneToMany(mappedBy="state")
+	private List<Person> persons;
+
+	//bi-directional many-to-one association to Country
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="country_code")
 	private Country country;
-	
-	public int getId() {
-		return id;
+
+	//bi-directional many-to-one association to District
+	@OneToMany(mappedBy="state")
+	private List<District> districts;
+
+	public State() {
 	}
+
+	public int getId() {
+		return this.id;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getCode() {
-		return code;
+		return this.code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public String getName() {
-		return name;
+		return this.name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Country getCountry() {
-		return country;
+
+	public List<Person> getPersons() {
+		return this.persons;
 	}
+
+	public void setPersons(List<Person> persons) {
+		this.persons = persons;
+	}
+
+	public Country getCountry() {
+		return this.country;
+	}
+
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+
+	public List<District> getDistricts() {
+		return this.districts;
+	}
+
+	public void setDistricts(List<District> districts) {
+		this.districts = districts;
 	}
 }
