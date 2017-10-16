@@ -18,7 +18,7 @@ create table district (
 create table city (
 	id int primary key auto_increment,
     name varchar(50) not null,
-    state_id varchar(50) not null
+    state_id int
 );
 
 create table person (
@@ -66,6 +66,9 @@ alter table person add constraint fk_pr_state foreign key
 
 alter table person add constraint fk_pr_city foreign key 
 (city_id) references city(id);
+
+alter table city add constraint fk_city_state foreign key 
+(state_id) references state(id);
 
 alter table timeline add constraint fk_tl_person_id foreign key 
 (person_id) references person(person_id);

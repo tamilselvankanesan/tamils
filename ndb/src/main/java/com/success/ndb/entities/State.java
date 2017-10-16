@@ -1,8 +1,13 @@
 package com.success.ndb.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * The persistent class for the state database table.
@@ -26,6 +31,10 @@ public class State implements Serializable {
 	// bi-directional many-to-one association to Person
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private List<Person> persons;
+
+	// bi-directional many-to-one association to City
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+	private List<City> cities;
 
 	// bi-directional many-to-one association to Country
 	@ManyToOne
@@ -81,5 +90,11 @@ public class State implements Serializable {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
+	public List<City> getCities() {
+		return cities;
+	}
 
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
 }

@@ -15,4 +15,15 @@ public class CityAssembler {
 //		entity.setPersons(persons);
 		return entity;
 	}
+	public static CityDTO assemble(City entity){
+		if(entity == null){
+			return null;
+		}
+		CityDTO dto = new CityDTO();
+		dto.setId(entity.getId());
+		dto.setName(entity.getName());
+//		dto.set
+		
+		return null;
+	}
 }
