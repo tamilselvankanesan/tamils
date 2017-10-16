@@ -1,1 +1,11 @@
 <h1>Add a new City</h1>
+
+<label>Select a country: </label>
+<app-countries (selectedCountry)="onCountrySelect($event)" required></app-countries>
+<br><br>
+<div *ngIf="states?.length>0">
+	<label>Select a state: </label>
+	<app-state-dropdown [states]="states" ></app-state-dropdown>
+</div>
+
+

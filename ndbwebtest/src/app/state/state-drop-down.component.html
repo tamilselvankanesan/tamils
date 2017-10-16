@@ -1,1 +1,4 @@
-state drop down works
+<select *ngIf="states?.length>0" (change)="onStateChange($event.target.value)">
+	<option>
+	<option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
+</select>

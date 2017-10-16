@@ -17,7 +17,13 @@
 	<option [ngValue]="country" *ngFor="let country of countries">{{country.name}}</option>
 </select>
 
-<h1>{{selectedCountry.name}}</h1>
+<h1>{{selectedCountry?.name}}</h1>
 
 <h1></h1> 
+<label>Input 1: </label>
+<input [ngModel]="input1" (ngModelChange)="onInput1Change($event)">
+<br/><br/>
+<label>Input 2: </label>
+<input [ngModel]="input2">
+
 

@@ -18,11 +18,16 @@ export class HandsOnComponent implements OnInit {
   ];
 
   selectedCtry = this.countryArr[0];
+  input1: string;
+  input2: string;
 
   constructor(private countryService: CountryService) {}
 
   ngOnInit() {
     this.countryService.getCountries().then(countries => this.countries = countries);
   }
-
+  onInput1Change(event) {
+    console.log('input 1 changed');
+    this.input2 = event;
+  }
 }
