@@ -2,12 +2,6 @@ package com.success.ndb.dto;
 
 import java.util.List;
 
-import com.success.ndb.entities.City;
-import com.success.ndb.entities.Country;
-import com.success.ndb.entities.Review;
-import com.success.ndb.entities.State;
-import com.success.ndb.entities.Timeline;
-
 public class PersonDTO {
 
 	private int personId;
@@ -19,11 +13,11 @@ public class PersonDTO {
 	private String lastName;
 	private String village;
 	private int zipCode;
-	private City city;
-	private Country country;
-	private State state;
-	private List<Review> reviews;
-	private List<Timeline> timelines;
+	private String city;
+	private String country;
+	private String state;
+	private List<ReviewDTO> reviews;
+	private List<TimelineDTO> timelines;
 
 	public int getPersonId() {
 		return this.personId;
@@ -97,44 +91,44 @@ public class PersonDTO {
 		this.zipCode = zipCode;
 	}
 
-	public City getCity() {
-		return this.city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public Country getCountry() {
-		return this.country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
-	public State getState() {
-		return this.state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
-	}
-
-	public List<Review> getReviews() {
+	public List<ReviewDTO> getReviews() {
 		return this.reviews;
 	}
 
-	public void setReviews(List<Review> reviews) {
+	public void setReviews(List<ReviewDTO> reviews) {
 		this.reviews = reviews;
 	}
 
-	public List<Timeline> getTimelines() {
+	public List<TimelineDTO> getTimelines() {
 		return this.timelines;
 	}
 
-	public void setTimelines(List<Timeline> timelines) {
+	public void setTimelines(List<TimelineDTO> timelines) {
 		this.timelines = timelines;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

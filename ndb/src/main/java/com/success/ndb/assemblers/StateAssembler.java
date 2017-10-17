@@ -9,7 +9,7 @@ import com.success.ndb.entities.State;
 public class StateAssembler {
 
 	public static StateDTO assemble(State state, boolean assembleCountry) {
-		if(state==null){
+		if (state == null) {
 			throw new RuntimeException("State Not Found.");
 		}
 		StateDTO dto = new StateDTO();
@@ -37,7 +37,8 @@ public class StateAssembler {
 	public static StateDTO assemble(State state) {
 		return assemble(state, true);
 	}
-	public static State assemble(StateDTO stateDTO){
+
+	public static State assemble(StateDTO stateDTO) {
 		State state = new State();
 		state.setCode(stateDTO.getCode());
 		state.setName(stateDTO.getName());

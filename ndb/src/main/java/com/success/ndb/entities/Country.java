@@ -1,8 +1,14 @@
 package com.success.ndb.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -18,10 +24,6 @@ public class Country implements Serializable {
 	private String code;
 
 	private String name;
-
-	//bi-directional many-to-one association to Person
-	@OneToMany(mappedBy="country")
-	private List<Person> persons;
 
 	//bi-directional many-to-one association to State
 	@OneToMany(mappedBy="country", fetch=FetchType.LAZY)
@@ -44,14 +46,6 @@ public class Country implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Person> getPersons() {
-		return this.persons;
-	}
-
-	public void setPersons(List<Person> persons) {
-		this.persons = persons;
 	}
 
 	public List<State> getStates() {

@@ -1,6 +1,7 @@
 import {AdminComponent} from './admin/admin.component';
 import { AddCityComponent } from './city/add-city.component';
 import {CountryListComponent} from './country/country-list.component';
+import { AddDistrictComponent } from './district/add-district.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
 import { AddStateComponent } from './state/add-state.component';
 import {Routes, RouterModule} from '@angular/router';
@@ -20,6 +21,10 @@ const appRoutes: Routes = [
       {
         path: 'add-city',
         component: AddCityComponent
+      },
+      {
+        path: 'add-district',
+        component: AddDistrictComponent
       }
     ]
   },

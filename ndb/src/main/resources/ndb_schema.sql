@@ -1,3 +1,11 @@
+drop table timeline;
+drop table review;
+drop table person;
+drop table city;
+drop table district;
+drop table state;
+drop table country;
+
 create table country (
 	code varchar(10) primary key,
     name varchar(50) 
@@ -29,11 +37,11 @@ create table person (
 	address2 varchar(100),
     zip_code integer(6),
 	village varchar(50),
-	city_id integer,
+	city varchar(50),
 	district varchar(50),
-	state_id integer,
+	state varchar(50),
 	about varchar(5000),
-	country_code varchar(10) default 'IN'
+	country varchar(50) default 'India'
 );
 
 create table timeline (
@@ -57,7 +65,7 @@ alter table state add constraint fk_country_code foreign key
 
 alter table district add constraint fk_dist_state foreign key 
 (state_id) references state(id);
-
+/*
 alter table person add constraint fk_pr_country_code foreign key 
 (country_code) references country(code);
 
@@ -69,10 +77,12 @@ alter table person add constraint fk_pr_city foreign key
 
 alter table city add constraint fk_city_state foreign key 
 (state_id) references state(id);
-
+*/
 alter table timeline add constraint fk_tl_person_id foreign key 
 (person_id) references person(person_id);
 
+alter table review add constraint fk_rw_person_id foreign key 
+(person_id) references person(person_id);
 
 
 insert into state values (1, 'TN', 'Tamil Nadu', 'IN');

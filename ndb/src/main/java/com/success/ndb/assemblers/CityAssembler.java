@@ -12,7 +12,7 @@ public class CityAssembler {
 		City entity = new City();
 		entity.setId(dto.getId());
 		entity.setName(dto.getName());
-//		entity.setPersons(persons);
+		entity.setState(StateAssembler.assemble(dto.getState()));
 		return entity;
 	}
 	public static CityDTO assemble(City entity){
@@ -22,8 +22,6 @@ public class CityAssembler {
 		CityDTO dto = new CityDTO();
 		dto.setId(entity.getId());
 		dto.setName(entity.getName());
-//		dto.set
-		
 		return null;
 	}
 }

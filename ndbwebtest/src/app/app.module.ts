@@ -12,6 +12,7 @@ import {AdminComponent} from './admin/admin.component';
 import {AdminService} from './admin/admin.service';
 import {AddCityComponent} from './city/add-city.component';
 import {CountryDropDownComponent} from './country/country-drop-down.component';
+import { AddDistrictComponent } from './district/add-district.component';
 import {AddStateComponent} from './state/add-state.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
 import { SharedModule } from './shared.module';
@@ -25,7 +26,8 @@ import {CommonModule} from '@angular/common';
     AddStateComponent,
     CountryDropDownComponent,
     HandsOnComponent,
-    AddCityComponent
+    AddCityComponent,
+    AddDistrictComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule

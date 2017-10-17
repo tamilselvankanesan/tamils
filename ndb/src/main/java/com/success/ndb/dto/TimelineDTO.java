@@ -2,14 +2,12 @@ package com.success.ndb.dto;
 
 import java.util.Date;
 
-import com.success.ndb.entities.Person;
-
 public class TimelineDTO {
 
 	private int id;
 	private Date createdDatetime;
 	private String description;
-	private Person person;
+	private PersonDTO person;
 
 	public int getId() {
 		return this.id;
@@ -35,11 +33,11 @@ public class TimelineDTO {
 		this.description = description;
 	}
 
-	public Person getPerson() {
+	public PersonDTO getPerson() {
 		return this.person;
 	}
 
-	public void setPerson(Person person) {
+	public void setPerson(PersonDTO person) {
 		this.person = person;
 	}
 }

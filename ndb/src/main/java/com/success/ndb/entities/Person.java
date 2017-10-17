@@ -35,17 +35,9 @@ public class Person implements Serializable {
 	@Column(name = "zip_code")
 	private int zipCode;
 
-	// bi-directional many-to-one association to City
-	@ManyToOne
-	private City city;
-
-	// bi-directional many-to-one association to Country
-	@ManyToOne
-	private Country country;
-
-	// bi-directional many-to-one association to State
-	@ManyToOne
-	private State state;
+	private String city;
+	private String state;
+	private String country;
 
 	// bi-directional many-to-one association to Review
 	@OneToMany(mappedBy = "person")
@@ -130,30 +122,6 @@ public class Person implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	public City getCity() {
-		return this.city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public Country getCountry() {
-		return this.country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
-	public State getState() {
-		return this.state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
-	}
-
 	public List<Review> getReviews() {
 		return this.reviews;
 	}
@@ -168,6 +136,30 @@ public class Person implements Serializable {
 
 	public void setTimelines(List<Timeline> timelines) {
 		this.timelines = timelines;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 }

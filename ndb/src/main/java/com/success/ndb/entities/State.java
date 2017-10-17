@@ -28,10 +28,6 @@ public class State implements Serializable {
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private List<District> districts;
 
-	// bi-directional many-to-one association to Person
-	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
-	private List<Person> persons;
-
 	// bi-directional many-to-one association to City
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private List<City> cities;
@@ -73,14 +69,6 @@ public class State implements Serializable {
 
 	public void setDistricts(List<District> districts) {
 		this.districts = districts;
-	}
-
-	public List<Person> getPersons() {
-		return this.persons;
-	}
-
-	public void setPersons(List<Person> persons) {
-		this.persons = persons;
 	}
 
 	public Country getCountry() {

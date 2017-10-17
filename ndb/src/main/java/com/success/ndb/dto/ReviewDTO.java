@@ -2,8 +2,6 @@ package com.success.ndb.dto;
 
 import java.util.Date;
 
-import com.success.ndb.entities.Person;
-
 public abstract class ReviewDTO {
 
 	private int id;
@@ -11,7 +9,7 @@ public abstract class ReviewDTO {
 	private String description;
 	private int rating;
 	private String reviewType;
-	private Person person;
+	private PersonDTO person;
 
 	public int getId() {
 		return this.id;
@@ -53,11 +51,11 @@ public abstract class ReviewDTO {
 		this.reviewType = reviewType;
 	}
 
-	public Person getPerson() {
+	public PersonDTO getPerson() {
 		return this.person;
 	}
 
-	public void setPerson(Person person) {
+	public void setPerson(PersonDTO person) {
 		this.person = person;
 	}
 
