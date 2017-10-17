@@ -13,6 +13,7 @@ import {AdminService} from './admin/admin.service';
 import {AddCityComponent} from './city/add-city.component';
 import {CountryDropDownComponent} from './country/country-drop-down.component';
 import { AddDistrictComponent } from './district/add-district.component';
+import { DistrictService } from './district/district.service';
 import {AddStateComponent} from './state/add-state.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
 import { SharedModule } from './shared.module';
@@ -32,7 +33,7 @@ import {CommonModule} from '@angular/common';
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule
   ],
-  providers: [AdminService, StateService],
+  providers: [AdminService, StateService, DistrictService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
