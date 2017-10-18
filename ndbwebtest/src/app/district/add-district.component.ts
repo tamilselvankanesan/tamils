@@ -1,5 +1,6 @@
 import {Country} from '../country/country';
 import {State} from '../state/state';
+import {StateService} from '../state/state.service';
 import {District} from './district';
 import {DistrictService} from './district.service';
 import {Component} from '@angular/core';
@@ -12,17 +13,24 @@ export class AddDistrictComponent {
   district: District;
   selectedCountry: Country;
   selectedState: State;
+  states: State[];
+  districtName: string;
 
-  constructor(private districtService: DistrictService) {
+  constructor(private districtService: DistrictService,
+    private stateService: StateService) {
 
   }
   addDistrict() {
-
+    const district = new District();
+    district.name = this.districtName;
+    district.state = this.selectedState;
+    this.districtService.addDistrict(district);
   }
   onCountrySelect(event) {
-
+    this.selectedCountry = event;
+    this.stateService.getStates(event.code).then(states => this.states = states);
   }
   onStateSelect(event) {
-
+    this.selectedState = event;
   }
 }

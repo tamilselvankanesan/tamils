@@ -15,8 +15,8 @@ export class DistrictService {
     params.set('stateId', '' + stateId);
     return this.http.get(this.url + 'search', params).toPromise().then(response => response.json() as District[]).catch(this.handleError);
   }
-  addDistrict(district: District) {
-
+  addDistrict(district: District): Promise<District> {
+    return this.http.post(this.url + 'add', JSON.stringify(district)).toPromise().then(response => response.json() as District).catch(this.handleError);
   }
   handleError(error: any): Promise<any> {
     console.error('error occured', error);

@@ -12,13 +12,13 @@ const statesArr: State[] = [{
 })
 
 export class StateDropDownComponent {
-  @Output() selectedCountry = new EventEmitter();
+  @Output() selectedState = new EventEmitter();
   @Input() states: State[];
   constructor() {
     // this.states = statesArr;
   }
   onStateChange(event) {
     console.log('selected state id: ' + event);
-    this.selectedCountry.emit(event);
+    this.selectedState.emit(event);
   }
 }
