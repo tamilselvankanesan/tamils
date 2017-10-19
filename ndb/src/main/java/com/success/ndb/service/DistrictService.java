@@ -8,5 +8,6 @@ import com.success.ndb.entities.District;
 public interface DistrictService {
 
 	DistrictDTO save(District entity);
+
 	List<DistrictDTO> getDistricts(int stateId);
 }

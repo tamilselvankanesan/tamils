@@ -1,10 +1,11 @@
 package com.success.ndb.dto;
 
-public class DistrictDTO {
+public class DistrictDTO extends BaseDTO{
 
 	private int id;
 	private String name;
 	private StateDTO state;
+	
 	public int getId() {
 		return id;
 	}

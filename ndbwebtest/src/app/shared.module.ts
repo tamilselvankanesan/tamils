@@ -1,3 +1,4 @@
+import { DistrictListComponent } from './district/district-list.component';
 import { StateDropDownComponent } from './state/state-drop-down.component';
 import {StateListComponent} from './state/state-list.component';
 import {StateService} from './state/state.service';
@@ -7,8 +8,8 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 @NgModule(
   {
     imports: [ReactiveFormsModule, CommonModule, FormsModule],
-    declarations: [StateListComponent, StateDropDownComponent],
-    exports: [StateListComponent, StateDropDownComponent],
+    declarations: [StateListComponent, StateDropDownComponent, DistrictListComponent],
+    exports: [StateListComponent, StateDropDownComponent, DistrictListComponent],
     providers: []
   }
 )

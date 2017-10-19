@@ -5,7 +5,11 @@
 <br><br>
 <div *ngIf="states?.length>0">
 	<label>Select a state: </label>
-	<app-state-dropdown [states]="states" ></app-state-dropdown>
+	<app-state-dropdown [states]="states" (selectedState)="onStateSelect($event)"></app-state-dropdown>
+</div>
+<div *ngIf="selectedState?.code">
+	<label>Select a district: </label>
+	<app-district-list [stateId]="selectedState.id"></app-district-list>
 </div>
 
 

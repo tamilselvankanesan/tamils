@@ -22,12 +22,7 @@ export class DistrictService {
     return this.http.post(this.url + 'add', JSON.stringify(district), {headers: this.headers}).toPromise().then(response => response.json() as District).catch(this.handleError);
   }
   handleError(error: any): Promise<any> {
-    console.log(error._body);
-    const b = JSON.parse(error._body);
-    console.log(b);
-    if (b instanceof ApplicationError) {
-      console.log('ssss' + error);
-    }
+    console.log('error ' + error);
     return Promise.reject(error);
   }
 }

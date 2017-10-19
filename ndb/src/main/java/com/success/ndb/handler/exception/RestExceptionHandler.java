@@ -25,6 +25,6 @@ public class RestExceptionHandler {
 	@ExceptionHandler(value=EntityExistsException.class)
 	public ResponseEntity<Object> buildResponseEntityForEntityExists(RuntimeException ex, WebRequest request){
 		ApplicationError error = new ApplicationError(ex.getMessage());
-		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, HttpStatus.OK);
 	}
 }

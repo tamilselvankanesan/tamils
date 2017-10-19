@@ -10,13 +10,19 @@ import {Component} from '@angular/core';
 export class AddStateComponent {
   selectedCountry: Country;
   newState = new State();
+  success = true;
+  message: string;
+
   constructor(private stateService: StateService) {}
   countryChanged(newCountry) {
     this.selectedCountry = newCountry;
   }
   addNewState() {
     this.newState.country = this.selectedCountry;
-    this.stateService.createState(this.newState);
+    this.stateService.createState(this.newState).then(state => {
+      this.success = !(state.error);
+      this.message = state.message;
+    });
   }
 }
 

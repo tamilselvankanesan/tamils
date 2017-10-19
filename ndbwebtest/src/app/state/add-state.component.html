@@ -19,4 +19,5 @@ select a country:
 	</div>
 	<br><br>
 	<input type="submit" value="Add State" [disabled]="!addStateForm.valid">
+	<div *ngIf="message">{{message}}</div>
 </form>

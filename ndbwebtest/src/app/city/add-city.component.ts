@@ -18,4 +18,8 @@ export class AddCityComponent {
       this.states.length = 0;
     }
   }
+  onStateSelect(selState) {
+    this.selectedState = selState;
+    console.log('city - state ' + selState);
+  }
 }

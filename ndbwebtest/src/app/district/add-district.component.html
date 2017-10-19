@@ -2,19 +2,20 @@
 
 <label>Select a Country: </label>
 <app-countries (selectedCountry)="onCountrySelect($event)"></app-countries>
-<br/><br/>
+<br />
+<br />
 <div *ngIf="selectedCountry">
 	<label>Select a State: </label>
-	<app-state-dropdown [states]="states" (selectedState)="onStateSelect($event)"></app-state-dropdown>
-	<form *ngIf="selectedState" (ngSubmit)="addDistrict()" #addDistrictForm="ngForm">
-		<br/>
-		<label> Enter District Name: </label>
-		<input type="text" [(ngModel)]="districtName" required #dName="ngModel" name="name">
-		<div [hidden]="dName.valid"> 
-			District Name is required.
-		</div>
-		<br/>
-		<input type="submit" value="Submit" [disabled]="!addDistrictForm.valid">
+	<app-state-dropdown [states]="states"
+		(selectedState)="onStateSelect($event)"></app-state-dropdown>
+	<form *ngIf="selectedState" (ngSubmit)="addDistrict()"
+		#addDistrictForm="ngForm">
+		<br /> <label> Enter District Name: </label> <input type="text"
+			[(ngModel)]="districtName" required #dName="ngModel" name="name">
+		<div [hidden]="dName.valid">District Name is required.</div>
+		<br /> <input type="submit" value="Submit"
+			[disabled]="!addDistrictForm.valid">
+		<div *ngIf="message">{{message}}</div>
 	</form>
 </div>
 

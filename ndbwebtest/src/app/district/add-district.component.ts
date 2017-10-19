@@ -16,6 +16,8 @@ export class AddDistrictComponent {
   selectedState: State;
   states: State[];
   districtName: string;
+  success = true;
+  message: string;
 
   constructor(private districtService: DistrictService,
     private stateService: StateService) {
@@ -25,8 +27,9 @@ export class AddDistrictComponent {
     const district = new District();
     district.name = this.districtName;
     district.state = this.selectedState;
-    this.districtService.addDistrict(district).then(result => {}).catch(e => {
-      console.log('Application Error Occurred.');
+    this.districtService.addDistrict(district).then(result => {
+      this.success = !(result.error);
+      this.message = result.message;
     });
   }
   onCountrySelect(event) {

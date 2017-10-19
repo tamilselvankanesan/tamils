@@ -2,8 +2,6 @@ package com.success.ndb.service;
 
 import java.util.List;
 
-import javax.persistence.EntityExistsException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +17,18 @@ public class DistrictServiceImpl implements DistrictService {
 	
 	@Override
 	public DistrictDTO save(District entity) {
+		DistrictDTO dto;
 		if(exists(entity)){
-			throw new EntityExistsException("District already exists.");
+			dto = new DistrictDTO();
+			dto.setMessage("District Already Exists. ");
+			dto.setError(true);
+		}else{
+			District newEntity = dao.save(entity);
+			dto = DistrictAssembler.assemble(newEntity);
+			dto.setSuccess(true);
+			dto.setMessage("Save Successful.");
 		}
-		District newEntity = dao.save(entity);
-		return DistrictAssembler.assemble(newEntity);
+		return dto;
 	}
 
 	@Override
