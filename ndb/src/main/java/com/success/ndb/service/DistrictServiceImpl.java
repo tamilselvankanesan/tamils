@@ -33,7 +33,7 @@ public class DistrictServiceImpl implements DistrictService {
 
 	@Override
 	public List<DistrictDTO> getDistricts(int stateId) {
-		return null;
+		return DistrictAssembler.assemble(dao.findByStateId(stateId));
 	}
 	private boolean exists(District entity){
 		List<District> result = dao.findByNameAndStateId(entity.getName(), entity.getState().getId());

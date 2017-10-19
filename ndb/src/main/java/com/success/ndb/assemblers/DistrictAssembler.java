@@ -1,5 +1,8 @@
 package com.success.ndb.assemblers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.success.ndb.dto.DistrictDTO;
 import com.success.ndb.entities.District;
 
@@ -23,5 +26,12 @@ public class DistrictAssembler {
 		dto.setId(entity.getId());
 		dto.setName(entity.getName());
 		return dto;
+	}
+	public static List<DistrictDTO> assemble(List<District> entities){
+		List<DistrictDTO> result = new ArrayList<>();
+		for(District entity : entities){
+			result.add(assemble(entity));
+		}
+		return result;
 	}
 }

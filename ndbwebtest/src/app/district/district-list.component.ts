@@ -1,4 +1,5 @@
 import {District} from './district';
+import {DistrictService} from './district.service';
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange} from '@angular/core';
 
 @Component({
@@ -11,12 +12,17 @@ export class DistrictListComponent implements OnChanges {
   @Output() event = new EventEmitter();
   districts: District[];
 
+  constructor(private districtService: DistrictService) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     for (let propName in changes) {
       if (propName === 'stateId') {
         let changedProp = changes[propName];
         let to = JSON.stringify(changedProp.currentValue);
-        console.log(to);
+        if (to) {
+          this.districtService.getDistricts(+to).then(districts => this.districts = districts);
+          console.log(to);
+        }
       }
     }
   }
