@@ -8,12 +8,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name = "District.findAll", query = "SELECT d FROM District d")
 public class District implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	private String name;

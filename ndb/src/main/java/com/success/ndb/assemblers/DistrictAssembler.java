@@ -5,7 +5,7 @@ import com.success.ndb.entities.District;
 
 public class DistrictAssembler {
 
-	public District assemble(DistrictDTO dto){
+	public static District assemble(DistrictDTO dto){
 		if(dto == null){
 			return null;
 		}
@@ -15,7 +15,7 @@ public class DistrictAssembler {
 		entity.setState(StateAssembler.assemble(dto.getState()));
 		return entity;
 	}
-	public DistrictDTO assemble(District entity){
+	public static DistrictDTO assemble(District entity){
 		if(entity == null){
 			return null;
 		}

@@ -40,6 +40,7 @@ public class StateAssembler {
 
 	public static State assemble(StateDTO stateDTO) {
 		State state = new State();
+		state.setId(stateDTO.getId());
 		state.setCode(stateDTO.getCode());
 		state.setName(stateDTO.getName());
 		state.setCountry(CountryAssembler.assemble(stateDTO.getCountry()));

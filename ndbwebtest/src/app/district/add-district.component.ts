@@ -1,3 +1,4 @@
+import {ApplicationError} from '../applicationerror';
 import {Country} from '../country/country';
 import {State} from '../state/state';
 import {StateService} from '../state/state.service';
@@ -24,7 +25,9 @@ export class AddDistrictComponent {
     const district = new District();
     district.name = this.districtName;
     district.state = this.selectedState;
-    this.districtService.addDistrict(district);
+    this.districtService.addDistrict(district).then(result => {}).catch(e => {
+      console.log('Application Error Occurred.');
+    });
   }
   onCountrySelect(event) {
     this.selectedCountry = event;

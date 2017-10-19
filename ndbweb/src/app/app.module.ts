@@ -26,10 +26,10 @@ import { AddStateComponent } from './state/add-state/add-state.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [CountryService, StateService, AdminService],
   bootstrap: [AppComponent]
