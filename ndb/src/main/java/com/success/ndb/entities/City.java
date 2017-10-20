@@ -20,7 +20,7 @@ public class City implements Serializable {
 	private String name;
 
 	@ManyToOne
-	private State state;
+	private District district;
 
 	public City() {
 	}
@@ -41,11 +41,11 @@ public class City implements Serializable {
 		this.name = name;
 	}
 
-	public State getState() {
-		return this.state;
+	public District getDistrict() {
+		return district;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public void setDistrict(District district) {
+		this.district = district;
 	}
 }

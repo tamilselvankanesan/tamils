@@ -39,9 +39,12 @@ public class StateAssembler {
 	}
 
 	public static State assemble(StateDTO stateDTO) {
+		if(stateDTO == null){
+			return null; 
+		}
 		State state = new State();
 		state.setId(stateDTO.getId());
-		state.setCode(stateDTO.getCode());
+		state.setCode(stateDTO.getCode().toUpperCase());
 		state.setName(stateDTO.getName());
 		state.setCountry(CountryAssembler.assemble(stateDTO.getCountry()));
 		return state;

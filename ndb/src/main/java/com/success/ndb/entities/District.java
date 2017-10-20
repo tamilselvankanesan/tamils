@@ -1,6 +1,8 @@
 package com.success.ndb.entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -18,6 +20,10 @@ public class District implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private State state;
+	
+	// bi-directional many-to-one association to city
+	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
+	private List<City> citites;
 
 	public District() {
 	}
@@ -44,5 +50,13 @@ public class District implements Serializable {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public List<City> getCitites() {
+		return citites;
+	}
+
+	public void setCitites(List<City> citites) {
+		this.citites = citites;
 	}
 }

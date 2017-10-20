@@ -15,24 +15,25 @@ import com.success.ndb.dto.StateDTO;
 import com.success.ndb.service.StateService;
 
 @RestController
-@RequestMapping(path="/rest/state")
+@RequestMapping(path = "/rest/state")
 @CrossOrigin
 public class StateController {
 
 	@Autowired
 	private StateService stateService;
-	
-	@RequestMapping(method=RequestMethod.GET, path="{stateCode}")
-	public StateDTO getState(@PathVariable String stateCode){
-		return StateAssembler.assemble(stateService.findByCode(stateCode));
+
+	@RequestMapping(method = RequestMethod.GET, path = "{stateCode}")
+	public StateDTO getState(@PathVariable String stateCode) {
+		return stateService.findByCode(stateCode);
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, path="/country/{countryCode}")
-	public List<StateDTO> getStates(@PathVariable String countryCode){
-		return StateAssembler.assemble(stateService.getStates(countryCode));
+
+	@RequestMapping(method = RequestMethod.GET, path = "/country/{countryCode}")
+	public List<StateDTO> getStates(@PathVariable String countryCode) {
+		return stateService.getStates(countryCode);
 	}
-	@RequestMapping(method=RequestMethod.POST, path="/add")
-	public StateDTO addState(@RequestBody StateDTO stateDTO){
-		return StateAssembler.assemble(stateService.save(StateAssembler.assemble(stateDTO)));
+
+	@RequestMapping(method = RequestMethod.POST, path = "/add")
+	public StateDTO addState(@RequestBody StateDTO stateDTO) {
+		return stateService.save(StateAssembler.assemble(stateDTO));
 	}
 }

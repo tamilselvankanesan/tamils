@@ -13,7 +13,7 @@ export class CountryDropDownComponent {
   @Output() selectedCountry = new EventEmitter();
 
   constructor(private countryService: CountryService) {
-    this.countryService.getCountries().then(countries => this.countries = countries);
+    this.countryService.getCountries().subscribe(countries => this.countries = countries);
   }
   onCountryChange(event) {
     console.log('event' + event);

@@ -1,9 +1,9 @@
 package com.success.ndb.dto;
 
-public class CityDTO {
+public class CityDTO extends BaseDTO{
 	private int id;
 	private String name;
-	private StateDTO state;
+	private DistrictDTO district;
 	
 	public int getId() {
 		return id;
@@ -17,10 +17,10 @@ public class CityDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public StateDTO getState() {
-		return state;
+	public DistrictDTO getDistrict() {
+		return district;
 	}
-	public void setStateId(StateDTO state) {
-		this.state = state;
+	public void setDistrict(DistrictDTO district) {
+		this.district = district;
 	}
 }

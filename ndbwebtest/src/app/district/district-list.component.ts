@@ -15,12 +15,13 @@ export class DistrictListComponent implements OnChanges {
   constructor(private districtService: DistrictService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('d changed');
     for (let propName in changes) {
       if (propName === 'stateId') {
         let changedProp = changes[propName];
         let to = JSON.stringify(changedProp.currentValue);
         if (to) {
-          this.districtService.getDistricts(+to).then(districts => this.districts = districts);
+          this.districtService.getDistricts(+to).subscribe(districts => this.districts = districts);
           console.log(to);
         }
       }
@@ -28,6 +29,6 @@ export class DistrictListComponent implements OnChanges {
   }
 
   onDistrictSelect(event) {
-    this.event.emit();
+    this.event.emit(event);
   }
 }

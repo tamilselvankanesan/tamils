@@ -2,7 +2,7 @@ package com.success.ndb.dto;
 
 import java.util.List;
 
-public class CountryDTO {
+public class CountryDTO extends BaseDTO{
 
 	private String code;
 	private String name;

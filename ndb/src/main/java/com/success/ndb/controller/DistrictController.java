@@ -27,7 +27,7 @@ public class DistrictController {
 		return service.save(DistrictAssembler.assemble(dto));
 	}
 	@RequestMapping(path="/search")
-	public List<DistrictDTO> getDistricts(@RequestParam("stateId") int stateId){
-		return service.getDistricts(stateId);
+	public List<DistrictDTO> getDistricts(@RequestParam("stateId") String stateId){
+		return service.getDistricts(Integer.parseInt(stateId));
 	}
 }

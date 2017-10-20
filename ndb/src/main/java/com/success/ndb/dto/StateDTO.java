@@ -1,6 +1,6 @@
 package com.success.ndb.dto;
 
-public class StateDTO {
+public class StateDTO extends BaseDTO{
 
 	private int id;
 	private String code;

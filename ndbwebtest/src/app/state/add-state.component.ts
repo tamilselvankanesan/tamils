@@ -19,7 +19,8 @@ export class AddStateComponent {
   }
   addNewState() {
     this.newState.country = this.selectedCountry;
-    this.stateService.createState(this.newState).then(state => {
+    this.stateService.createState(this.newState).subscribe(state => {
+      console.log('message -> ' + state.message);
       this.success = !(state.error);
       this.message = state.message;
     });

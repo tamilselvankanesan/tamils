@@ -21,14 +21,14 @@ export class CountryListComponent implements OnInit {
   constructor(
     private countryService: CountryService) {
     this.searchTerm.valueChanges.distinctUntilChanged().debounceTime(400).subscribe(searchTerm =>
-      this.countryService.searchCountries(searchTerm).then(countries1 => this.countries1 = countries1));
+      this.countryService.searchCountries(searchTerm).subscribe(countries1 => this.countries1 = countries1));
   }
 
   ngOnInit(): void {
     this.getCountries();
   }
   getCountries(): void {
-    this.countryService.getCountries().then(countries => this.countries = countries);
+    this.countryService.getCountries().subscribe(countries => this.countries = countries);
     console.log('after');
   }
 }

@@ -1,5 +1,8 @@
+import {District} from '../district/district';
 import {State} from '../state/state';
 import {StateService} from '../state/state.service';
+import {City} from './city';
+import {CityService} from './city.service';
 import {Component} from '@angular/core';
 
 @Component({
@@ -9,11 +12,15 @@ import {Component} from '@angular/core';
 export class AddCityComponent {
   states: State[];
   selectedState: State;
-  constructor(private stateService: StateService) {
+  selectedDistrict: District;
+  name: string;
+  message: string;
+  success = true;
+  constructor(private stateService: StateService, private cityService: CityService) {
   }
   onCountrySelect(selectedCountry) {
     if (selectedCountry) {
-      this.stateService.getStates(selectedCountry.code).then(states => this.states = states);
+      this.stateService.getStates(selectedCountry.code).subscribe(states => this.states = states);
     } else {
       this.states.length = 0;
     }
@@ -21,5 +28,19 @@ export class AddCityComponent {
   onStateSelect(selState) {
     this.selectedState = selState;
     console.log('city - state ' + selState);
+  }
+  onDistrictSelect(event) {
+    console.log('district selected - ' + event);
+    this.selectedDistrict = event;
+  }
+  addCity() {
+    let newCity = new City();
+    this.message = '';
+    newCity.name = this.name.trim();
+    newCity.district = this.selectedDistrict;
+    this.cityService.addCity(newCity).subscribe(city => {
+      this.message = city.message;
+      this.success = !city.error;
+    });
   }
 }

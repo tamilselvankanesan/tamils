@@ -2,14 +2,23 @@
 
 <label>Select a country: </label>
 <app-countries (selectedCountry)="onCountrySelect($event)" required></app-countries>
-<br><br>
 <div *ngIf="states?.length>0">
+	<br><br>
 	<label>Select a state: </label>
 	<app-state-dropdown [states]="states" (selectedState)="onStateSelect($event)"></app-state-dropdown>
 </div>
 <div *ngIf="selectedState?.code">
+	<br><br>
 	<label>Select a district: </label>
-	<app-district-list [stateId]="selectedState.id"></app-district-list>
+	<app-district-list [stateId]="selectedState.id" (event)="onDistrictSelect($event)"></app-district-list>
 </div>
+<form #addCityForm="ngForm" (ngSubmit)="addCity()" *ngIf="selectedDistrict">
+	<br><br> 
+	<label>Enter City Name: </label>
+	<input type="text" [(ngModel)]="name" name="cityName" required #cityName="ngModel">
+	<br><br>
+	<input type="submit" value="Submit" [disabled]="!addCityForm.valid">
+	<div *ngIf="message">{{message}}</div>
+</form>
 
 

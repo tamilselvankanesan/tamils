@@ -1,29 +1,33 @@
+import {BaseService} from '../base.service';
 import {Country} from './country';
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs';
+import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class CountryService {
+export class CountryService extends BaseService {
   private header = new Headers({'Content-type': 'application/json'});
   private countryURL = 'http://localhost:8080/ndb/rest/countries';
 
-  constructor(private http: Http) {}
-
-  getCountries(): Promise<Country[]> {
-    return this.http.get(this.countryURL).toPromise().then(respone => respone.json() as Country[]).catch(this.handleError);
-  }
-  searchCountries(searchTerm: String): Promise<Country[]> {
-    return this.http.get(this.countryURL + '/' + searchTerm).toPromise().then(response => response.json() as Country[]).catch(this.handleError);
+  constructor(private http: Http) {
+    super();
   }
 
-  getCountry(code: string): Promise<Country> {
+  getCountries(): Observable<Country[]> {
+    return this.http.get(this.countryURL).map(
+      data => data.json() as Country[],
+      error => super.handleError);
+  }
+
+  searchCountries(searchTerm: String): Observable<Country[]> {
+    let countries: Country[];
+    return this.http.get(this.countryURL + '/' + searchTerm).map(data => data.json() as Country[]);
+  }
+
+  getCountry(code: string): Observable<Country> {
     console.log('code->' + code);
-    return this.http.get(this.countryURL + '/find/' + code).toPromise().then(response => response.json() as Country).catch(this.handleError);
-  }
-
-  handleError(error: any): Promise<any> {
-    console.error('error occured', error);
-    return Promise.reject(error.message || error);
+    return this.http.get(this.countryURL + '/find/' + code).map(data => data.json() as Country, error => super.handleError);
   }
 }

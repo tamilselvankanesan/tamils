@@ -1,7 +1,8 @@
-import { State } from '../state/state';
-export class City {
-  constructor(
-    public id: number,
-    public state: State
-  ) {}
+import {Base} from '../base';
+import {District} from '../district/district';
+import {State} from '../state/state';
+export class City extends Base {
+  id: number;
+  name: string;
+  district: District;
 }

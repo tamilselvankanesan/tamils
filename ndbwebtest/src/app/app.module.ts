@@ -11,6 +11,7 @@ import {HttpModule} from '@angular/http';
 import {AdminComponent} from './admin/admin.component';
 import {AdminService} from './admin/admin.service';
 import {AddCityComponent} from './city/add-city.component';
+import { CityService } from './city/city.service';
 import {CountryDropDownComponent} from './country/country-drop-down.component';
 import { AddDistrictComponent } from './district/add-district.component';
 import { DistrictService } from './district/district.service';
@@ -33,7 +34,7 @@ import {CommonModule} from '@angular/common';
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule
   ],
-  providers: [AdminService, StateService, DistrictService],
+  providers: [AdminService, StateService, DistrictService, CityService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

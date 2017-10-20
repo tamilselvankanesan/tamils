@@ -27,14 +27,14 @@ export class AddDistrictComponent {
     const district = new District();
     district.name = this.districtName;
     district.state = this.selectedState;
-    this.districtService.addDistrict(district).then(result => {
+    this.districtService.addDistrict(district).subscribe(result => {
       this.success = !(result.error);
       this.message = result.message;
     });
   }
   onCountrySelect(event) {
     this.selectedCountry = event;
-    this.stateService.getStates(event.code).then(states => this.states = states);
+    this.stateService.getStates(event.code).subscribe(states => this.states = states);
   }
   onStateSelect(event) {
     this.selectedState = event;

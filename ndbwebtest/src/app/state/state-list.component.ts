@@ -3,6 +3,7 @@ import {State} from './state';
 import {StateService} from './state.service';
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {FormsModule, FormControl, ReactiveFormsModule} from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-state-list',
@@ -18,13 +19,13 @@ export class StateListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.log('selected country code->' + this.selCountry.code);
-    this.getStates(this.selCountry.code).then(states => this.states = states);
+    this.getStates(this.selCountry.code).subscribe(states => this.states = states);
   }
 
   ngOnChanges(changes: any) {
   }
 
-  getStates(countryCode: string): Promise<State[]> {
+  getStates(countryCode: string): Observable<State[]> {
     return this.stateService.getStates(countryCode);
   }
 }
