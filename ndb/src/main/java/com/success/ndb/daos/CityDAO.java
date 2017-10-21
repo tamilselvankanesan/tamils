@@ -16,4 +16,7 @@ public interface CityDAO extends CrudRepository<City, Integer>{
 
 	@Query("select c from City c where LOWER(c.name)=:cityName and c.district.id=:districtId")
 	List<City> searchByCityNameAndDistrictId(@Param("cityName") String cityName, @Param("districtId") int districtId);
+	
+	@Query("select c from City c where c.district.id=:districtId")
+	List<City> searchByDistrictId(@Param("districtId") int districtId);
 }

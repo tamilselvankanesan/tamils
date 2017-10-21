@@ -1,0 +1,49 @@
+<h1>Add a new Person record</h1>
+<form #addPersonForm="ngForm" (ngSubmit)="addPerson()">
+
+	<table>
+		<tr>
+			<td style="text-align: right"><label>First Name: </label></td>
+			<td colspan="2"><input type="text" name="fName" #fName="ngModel"
+				[(ngModel)]="person.firstName" required></td>
+		</tr>
+		<tr>
+			<td style="text-align: right"><label>Last Name: </label></td>
+			<td colspan="2"><input type="text" name="lName" #lName="ngModel"
+				[(ngModel)]="person.lastName"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right"><label>Address: </label></td>
+			<td><input type="text" name="address1" #address1="ngModel"
+				[(ngModel)]="person.address1"></td>
+			<td><input type="text" name="address1" #address2="ngModel"
+				[(ngModel)]="person.address2"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right"><label>Village/Town: </label></td>
+			<td colspan="2"><input type="text" name="village"
+				#village="ngModel" [(ngModel)]="person.village"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right"><label>State: </label></td>
+			<td colspan="2"><app-state-dropdown
+					(selectedState)="onStateChange($event)"></app-state-dropdown>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right"><label>District: </label></td>
+			<td colspan="2"><app-district-list [stateId]="selectedStateId"
+					(event)="onDistrictChange($event)"></app-district-list></td>
+		</tr>
+		<tr>
+			<td style="text-align: right"><label>City: </label></td>
+			<td colspan="2"><app-city-dropdown
+					[districtId]="selectedDistrictId"></app-city-dropdown></td>
+		</tr>
+		<tr>
+			<td><input type="submit" [disabled]="!addPersonForm.valid || !selectedStateId || !selectedDistrictId"
+				value="Submit" /></td>
+			<td></td>
+		</tr>
+	</table>
+</form>

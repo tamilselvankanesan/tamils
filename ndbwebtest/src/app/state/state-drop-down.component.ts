@@ -1,5 +1,6 @@
 import {State} from './state';
-import {Component, Input, EventEmitter, Output, NgModule} from '@angular/core';
+import {StateService} from './state.service';
+import {Component, Input, EventEmitter, Output, NgModule, OnInit} from '@angular/core';
 import {FormsModule, NgModel} from '@angular/forms';
 
 @Component({
@@ -7,11 +8,14 @@ import {FormsModule, NgModel} from '@angular/forms';
   templateUrl: './state-drop-down.component.html'
 })
 
-export class StateDropDownComponent {
+export class StateDropDownComponent implements OnInit {
   @Output() selectedState = new EventEmitter();
   @Input() states: State[];
-  constructor() {
-    // this.states = statesArr;
+  @Input() name: string;
+  constructor(private stateService: StateService) {
+  }
+  ngOnInit(): void {
+    this.stateService.getStates('IN').subscribe(states => this.states = states);
   }
   onStateChange(event) {
     this.selectedState.emit(event);

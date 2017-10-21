@@ -1,0 +1,4 @@
+<select (change)="onCityChange(cities[$event.target.value])">
+	<option>
+	<option *ngFor="let city of cities let i=index" [value]="i">{{city.name}}</option>
+</select>

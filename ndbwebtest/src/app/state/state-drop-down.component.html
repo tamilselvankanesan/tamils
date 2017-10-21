@@ -1,4 +1,4 @@
-<select *ngIf="states?.length>0" (change)="onStateChange(states[$event.target.value])">
+<select *ngIf="states?.length>0" (change)="onStateChange(states[$event.target.value])" [name]="name">
 	<option>
 	<option *ngFor="let state of states let i=index" [value]="i">{{state.name}}</option>
 </select>

@@ -1,5 +1,8 @@
 package com.success.ndb.assemblers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.success.ndb.dto.CityDTO;
 import com.success.ndb.entities.City;
 
@@ -23,5 +26,12 @@ public class CityAssembler {
 		dto.setId(entity.getId());
 		dto.setName(entity.getName());
 		return dto;
+	}
+	public static List<CityDTO> assemble(List<City> entities){
+		List<CityDTO> list = new ArrayList<>();
+		for(City entity: entities){
+			list.add(assemble(entity));
+		}
+		return list;
 	}
 }

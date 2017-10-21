@@ -45,7 +45,7 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public List<CityDTO> searchByDistrictId(int districtId) {
-		return null;
+		return CityAssembler.assemble(dao.searchByDistrictId(districtId));
 	}
 
 }
