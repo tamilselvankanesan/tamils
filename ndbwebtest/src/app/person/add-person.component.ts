@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Person} from './person';
+import {PersonService} from './person.service';
 @Component({
   selector: 'app-add-person',
   templateUrl: './add-person.component.html'
@@ -9,10 +10,14 @@ export class AddPersonComponent {
   selectedStateId: number;
   selectedDistrictId: number;
   stateDropdown = 'state';
-  constructor() {
+  constructor(private personService: PersonService) {
 
   }
-  addPerson() {}
+  addPerson() {
+    let person = new Person();
+//    person.state = this.se
+    this.personService.addPerson(person);
+  }
   onStateChange(state) {
     if (state) {
       this.selectedStateId = state.id;

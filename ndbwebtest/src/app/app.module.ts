@@ -17,6 +17,7 @@ import { AddDistrictComponent } from './district/add-district.component';
 import { DistrictService } from './district/district.service';
 import {AddStateComponent} from './state/add-state.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
+import { PersonService } from './person/person.service';
 import { SharedModule } from './shared.module';
 import {StateService} from './state/state.service';
 import {CommonModule} from '@angular/common';
@@ -34,7 +35,7 @@ import {CommonModule} from '@angular/common';
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule
   ],
-  providers: [AdminService, StateService, DistrictService, CityService],
+  providers: [AdminService, StateService, DistrictService, CityService, PersonService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

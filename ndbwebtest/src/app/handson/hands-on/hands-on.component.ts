@@ -24,7 +24,7 @@ export class HandsOnComponent implements OnInit {
   constructor(private countryService: CountryService) {}
 
   ngOnInit() {
-    this.countryService.getCountries().then(countries => this.countries = countries);
+    this.countryService.getCountries().subscribe(countries => this.countries = countries);
   }
   onInput1Change(event) {
     console.log('input 1 changed');

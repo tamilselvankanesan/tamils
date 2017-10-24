@@ -5,36 +5,40 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.success.ndb.daos.PersonDao;
+import com.success.ndb.assemblers.PersonAssembler;
+import com.success.ndb.daos.PersonDAO;
+import com.success.ndb.dto.PersonDTO;
 import com.success.ndb.entities.Person;
+
 @Service
 public class PersonServiceImpl implements PersonService {
 
 	@Autowired
-	private PersonDao personDao;
-	
+	private PersonDAO dao;
+
 	@Override
-	public List<Person> getPersons() {
-		// TODO Auto-generated method stub
+	public List<PersonDTO> search(PersonDTO dto) {
+		dao.search(dto);
 		return null;
 	}
 
 	@Override
-	public Person addPerson() {
-		// TODO Auto-generated method stub
+	public PersonDTO addPerson(Person entity) {
+		return PersonAssembler.assemble(dao.save(entity), false);
+	}
+
+	@Override
+	public PersonDTO updatePerson(Person entity) {
 		return null;
 	}
 
 	@Override
-	public Person updatePerson() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deletePerson() {
-		// TODO Auto-generated method stub
+	public void deletePerson(Person entity) {
 
 	}
 
+	private boolean exists(Person entity) {
+
+		return false;
+	}
 }
