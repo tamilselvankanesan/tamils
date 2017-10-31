@@ -25,25 +25,37 @@
 				#village="ngModel" [(ngModel)]="person.village"></td>
 		</tr>
 		<tr>
+			<td style="text-align: right"><label>Zip Code: </label></td>
+			<td colspan="2"><input type="text" name="zip"
+				#zip="ngModel" [(ngModel)]="person.zipCode"></td>
+		</tr>
+		<tr>
 			<td style="text-align: right"><label>State: </label></td>
 			<td colspan="2"><app-state-dropdown
 					(selectedState)="onStateChange($event)"></app-state-dropdown>
 			</td>
 		</tr>
-		<tr>
+		<tr [hidden]="selectedState===null">
 			<td style="text-align: right"><label>District: </label></td>
-			<td colspan="2"><app-district-list [stateId]="selectedStateId"
+			<td colspan="2"><app-district-list [stateId]="selectedState?.id"
 					(event)="onDistrictChange($event)"></app-district-list></td>
 		</tr>
-		<tr>
+		<tr [hidden]="selectedDistrict===null">
 			<td style="text-align: right"><label>City: </label></td>
-			<td colspan="2"><app-city-dropdown
-					[districtId]="selectedDistrictId"></app-city-dropdown></td>
+			<td colspan="2"><app-city-dropdown (citySelect)="onCityChange($event)"
+					[districtId]="selectedDistrict?.id"></app-city-dropdown></td>
 		</tr>
 		<tr>
-			<td><input type="submit" [disabled]="!addPersonForm.valid || !selectedStateId || !selectedDistrictId"
+			<td><input type="submit" [disabled]="!addPersonForm.valid || !selectedState || !selectedDistrict"
 				value="Submit" /></td>
-			<td></td>
+			<td>
+				<input type="button" value="Reset" (click)="reset()"/>
+			</td>
+		</tr>
+		<tr [hidden]="message==null">
+			<td colspan="3">
+				{{message}}
+			</td>
 		</tr>
 	</table>
 </form>

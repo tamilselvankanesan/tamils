@@ -12,6 +12,7 @@ export class StateDropDownComponent implements OnInit {
   @Output() selectedState = new EventEmitter();
   @Input() states: State[];
   @Input() name: string;
+  selState: State;
   constructor(private stateService: StateService) {
   }
   ngOnInit(): void {

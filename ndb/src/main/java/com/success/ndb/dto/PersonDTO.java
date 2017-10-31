@@ -2,7 +2,7 @@ package com.success.ndb.dto;
 
 import java.util.List;
 
-public class PersonDTO {
+public class PersonDTO extends BaseDTO{
 
 	private int personId;
 	private String about;

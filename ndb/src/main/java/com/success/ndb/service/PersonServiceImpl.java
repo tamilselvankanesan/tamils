@@ -18,13 +18,16 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<PersonDTO> search(PersonDTO dto) {
-		dao.search(dto);
-		return null;
+		return PersonAssembler.assemble(dao.search(dto), false);
 	}
 
 	@Override
 	public PersonDTO addPerson(Person entity) {
-		return PersonAssembler.assemble(dao.save(entity), false);
+		//validate??
+		PersonDTO dto = PersonAssembler.assemble(dao.save(entity), false);
+		dto.setSuccess(true);
+		dto.setMessage("Save successful.");
+		return dto;
 	}
 
 	@Override

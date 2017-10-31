@@ -1,5 +1,7 @@
 package com.success.ndb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,5 +23,9 @@ public class PersonController {
 	@RequestMapping("/save")
 	public PersonDTO save(@RequestBody PersonDTO dto) {
 		return personService.addPerson(PersonAssembler.assemble(dto));
+	}
+	@RequestMapping("/search")
+	public List<PersonDTO> search(PersonDTO dto){
+		return personService.search(dto);
 	}
 }
