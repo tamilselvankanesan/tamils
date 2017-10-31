@@ -4,13 +4,14 @@ import {CountryListComponent} from './country/country-list.component';
 import { AddDistrictComponent } from './district/add-district.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
 import { AddPersonComponent } from './person/add-person.component';
+import { PersonSearchComponent } from './person/person-search.component';
 import { AddStateComponent } from './state/add-state.component';
 import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 
 const appRoutes: Routes = [
   {
-    path: '', component: CountryListComponent
+    path: '', component: PersonSearchComponent
   },
   {
     path: 'admin',
