@@ -5,4 +5,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./person-search.component.css'],
   templateUrl: './person-search.component.html'
 })
-export class PersonSearchComponent {}
+export class PersonSearchComponent {
+  searchParam: string;
+  search() {}
+}
