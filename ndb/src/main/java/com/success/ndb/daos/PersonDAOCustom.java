@@ -8,4 +8,6 @@ import com.success.ndb.entities.Person;
 public interface PersonDAOCustom {
 
 	public List<Person> search(PersonDTO dto);
+
+	public List<Person> search(String param);
 }

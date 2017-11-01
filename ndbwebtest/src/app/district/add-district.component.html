@@ -19,7 +19,7 @@
 		</div>	
 		<br /> 
 		<button type="submit" class="btn btn-default" [disabled]="!addDistrictForm.valid">Add District</button>
-		<div [hidden]="message==null" [ngClass]="{'alert-success': success, 'alert-danger': !success}">
+		<div [hidden]="message==null" [ngClass]="{'alert alert-success': success, 'alert alert-danger': !success}">
 			<br/>
 			{{message}}
 		</div>

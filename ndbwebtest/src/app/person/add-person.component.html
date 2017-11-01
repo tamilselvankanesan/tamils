@@ -47,7 +47,7 @@
 	</div>
 	<button type="submit" class="btn btn-default" [disabled]="!addPersonForm.valid || !selectedState || !selectedDistrict">Submit</button>
 	<button type="button" (click)="reset()" class="btn btn-default" >Reset</button>
-	<div [hidden]="message==null" [ngClass]="{'alert-success': success, 'alert-danger': !success}">
+	<div [hidden]="message==null" [ngClass]="{'alert alert-success': success, 'alert alert-danger': !success}">
 		<br/>
 		{{message}}
 	</div>

@@ -48,37 +48,74 @@ public class PersonDAOImpl implements PersonDAOCustom {
 
 		return tq.getResultList();
 	}
-	private List<Predicate> getConditions(CriteriaBuilder cb, Root<Person> root, PersonDTO dto){
+
+	private List<Predicate> getConditions(CriteriaBuilder cb, Root<Person> root, PersonDTO dto) {
 		List<Predicate> predicates = new ArrayList<>();
-		
+
 		if (StringUtils.hasLength(dto.getFirstName())) {
-			predicates.add(cb.like(cb.lower(root.get(Person_.firstName)), "%"+dto.getFirstName().trim().toLowerCase()+"%"));
+			predicates.add(cb.like(cb.lower(root.get(Person_.firstName)),
+					"%" + dto.getFirstName().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getLastName())) {
-			predicates.add(cb.like(root.get(Person_.lastName), "%"+dto.getLastName().trim().toLowerCase()+"%"));
+			predicates.add(
+					cb.like(cb.lower(root.get(Person_.lastName)), "%" + dto.getLastName().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getAddress1())) {
-			predicates.add(cb.like(root.get(Person_.address1), "%"+dto.getAddress1().trim().toLowerCase()+"%"));
+			predicates.add(
+					cb.like(cb.lower(root.get(Person_.address1)), "%" + dto.getAddress1().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getAddress2())) {
-			predicates.add(cb.like(root.get(Person_.address2), "%"+dto.getAddress2().trim().toLowerCase()+"%"));
+			predicates.add(
+					cb.like(cb.lower(root.get(Person_.address2)), "%" + dto.getAddress2().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getState())) {
-			predicates.add(cb.like(root.get(Person_.state), "%"+dto.getState().trim().toLowerCase()+"%"));
+			predicates.add(cb.like(cb.lower(root.get(Person_.state)), "%" + dto.getState().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getDistrict())) {
-			predicates.add(cb.like(root.get(Person_.district), "%"+dto.getDistrict().trim().toLowerCase()+"%"));
+			predicates.add(
+					cb.like(cb.lower(root.get(Person_.district)), "%" + dto.getDistrict().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getCity())) {
-			predicates.add(cb.like(root.get(Person_.city), "%"+dto.getCity().trim().toLowerCase()+"%"));
+			predicates.add(cb.like(cb.lower(root.get(Person_.city)), "%" + dto.getCity().trim().toLowerCase() + "%"));
 		}
 		if (StringUtils.hasLength(dto.getVillage())) {
-			predicates.add(cb.like(root.get(Person_.village), "%"+dto.getVillage().trim().toLowerCase()+"%"));
+			predicates.add(
+					cb.like(cb.lower(root.get(Person_.village)), "%" + dto.getVillage().trim().toLowerCase() + "%"));
 		}
-		if (dto.getZipCode()!=0) {
-			predicates.add(cb.like(root.get(Person_.zipCode).as(String.class), "%"+String.valueOf(dto.getZipCode())+"%"));
+		if (dto.getZipCode() != 0) {
+			predicates.add(
+					cb.like(root.get(Person_.zipCode).as(String.class), "%" + String.valueOf(dto.getZipCode()) + "%"));
 		}
 		return predicates;
 	}
 
+	@Override
+	public List<Person> search(String param) {
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Person> cq = cb.createQuery(Person.class);
+		Root<Person> root = cq.from(Person.class);
+
+		cq.where(cb.or(getSearchPredicates(cb, root, param).toArray(new Predicate[0])));
+		
+		TypedQuery<Person> tq = em.createQuery(cq);
+
+		return tq.getResultList();
+	}
+
+	private List<Predicate> getSearchPredicates(CriteriaBuilder cb, Root<Person> root, String param) {
+		List<Predicate> orPredicates = new ArrayList<>();
+		param = "%" + param.trim().toLowerCase() + "%";
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.firstName)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.lastName)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.address1)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.address2)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.about)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.village)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.city)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.district)), param));
+		orPredicates.add(cb.like(cb.lower(root.get(Person_.state)), param));
+		orPredicates.add(cb.like(root.get(Person_.zipCode).as(String.class), param));
+		return orPredicates;
+	}
 }

@@ -23,7 +23,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public PersonDTO addPerson(Person entity) {
-		//validate??
+		// validate??
 		PersonDTO dto = PersonAssembler.assemble(dao.save(entity), false);
 		dto.setSuccess(true);
 		dto.setMessage("Save successful.");
@@ -43,5 +43,10 @@ public class PersonServiceImpl implements PersonService {
 	private boolean exists(Person entity) {
 
 		return false;
+	}
+
+	@Override
+	public List<PersonDTO> search(String param) {
+		return PersonAssembler.assemble(dao.search(param), false);
 	}
 }

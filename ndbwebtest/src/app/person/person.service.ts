@@ -18,4 +18,7 @@ export class PersonService extends BaseService {
     return this.http.post(this.url + 'save', JSON.stringify(person), {headers: this.headers}).map(data => data.json() as Person, error => this.handleError);
   }
 
+  search(searchParam: string): Observable<Person[]> {
+    return this.http.get(this.url + 'search/' + searchParam).map(data => data.json() as Person[], error => this.handleError);
+  }
 }
