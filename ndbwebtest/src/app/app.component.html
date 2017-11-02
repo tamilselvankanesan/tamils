@@ -1,15 +1,36 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
+<div style="text-align: center">
+	<h1>Welcome to {{title}}!</h1>
 </div>
-<a routerLink="/">Home</a>
-&nbsp;&nbsp;
-<a routerLink="/countries">Countries</a>
-&nbsp;&nbsp;
-<a routerLink="/admin">Admin</a>
-&nbsp;&nbsp;
-<a routerLink="/hands-on">Hands-on</a>
-<router-outlet></router-outlet>
 
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<!-- <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div> -->
+		<ul class="nav navbar-nav">
+			<li class="active"><a routerLink="/">Home</a></li>
+			<li><a routerLink="/countries">Countries</a></li>
+			<li><a routerLink="/admin">Admin</a></li>
+			<li><a routerLink="/hands-on">Hands-on</a></li>
+		</ul>
+		<form class="navbar-form navbar-left">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search my NDB" name="searchText"
+					[(ngModel)]="searchParam">
+				<div class="input-group-btn">
+					<button class="btn btn-default" (click)="search()">
+						<i class="glyphicon glyphicon-search"></i>
+					</button>
+				</div>
+			</div>
+		</form>
+		<ul class="nav navbar-nav navbar-right">
+			<!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span>
+					Sign Up</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+					Login</a></li> -->
+		</ul>
+	</div>
+</nav>
+<router-outlet></router-outlet>
