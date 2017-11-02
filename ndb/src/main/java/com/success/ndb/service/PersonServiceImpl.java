@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.success.ndb.assemblers.PersonAssembler;
 import com.success.ndb.daos.PersonDAO;
@@ -48,5 +49,18 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public List<PersonDTO> search(String param) {
 		return PersonAssembler.assemble(dao.search(param), false);
+	}
+
+	@Override
+	public PersonDTO getPersonById(String id) {
+		PersonDTO dto;
+		if (StringUtils.hasText(id)) {
+			dto = PersonAssembler.assemble(dao.findOne(Integer.parseInt(id)), false);
+		} else {
+			dto = new PersonDTO();
+			dto.setMessage("No records found.");
+			dto.setError(true);
+		}
+		return dto;
 	}
 }

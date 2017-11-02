@@ -21,6 +21,11 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
+	@RequestMapping("/{personId}")
+	public PersonDTO getPerson(@PathVariable String personId) {
+		return personService.getPersonById(personId);
+	}
+	
 	@RequestMapping("/save")
 	public PersonDTO save(@RequestBody PersonDTO dto) {
 		return personService.addPerson(PersonAssembler.assemble(dto));

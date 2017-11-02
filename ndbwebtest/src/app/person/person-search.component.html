@@ -13,7 +13,7 @@
 <ng-container *ngIf="searchResults">
 <div *ngFor="let person of searchResults">
 	<h3>
-		<a routerLink="">{{person.firstName}}</a>
+		<a routerLink="person/{{person.personId}}">{{person.firstName}}</a>
 	</h3>
 	<h4>
 		{{person|json}}

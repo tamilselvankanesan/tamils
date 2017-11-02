@@ -17,6 +17,7 @@ import { AddDistrictComponent } from './district/add-district.component';
 import { DistrictService } from './district/district.service';
 import {AddStateComponent} from './state/add-state.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
+import { PersonDetailComponent } from './person/person-detail.component';
 import { PersonSearchComponent } from './person/person-search.component';
 import { PersonService } from './person/person.service';
 import { SharedModule } from './shared.module';
@@ -32,7 +33,8 @@ import {CommonModule} from '@angular/common';
     HandsOnComponent,
     AddCityComponent,
     AddDistrictComponent,
-    PersonSearchComponent
+    PersonSearchComponent,
+    PersonDetailComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule

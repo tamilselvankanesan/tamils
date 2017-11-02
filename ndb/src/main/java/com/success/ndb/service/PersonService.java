@@ -16,4 +16,6 @@ public interface PersonService {
 	PersonDTO updatePerson(Person entity);
 
 	void deletePerson(Person entity);
+	
+	PersonDTO getPersonById(String personId);
 }
