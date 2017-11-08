@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class AdminService {
   private adminUrl = 'http://localhost:8080/ndb/rest/countries/import';
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
   importCountriesToNDB(): void {
     this.http.post(this.adminUrl, {headers: this.headers}).toPromise().catch(this.handleError);
   }

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Headers} from '@angular/http';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class BaseService {
   ndbUrl = 'http://localhost:8080/ndb/rest/';
-  headers = new Headers({
+  headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });
   constructor() {}

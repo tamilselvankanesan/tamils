@@ -7,9 +7,11 @@ import {StateService} from './state/state.service';
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule(
   {
-    imports: [ReactiveFormsModule, CommonModule, FormsModule],
+    imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule],
     declarations: [StateListComponent, StateDropDownComponent, DistrictListComponent, AddPersonComponent, CityDropdownComponent],
     exports: [StateListComponent, StateDropDownComponent, DistrictListComponent, AddPersonComponent, CityDropdownComponent],
     providers: []
