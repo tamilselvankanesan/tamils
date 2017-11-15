@@ -1,8 +1,9 @@
 package com.success.ndb.service;
 
-import com.success.ndb.entities.ApplicationUser;
+import com.success.ndb.dto.ApplicationUserDTO;
 
 public interface UserService {
 
-	ApplicationUser save(ApplicationUser entity);
+	ApplicationUserDTO save(ApplicationUserDTO dto);
+	ApplicationUserDTO getPerson(ApplicationUserDTO dto);
 }

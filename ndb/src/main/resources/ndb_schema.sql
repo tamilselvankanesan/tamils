@@ -60,6 +60,13 @@ create table review (
 	review_type varchar(50)
 );
 
+create table application_user (
+	user_id int primary key auto_increment,
+	first_name varchar(30) not null,
+    last_name varchar(30) not null,
+    application_login varchar(30) not null,
+    application_password varchar(100) not null);
+
 alter table state add constraint fk_country_code foreign key 
 (country_code) references country(code);
 

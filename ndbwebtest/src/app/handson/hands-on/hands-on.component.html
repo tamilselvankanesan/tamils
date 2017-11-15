@@ -1,13 +1,11 @@
-<p>
-  hands-on works!
-</p>
+<p>hands-on works!</p>
 
-<input [(ngModel)]="sampleText" type="text"/>
+<input [(ngModel)]="sampleText" type="text" />
 
 <h2>{{sampleText}}</h2>
 
 
-<br/>
+<br />
 
 <input #templateRefVarTest type="text">
 
@@ -19,11 +17,31 @@
 
 <h1>{{selectedCountry?.name}}</h1>
 
-<h1></h1> 
+<h1></h1>
 <label>Input 1: </label>
 <input [ngModel]="input1" (ngModelChange)="onInput1Change($event)">
-<br/><br/>
+<br />
+<br />
 <label>Input 2: </label>
 <input [ngModel]="input2">
 
+<div>
+
+	<form #myForm="ngForm" (ngSubmit)="login()">
+		<div class="form-group">
+			<label for="uName">User Name: </label> 
+			<input type="text"
+				name="uName" #uName="ngModel" class="form-control" id="uName"
+				[(ngModel)]="applicationUser.applicationLogin" required>
+		</div>
+		<div class="form-group">
+			<label for="password">Password: </label> 
+			<input type="password" 
+				name="password" #password="ngModel" class="form-control" id="password" required
+				[(ngModel)]="applicationUser.applicationPassword">
+		</div>
+		<button type="submit" class="btn btn-default" [disabled]="!myForm.valid">Login</button>
+	</form>
+
+</div>
 

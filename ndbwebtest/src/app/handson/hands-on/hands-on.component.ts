@@ -1,5 +1,7 @@
+import {AdminService} from '../../admin/admin.service';
 import {Country} from '../../country/country';
 import {CountryService} from '../../country/country.service';
+import {ApplicationUser} from '../../user/application-user';
 import {Component, OnInit} from '@angular/core';
 
 @Component({
@@ -20,8 +22,9 @@ export class HandsOnComponent implements OnInit {
   selectedCtry = this.countryArr[0];
   input1: string;
   input2: string;
+  applicationUser = new ApplicationUser();
 
-  constructor(private countryService: CountryService) {}
+  constructor(private countryService: CountryService, private adminService: AdminService) {}
 
   ngOnInit() {
     this.countryService.getCountries().subscribe(countries => this.countries = countries);
@@ -29,5 +32,9 @@ export class HandsOnComponent implements OnInit {
   onInput1Change(event) {
     console.log('input 1 changed');
     this.input2 = event;
+  }
+  login() {
+    console.log(this.applicationUser.applicationLogin);
+    this.adminService.login(this.applicationUser);
   }
 }

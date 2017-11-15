@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.success.ndb.dto.ApplicationUserDTO;
 import com.success.ndb.entities.ApplicationUser;
 import com.success.ndb.service.UserService;
 
@@ -18,10 +19,18 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@RequestMapping(path = "/signup", method = RequestMethod.POST)
+	public ApplicationUserDTO signup(@RequestBody ApplicationUserDTO dto) {
+		dto.setApplicationPassword(bCryptPasswordEncoder.encode(dto.getApplicationPassword()));
+		return service.save(dto);
+	}
 	
-	@RequestMapping(path="/signup", method=RequestMethod.POST)
-	public void signup(@RequestBody ApplicationUser user){
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		service.save(user);
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
+	public ApplicationUserDTO login(@RequestBody ApplicationUserDTO dto) {
+		
+		System.out.println("testing");
+		
+		return dto;
 	}
 }

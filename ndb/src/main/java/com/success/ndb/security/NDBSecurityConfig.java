@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,11 +21,17 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	@Qualifier("customUserDetailsService")
-	private UserDetailsService customUserDetailsService;
+	private UserDetailsService customUserDetailsService; //spring will use this class to load the user details
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated();//this needs to be customized based on requirements..
+		//exclude the signup URL from authentication..  
+		//JWTAuthenticationFilter used to authenticate the user using the user name and password and create a JWT token for successful login
+		//JWTAuthorizationFilter used to authorize each calls and make sure if the JWT token present and valid. if not valid then authorization fails
+		/*http.authorizeRequests().antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll().anyRequest().authenticated().
+		and().addFilter(new JWTAuthenticationFilter(authenticationManager())).addFilter(new JWTAuthorizationFilter(authenticationManager())).
+		sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
+		//authenticationManager() will use our custom AuthenticationManagerBuilder provided in the configureGlobal() method
 
 	}
 	@Autowired
@@ -43,5 +51,9 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder getPasswordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new BCryptPasswordEncoder().encode("tamil"));
 	}
 }

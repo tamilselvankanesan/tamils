@@ -1,33 +1,11 @@
-package com.success.ndb.entities;
+package com.success.ndb.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
-
-@Entity
-@Table(name = "application_user")
-public class ApplicationUser {
-
-	@Column(name = "first_name")
-	private String firstName;
-	
-	@Column(name = "last_name")
-	private String lastName;
-	
-	@Column(name = "application_login")
-	@NotBlank
-	private String applicationLogin;
-	
-	@Column(name = "application_password")
-	@NotBlank
-	private String applicationPassword;
-	
-	@Column
-	@Id
+public class ApplicationUserDTO extends BaseDTO{
 	private int userId;
+	private String firstName;
+	private String lastName;
+	private String applicationLogin;
+	private String applicationPassword;
 
 	public String getFirstName() {
 		return firstName;
