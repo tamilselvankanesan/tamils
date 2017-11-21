@@ -25,7 +25,7 @@ public class ApplicationUser {
 	@NotBlank
 	private String applicationPassword;
 	
-	@Column
+	@Column(name="user_id")
 	@Id
 	private int userId;
 

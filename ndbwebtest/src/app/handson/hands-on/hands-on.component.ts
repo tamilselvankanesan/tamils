@@ -1,6 +1,7 @@
 import {AdminService} from '../../admin/admin.service';
 import {Country} from '../../country/country';
 import {CountryService} from '../../country/country.service';
+import {State} from '../../state/state';
 import {ApplicationUser} from '../../user/application-user';
 import {Component, OnInit} from '@angular/core';
 
@@ -12,6 +13,7 @@ import {Component, OnInit} from '@angular/core';
 export class HandsOnComponent implements OnInit {
 
   countries: Country[];
+  states: State[];
   selectedCountry: Country;
   sampleText = 'Hello';
   countryArr = [
@@ -28,6 +30,7 @@ export class HandsOnComponent implements OnInit {
 
   ngOnInit() {
     this.countryService.getCountries().subscribe(countries => this.countries = countries);
+    //    this.getUserInfo();
   }
   onInput1Change(event) {
     console.log('input 1 changed');
@@ -36,5 +39,8 @@ export class HandsOnComponent implements OnInit {
   login() {
     console.log(this.applicationUser.applicationLogin);
     this.adminService.login(this.applicationUser);
+  }
+  getUserInfo() {
+    this.adminService.getCountryInfo('IN').subscribe(states => this.states = states);
   }
 }

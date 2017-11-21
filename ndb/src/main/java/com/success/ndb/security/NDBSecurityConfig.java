@@ -18,42 +18,46 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @Configuration
 public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	@Qualifier("customUserDetailsService")
-	private UserDetailsService customUserDetailsService; //spring will use this class to load the user details
-	
+	private UserDetailsService customUserDetailsService; // spring will use this
+															// class to load the
+															// user details
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//exclude the signup URL from authentication..  
 		//JWTAuthenticationFilter used to authenticate the user using the user name and password and create a JWT token for successful login
 		//JWTAuthorizationFilter used to authorize each calls and make sure if the JWT token present and valid. if not valid then authorization fails
-		/*http.authorizeRequests().antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll().anyRequest().authenticated().
+		http.authorizeRequests().antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL, SecurityConstants.LOGIN_URL).permitAll().anyRequest().authenticated().
 		and().addFilter(new JWTAuthenticationFilter(authenticationManager())).addFilter(new JWTAuthorizationFilter(authenticationManager())).
-		sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
+		sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		//authenticationManager() will use our custom AuthenticationManagerBuilder provided in the configureGlobal() method
 
 	}
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(getAuthProvider());
 		auth.userDetailsService(customUserDetailsService);
-		
+
 	}
+
 	@Bean
-	public DaoAuthenticationProvider getAuthProvider(){
-		//http://www.baeldung.com/spring-security-authentication-provider
+	public DaoAuthenticationProvider getAuthProvider() {
+		// http://www.baeldung.com/spring-security-authentication-provider
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(customUserDetailsService);
 		authProvider.setPasswordEncoder(getPasswordEncoder());
 		return authProvider;
 	}
+
 	@Bean
-	public PasswordEncoder getPasswordEncoder(){
+	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	public static void main(String[] args) {
-		System.out.println(new BCryptPasswordEncoder().encode("tamil"));
+		// System.out.println(new BCryptPasswordEncoder().encode("tamil"));
 	}
 }
