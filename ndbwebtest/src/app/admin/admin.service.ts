@@ -1,5 +1,6 @@
 import {BaseService} from '../base.service';
 import {Country} from '../country/country';
+import {JwtAuthenticationResponse} from '../jwt';
 import {State} from '../state/state';
 import {ApplicationUser} from '../user/application-user';
 import {Injectable} from '@angular/core';
@@ -20,8 +21,18 @@ export class AdminService extends BaseService {
 
   login(appUser: ApplicationUser) {
     console.log(' aa ' + appUser.applicationPassword);
-    this.http.post(this.ndbUrl + 'user/login', JSON.stringify(appUser), {headers: this.headers}).map(response =>
-      response as ApplicationUser, error => this.handleError).subscribe();
+//    this.http.post(this.ndbUrl + 'user/login', JSON.stringify(appUser), {headers: this.headers}).map(
+//      (response: Response) => {
+//        console.log(response.json());
+//        let token = response.json();
+//      }).subscribe();
+
+    this.http.post(this.ndbUrl + 'user/login', JSON.stringify(appUser), {headers: this.headers}).map(data => data as JwtAuthenticationResponse, error => this.handleError).subscribe(
+      data => {
+        console.log('data.token==>' + data.token);
+        localStorage.setItem('ndbtoken', 'Bearer ' + data.token);
+      }
+    );
   }
   getCountryInfo(cCode: string): Observable<State[]> {
     //    this.http.get('http://localhost:8080/ndb/rest/countries').map(data => data as Country[]).subscribe();

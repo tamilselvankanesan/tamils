@@ -6,6 +6,11 @@ import {Observable} from 'rxjs';
 export class TokenInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('inside interceptor');
-    return next.handle(req);
+    return next.handle(this.addToken(req, next));
+  }
+  addToken(req: HttpRequest<any>, next: HttpHandler): HttpRequest<any> {
+    console.log(localStorage.getItem('ndbtoken'));
+    return req.clone({setHeaders: {Authorization: localStorage.getItem('ndbtoken')}});
+//    return req.clone({setHeaders: {Authorization: 'testing'}});
   }
 }
