@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -18,20 +19,20 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil implements Serializable {
 
     private static final long serialVersionUID = -3301605591108950415L;
-
-    static final String CLAIM_KEY_USERNAME = "sub";
+    private static final Logger logger = Logger.getLogger(JwtUtil.class);
+    /*static final String CLAIM_KEY_USERNAME = "sub";
     static final String CLAIM_KEY_AUDIENCE = "aud";
-    static final String CLAIM_KEY_CREATED = "iat";
+    static final String CLAIM_KEY_CREATED = "iat";*/
 
     /*static final String AUDIENCE_UNKNOWN = "unknown";
     static final String AUDIENCE_WEB = "web";
     static final String AUDIENCE_MOBILE = "mobile";
     static final String AUDIENCE_TABLET = "tablet";*/
 
-//    @Value("${jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
-//    @Value("${jwt.expiration}")
+    @Value("${jwt.expiration}")
     private Long expiration;
 
     public String getUsernameFromToken(String token) {
@@ -40,10 +41,12 @@ public class JwtUtil implements Serializable {
 
     public Date getIssuedAtDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getIssuedAt);
+//    	return getAllClaimsFromToken(token).getIssuedAt();
     }
 
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
+//    	return getAllClaimsFromToken(token).getExpiration();
     }
 
     /*public String getAudienceFromToken(String token) {
@@ -97,7 +100,7 @@ public class JwtUtil implements Serializable {
         final Date createdDate = new Date();
         final Date expirationDate = calculateExpirationDate(createdDate);
 
-        System.out.println("doGenerateToken " + createdDate);
+        logger.info("doGenerateToken " + createdDate);
 
         return Jwts.builder()
                 .setClaims(claims)

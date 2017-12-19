@@ -26,8 +26,9 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService customUserDetailsService; // spring will use this
 															// class to load the
 															// user details
+
 	@Autowired
-	private DemoAuthenticationProvider demoAuthenticationProvider;
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -55,9 +56,9 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 		 * DemoAuthenticationFilter(), BasicAuthenticationFilter.class);
 		 */
 
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/**/user/**").permitAll().anyRequest()
-				.authenticated().and()
-				.addFilterBefore(new DemoAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.authorizeRequests().antMatchers("/**/user/**").permitAll().anyRequest().authenticated().and()
+				.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll();
@@ -74,27 +75,28 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.addAllowedOrigin("*");
-	    config.addAllowedHeader("*");
-	    config.addAllowedMethod("OPTIONS");
-	    config.addAllowedMethod("HEAD");
-	    config.addAllowedMethod("GET");
-	    config.addAllowedMethod("PUT");
-	    config.addAllowedMethod("POST");
-	    config.addAllowedMethod("DELETE");
-	    config.addAllowedMethod("PATCH");
-	    source.registerCorsConfiguration("/**", config);
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("OPTIONS");
+		config.addAllowedMethod("HEAD");
+		config.addAllowedMethod("GET");
+		config.addAllowedMethod("PUT");
+		config.addAllowedMethod("POST");
+		config.addAllowedMethod("DELETE");
+//		config.addAllowedMethod("PATCH");
+		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
 	}
 
-	/*
-	 * @Override public void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception { auth.authenticationProvider(demoAuthenticationProvider); }
-	 */
-
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { // auth.authenticationProvider(getAuthProvider());
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		// auth.authenticationProvider(getAuthProvider());
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(getPasswordEncoder());
 		// auth.authenticationProvider(new JWTAuthorizationFilter());
+	}
+
+	@Bean
+	public JWTAuthenticationFilter authenticationTokenFilterBean() {
+		return new JWTAuthenticationFilter();
 	}
 
 	/*

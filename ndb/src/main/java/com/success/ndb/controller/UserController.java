@@ -32,8 +32,6 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private JwtUtil jwtUtil;
-	// @Autowired
-	// private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@RequestMapping(path = "/signup", method = RequestMethod.POST)
 	public ApplicationUserDTO signup(@RequestBody ApplicationUserDTO dto) {
@@ -45,10 +43,6 @@ public class UserController {
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public JwtAuthenticationResponse login(@RequestBody ApplicationUserDTO dto) {
 
-//		ApplicationUserDTO dto = new ApplicationUserDTO();
-		dto.setApplicationLogin("tamil"); 
-		dto.setApplicationPassword("tamil");
-		
 		final Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(dto.getApplicationLogin(),
 						dto.getApplicationPassword(), new ArrayList<>()));

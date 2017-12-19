@@ -10,7 +10,12 @@ export class TokenInterceptor implements HttpInterceptor {
   }
   addToken(req: HttpRequest<any>, next: HttpHandler): HttpRequest<any> {
     console.log(localStorage.getItem('ndbtoken'));
-    return req.clone({setHeaders: {Authorization: localStorage.getItem('ndbtoken')}});
-//    return req.clone({setHeaders: {Authorization: 'testing'}});
+    let token = localStorage.getItem('ndbtoken');
+    if (token) {
+      return req.clone({setHeaders: {Authorization: localStorage.getItem('ndbtoken')}});
+    } else {
+      return req;
+    }
+    //    return req.clone({setHeaders: {Authorization: 'testing'}});
   }
 }

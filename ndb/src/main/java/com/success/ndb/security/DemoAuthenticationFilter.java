@@ -42,6 +42,7 @@ public class DemoAuthenticationFilter extends OncePerRequestFilter {
 		String requestHeader = request.getHeader("Authorization");
 		
 		if(requestHeader!=null && requestHeader.startsWith("Bearer ")){
+			System.out.println("toekn found...");
 			String token = requestHeader.substring(7);
 			//validate the token
 			String userName = jwtUtil.getUsernameFromToken(token);
@@ -54,7 +55,6 @@ public class DemoAuthenticationFilter extends OncePerRequestFilter {
 	                SecurityContextHolder.getContext().setAuthentication(authentication);
 				}
 			}
-			System.out.println("toekn found...");
 		}else{
 			System.out.println("no token found...");
 			//access to secured urls will be denied

@@ -1,8 +1,6 @@
 package com.success.ndb.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -10,54 +8,60 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.success.ndb.dto.ApplicationUserDTO;
+import com.success.ndb.utils.JwtUtil;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-//https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/
-public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-
-	public JWTAuthenticationFilter() {
-        super("/**");
-    }
-
-	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtUtil jwtUtil;
+	
+	@Value("${jwt.header}")
+    private String tokenHeader;
+	
+	@Autowired
+	private UserDetailsService userService;
+	
 	private static final Logger logger = Logger.getLogger(JWTAuthenticationFilter.class);
-
-	/*
-	 * public JWTAuthenticationFilter(AuthenticationManager
-	 * authenticationManager) { this.authenticationManager =
-	 * authenticationManager; }
-	 */
-
+	
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-
-		System.out.println("Hello world");
-		return null;
-		/*try {
-			ApplicationUserDTO dto = new ObjectMapper().readValue(request.getInputStream(), ApplicationUserDTO.class);
-			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getApplicationLogin(),
-					dto.getApplicationPassword(), new ArrayList<>()));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}*/
-	}
-
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication auth) throws IOException, ServletException {
-		/*String token = Jwts.builder().setSubject(((User) auth.getPrincipal()).getUsername())
-				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET).compact();
-		response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);*/
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+//		Authentication authentication = new UsernamePasswordAuthenticationToken("tamil", "tamil", new ArrayList<>());
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+		logger.info("inside demo auth filter...");
+		
+		String requestHeader = request.getHeader(tokenHeader);
+		
+		if(requestHeader!=null && requestHeader.startsWith("Bearer ")){
+			logger.info("token found...");
+			String token = requestHeader.substring(7);
+			//validate the token
+			String userName = jwtUtil.getUsernameFromToken(token);
+			if(userName!=null && SecurityContextHolder.getContext().getAuthentication()==null){
+				UserDetails userDetails = userService.loadUserByUsername(userName);
+				if(jwtUtil.validateToken(token, userDetails)){
+					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//	                logger.info("authenticated user " + username + ", setting security context");
+	                SecurityContextHolder.getContext().setAuthentication(authentication);
+				}else{
+					//invalid token
+				}
+			}
+		}else{
+			logger.info("no token found...");
+			//access to secured urls will be denied
+		}
+		
+		filterChain.doFilter(request, response);
 	}
 }
