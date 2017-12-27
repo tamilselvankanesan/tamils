@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AdminComponent} from './admin/admin.component';
 import {AdminService} from './admin/admin.service';
+import { JWTInterceptor } from './auth/jwt.interceptor';
 import {TokenInterceptor} from './auth/token.interceptor';
 import {AddCityComponent} from './city/add-city.component';
 import {CityService} from './city/city.service';
@@ -47,7 +48,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     {provide: DistrictService, useClass: DistrictService},
     {provide: CityService, useClass: CityService},
     {provide: PersonService, useClass: PersonService},
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
