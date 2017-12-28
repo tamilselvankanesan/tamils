@@ -44,9 +44,9 @@ export class AdminService extends BaseService {
       error => super.handleError);
   }
   getToken(): string {
-    console.log(localStorage.getItem('ndbtoken'));
+    console.log('inside auth service - ndbtoken->' + localStorage.getItem('ndbtoken'));
     if (tokenNotExpired(null, localStorage.getItem('ndbtoken'))) {
-
+      console.log('token not found. forward to login page..');
     }
     return localStorage.getItem('ndbtoken');
   }

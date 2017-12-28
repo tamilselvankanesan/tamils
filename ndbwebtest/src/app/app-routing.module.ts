@@ -7,10 +7,14 @@ import {AddPersonComponent} from './person/add-person.component';
 import {PersonDetailComponent} from './person/person-detail.component';
 import {PersonSearchComponent} from './person/person-search.component';
 import {AddStateComponent} from './state/add-state.component';
+import { LoginComponent } from './user/login.component';
 import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 
 const appRoutes: Routes = [
+  {
+    path: 'login', component: LoginComponent
+  },
   {
     path: '', component: PersonSearchComponent
   },
