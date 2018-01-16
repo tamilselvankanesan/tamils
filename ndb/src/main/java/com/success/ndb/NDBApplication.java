@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -15,11 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EntityScan(basePackages={"com.success.ndb.entities"})
 public class NDBApplication extends SpringBootServletInitializer{
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
-	
 	public static void main(String[] args) {
 		SpringApplication.run(NDBApplication.class, args);
 	}

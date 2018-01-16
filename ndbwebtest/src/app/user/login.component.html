@@ -1,1 +1,21 @@
-Login Here
+<form (ngSubmit)="login()" #loginForm="ngForm">
+	<div class="form-group">
+		<label for="uName">User Name: </label>
+		<input type="text" name="uName" id="uName" #uName="ngModel" [(ngModel)]="appUser.applicationLogin"  class="form-control" required/>
+		<div [hidden]="uName.valid" class="alert alert-danger">>
+			User Name is required.
+		</div>
+		
+		<label for="password">Password: </label>
+		<input type="password" name="password" id="password" #pass="ngModel" [(ngModel)]="appUser.applicationPassword"  class="form-control" required/>
+		<div [hidden]="pass.valid" class="alert alert-danger">>
+			Password is required.
+		</div>
+		
+		<button type="submit" class="btn btn-default" [disabled]="!loginForm.valid">Login</button>
+		<div [hidden]="message==null" [ngClass]="{'alert alert-success': success, 'alert alert-danger': !success}">
+		<br/>
+			{{message}}
+		</div>
+	</div>
+</form>

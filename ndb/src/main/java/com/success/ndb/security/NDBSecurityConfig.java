@@ -23,51 +23,18 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	@Qualifier("customUserDetailsService")
-	private UserDetailsService customUserDetailsService; // spring will use this
-															// class to load the
-															// user details
-
+	private UserDetailsService customUserDetailsService; // spring will use this class to load the user details
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// exclude the signup URL from authentication..
-		// JWTAuthenticationFilter used to authenticate the user using the user
-		// name and password and create a JWT token for successful login
-		// JWTAuthorizationFilter used to authorize each calls and make sure if
-		// the JWT token present and valid. if not valid then authorization
-		// fails
-		// http.authorizeRequests().antMatchers(HttpMethod.POST,
-		// SecurityConstants.SIGN_UP_URL,
-		// SecurityConstants.LOGIN_URL).permitAll().anyRequest().authenticated().
-		// and().addFilter(new
-		// JWTAuthenticationFilter(authenticationManager())).addFilter(new
-		// JWTAuthorizationFilter(authenticationManager())).
-		// sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-		// http.addFilterBefore(new TokenAuthenticationFilter(),
-		// BasicAuthenticationFilter.class);
-		// http.addFilter(new JWTAuthorizationFilter(authenticationManager()));
-
-		/*
-		 * http.authorizeRequests().antMatchers("/rest/user/login").permitAll().
-		 * anyRequest().authenticated().and() .addFilterBefore(new
-		 * DemoAuthenticationFilter(), BasicAuthenticationFilter.class);
-		 */
-
+		// authenticationTokenFilterBean checks if a valid auth token presents. if doesn't present unauthorizedHandler will be called.
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.authorizeRequests().antMatchers("/**/user/**").permitAll().anyRequest().authenticated().and()
 				.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-		// http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll();
-
-		// http.authorizeRequests().antMatchers("").authenticated().and().add
-
-		// authenticationManager() will use our custom
-		// AuthenticationManagerBuilder provided in the configureGlobal() method
-
 	}
 
 	@Bean
@@ -82,16 +49,13 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 		config.addAllowedMethod("PUT");
 		config.addAllowedMethod("POST");
 		config.addAllowedMethod("DELETE");
-//		config.addAllowedMethod("PATCH");
 		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// auth.authenticationProvider(getAuthProvider());
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(getPasswordEncoder());
-		// auth.authenticationProvider(new JWTAuthorizationFilter());
 	}
 
 	@Bean
@@ -99,20 +63,12 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new JWTAuthenticationFilter();
 	}
 
-	/*
-	 * @Bean public DaoAuthenticationProvider getAuthProvider() { //
-	 * http://www.baeldung.com/spring-security-authentication-provider
-	 * DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	 * authProvider.setUserDetailsService(customUserDetailsService);
-	 * authProvider.setPasswordEncoder(getPasswordEncoder()); return
-	 * authProvider; }
-	 */
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	public static void main(String[] args) {
-		// System.out.println(new BCryptPasswordEncoder().encode("tamil"));
+		 System.out.println(new BCryptPasswordEncoder().encode("tamil"));
 	}
 }
