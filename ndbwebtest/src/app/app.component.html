@@ -16,20 +16,22 @@
 		</ul>
 		<form class="navbar-form navbar-left">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search my NDB" name="searchText"
-					[(ngModel)]="searchParam">
+				<input type="text" class="form-control" placeholder="Search my NDB"
+					name="searchText" [(ngModel)]="searchParam">
 				<div class="input-group-btn">
 					<button class="btn btn-default" (click)="search()">
 						<i class="glyphicon glyphicon-search"></i>
 					</button>
 				</div>
 			</div>
-		</form>
+		</form> 
 		<ul class="nav navbar-nav navbar-right">
-			<!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span>
+			<li><a routerLink="/signup"><span class="glyphicon glyphicon-user"></span>
 					Sign Up</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-					Login</a></li> -->
+			<li *ngIf="!isLoggedIn()"><a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>
+					Login</a></li>
+			<li *ngIf="isLoggedIn()"><a (click)="logout()" href="javascript:void(0);"><span class="glyphicon glyphicon-log-out"></span>
+					Logout</a></li>
 		</ul>
 	</div>
 </nav>
