@@ -23,6 +23,7 @@ export class PersonSearchComponent implements OnInit {
       }
       return this.personService.search(this.searchParam);
     }).subscribe(results => {
+      console.log('inside person-search. sch results found');
       this.searchResults = results;
       if (this.searchResults.length === 0 && paramFound) {
         this.found = false;

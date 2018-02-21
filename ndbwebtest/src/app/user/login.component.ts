@@ -23,6 +23,8 @@ export class LoginComponent {
         this.message = response.message;
       } else {
         this.authService.setToken(response.token);
+        this.authService.loggedIn = true;
+        // perform queued requests if any, otherwise go to home page
         this.router.navigate(['/']); // navigate to home page
       }
     });
