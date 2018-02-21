@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -13,6 +14,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @PropertySource(value={"classpath:jdbc.properties"})
@@ -23,13 +25,34 @@ public class NDBConfiguration {
 	@Autowired
 	private Environment environment;
 	
+	@Value("${JDBC_URL:#{null}}")
+	private String jdbcUrl;
+	
+	@Value("${JDBC_USER:#{null}}")
+	private String jdbcUser;
+	
+	@Value("${JDBC_PASSWORD:#{null}}")
+	private String jdbcPassword;
+	
 	@Bean
 	DataSource dataSource(){
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setUrl(environment.getProperty("datasource.url"));
 		dataSource.setDriverClassName(environment.getProperty("datasource.driver-class-name"));
-		dataSource.setUsername(environment.getProperty("datasource.username"));
-		dataSource.setPassword(environment.getProperty("datasource.password"));
+		if(StringUtils.isEmpty(jdbcUrl)){
+			dataSource.setUrl(environment.getProperty("datasource.url"));
+		}else{
+			dataSource.setUrl(jdbcUrl);	
+		}
+		if(StringUtils.isEmpty(jdbcUser)){
+			dataSource.setUsername(environment.getProperty("datasource.username"));
+		}else{
+			dataSource.setUsername(jdbcUser);
+		}
+		if(StringUtils.isEmpty(jdbcPassword)){
+			dataSource.setPassword(environment.getProperty("datasource.password"));
+		}else{
+			dataSource.setPassword(jdbcPassword);
+		}
 		return dataSource;
 	}
 
