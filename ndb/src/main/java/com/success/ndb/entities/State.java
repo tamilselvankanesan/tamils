@@ -8,12 +8,13 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the state database table.
  * 
  */
-@Entity
+@Entity(name="state")
 public class State implements Serializable {
 	private static final long serialVersionUID = 1L;
 

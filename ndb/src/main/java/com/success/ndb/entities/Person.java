@@ -8,7 +8,7 @@ import java.util.List;
  * The persistent class for the person database table.
  * 
  */
-@Entity
+@Entity(name="person")
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 

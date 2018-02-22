@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
+@Entity(name="applicationuser")
 @Table(name = "application_user")
 public class ApplicationUser {
 

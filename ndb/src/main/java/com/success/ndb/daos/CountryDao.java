@@ -18,6 +18,6 @@ public interface CountryDao extends CrudRepository<Country, String> {
 	
 	List<Country> save(List<Country> countries);
 	
-	@Query("Select a from Country a where LOWER(a.name) like %:filter%")
+	@Query("Select a from country a where LOWER(a.name) like %:filter%")
 	List<Country> findCountries(@Param("filter") String filter);
 }

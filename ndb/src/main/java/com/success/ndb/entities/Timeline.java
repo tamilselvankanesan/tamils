@@ -9,7 +9,7 @@ import java.util.Date;
  * The persistent class for the timeline database table.
  * 
  */
-@Entity
+@Entity(name="timeline")
 public class Timeline implements Serializable {
 	private static final long serialVersionUID = 1L;
 

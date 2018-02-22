@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
  * The persistent class for the country database table.
  * 
  */
-@Entity
+@Entity(name="country")
 public class Country implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -10,6 +10,6 @@ import com.success.ndb.entities.ApplicationUser;
 @Repository
 public interface UserDAO extends CrudRepository<ApplicationUser, Integer> {
 
-	@Query("select a from ApplicationUser a where a.applicationLogin = :applicationLogin")
+	@Query("select a from applicationuser a where a.applicationLogin = :applicationLogin")
 	ApplicationUser findByApplicationLogin(@Param("applicationLogin") String applicationLogin);
 }

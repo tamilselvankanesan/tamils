@@ -1,3 +1,8 @@
+CREATE SCHEMA  IF NOT EXISTS `ndb_dev` ;
+CREATE USER  IF NOT EXISTS 'ndb_app'@'localhost' IDENTIFIED BY 'Ndb_test1';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ndb_dev.* TO 'ndb_app'@'localhost';
+
+
 drop table timeline;
 drop table review;
 drop table person;

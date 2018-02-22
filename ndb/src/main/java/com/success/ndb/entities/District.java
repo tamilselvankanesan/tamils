@@ -9,7 +9,7 @@ import javax.persistence.*;
  * The persistent class for the district database table.
  * 
  */
-@Entity
+@Entity(name="district")
 public class District implements Serializable {
 	private static final long serialVersionUID = 1L;
 
