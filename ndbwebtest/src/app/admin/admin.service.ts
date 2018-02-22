@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AdminService extends BaseService {
-  private adminUrl = 'http://localhost:8080/ndb/rest/countries/import';
+  private adminUrl = this.ndbUrl + 'countries/import';
   private failedRequests: Array<HttpRequest<any>> = [];
 
   constructor(private http: HttpClient) {
@@ -39,9 +39,9 @@ export class AdminService extends BaseService {
 
 
   getCountryInfo(cCode: string): Observable<State[]> {
-    //    this.http.get('http://localhost:8080/ndb/rest/countries').map(data => data as Country[]).subscribe();
-    this.http.get('http://localhost:8080/ndb/rest/user/info/tamil').map(data => data as ApplicationUser).subscribe();
-    return this.http.get('http://localhost:8080/ndb/rest/state/country/' + cCode).map(
+    //    this.http.get(this.ndbUrl+'countries').map(data => data as Country[]).subscribe();
+    this.http.get(this.ndbUrl + 'user/info/tamil').map(data => data as ApplicationUser).subscribe();
+    return this.http.get(this.ndbUrl + 'state/country/' + cCode).map(
       data => data as State[],
       error => super.handleError);
   }

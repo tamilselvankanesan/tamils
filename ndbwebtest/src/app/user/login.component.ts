@@ -13,6 +13,7 @@ export class LoginComponent {
   password: string;
   message: string;
   appUser = new ApplicationUser();
+  success = true;
 
   constructor(private adminService: AdminService, private authService: AuthService, private router: Router) {}
 
@@ -21,6 +22,7 @@ export class LoginComponent {
     this.adminService.login(this.appUser).subscribe(response => {
       if (response.error) {
         this.message = response.message;
+        this.success = false;
       } else {
         this.authService.setToken(response.token);
         this.authService.loggedIn = true;

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CountryService extends BaseService {
   private header = new Headers({'Content-type': 'application/json'});
-  private countryURL = 'http://localhost:8080/ndb/rest/countries';
+  private countryURL = this.ndbUrl + 'countries';
 
   constructor(private http: HttpClient) {
     super();
