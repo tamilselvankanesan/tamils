@@ -10,15 +10,18 @@ export class AuthService extends BaseService {
 
   getToken(): string {
     console.log('inside auth service - ndbtoken->' + localStorage.getItem('ndbtoken'));
-    if (tokenNotExpired(null, localStorage.getItem('ndbtoken'))) {
+    if (this.isAuthenticated()) {
       console.log('token not found. forward to login page..');
     }
-//    console.log('toekn => '+this.jwtHelper.decodeToken(localStorage.getItem('ndbtoken')));
+    //    console.log('toekn => '+this.jwtHelper.decodeToken(localStorage.getItem('ndbtoken')));
     return localStorage.getItem('ndbtoken');
   }
   setToken(token) {
     console.log('inside auth service - settotkem->');
     localStorage.setItem('ndbtoken', 'Bearer ' + token);
+  }
+  isAuthenticated(): boolean {
+    return tokenNotExpired(localStorage.getItem('ndbtoken'));
   }
   collectFailedRequests(failedHttpRequest: HttpRequest<any>) {
     this.failedRequests = [];
