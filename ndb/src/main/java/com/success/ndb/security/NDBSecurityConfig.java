@@ -32,8 +32,13 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 		// exclude the signup URL from authentication..
 		// authenticationTokenFilterBean checks if a valid auth token presents. if doesn't present unauthorizedHandler will be called.
 		
+		//http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+		//.authorizeRequests().antMatchers("/**/admin/**").authenticated().anyRequest().permitAll().and()
+		//.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
+		//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-		.authorizeRequests().antMatchers("/**/admin/**").authenticated().anyRequest().permitAll().and()
+		.authorizeRequests().antMatchers("/**/user/**").permitAll().anyRequest().authenticated().and()
 		.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}

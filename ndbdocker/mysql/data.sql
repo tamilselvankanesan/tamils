@@ -1,4 +1,7 @@
-GRANT SELECT, INSERT, UPDATE, DELETE ON ndb_dev.* TO 'ndb_app'@'%';
+/*CREATE SCHEMA  IF NOT EXISTS `ndb_dev` ;
+CREATE USER  IF NOT EXISTS 'ndb_app'@'localhost' IDENTIFIED BY 'Ndb_test1';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ndb_dev.* TO 'ndb_app'@'localhost'; */
+GRANT SELECT, INSERT, UPDATE, DELETE ON ndb_dev.* TO 'ndb_app'@'%'; 
 create table IF NOT EXISTS ndb_dev.country (
 	code varchar(10) primary key,
     name varchar(50) 
