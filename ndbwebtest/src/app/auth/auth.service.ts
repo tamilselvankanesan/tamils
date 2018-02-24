@@ -21,14 +21,17 @@ export class AuthService extends BaseService {
     localStorage.setItem('ndbtoken', 'Bearer ' + token);
   }
   isAuthenticated(): boolean {
-    return tokenNotExpired(localStorage.getItem('ndbtoken'));
+    return tokenNotExpired(null, localStorage.getItem('ndbtoken'));
   }
   collectFailedRequests(failedHttpRequest: HttpRequest<any>) {
     this.failedRequests = [];
     this.failedRequests.push(failedHttpRequest);
   }
   logout() {
-    localStorage.removeItem('ndbtoken');
+    this.removeToken();
     this.loggedIn = false;
+  }
+  removeToken() {
+    localStorage.removeItem('ndbtoken');
   }
 }
