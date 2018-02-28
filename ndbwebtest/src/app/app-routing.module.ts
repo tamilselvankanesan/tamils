@@ -4,6 +4,7 @@ import {AddCityComponent} from './city/add-city.component';
 import {CountryListComponent} from './country/country-list.component';
 import {AddDistrictComponent} from './district/add-district.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
+import { HomeComponent } from './home/home.component';
 import {AddPersonComponent} from './person/add-person.component';
 import {PersonDetailComponent} from './person/person-detail.component';
 import {PersonSearchComponent} from './person/person-search.component';
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path: '', component: PersonSearchComponent
+    path: '', component: HomeComponent
   },
   {
     path: 'search/:param', component: PersonSearchComponent

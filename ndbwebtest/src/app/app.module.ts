@@ -21,6 +21,7 @@ import {AddDistrictComponent} from './district/add-district.component';
 import {DistrictService} from './district/district.service';
 import {AddStateComponent} from './state/add-state.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
+import { HomeComponent } from './home/home.component';
 import {PersonDetailComponent} from './person/person-detail.component';
 import {PersonSearchComponent} from './person/person-search.component';
 import {PersonService} from './person/person.service';
@@ -39,7 +40,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     AddCityComponent,
     AddDistrictComponent,
     PersonSearchComponent,
-    PersonDetailComponent
+    PersonDetailComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule
