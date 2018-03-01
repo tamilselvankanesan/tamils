@@ -1,5 +1,6 @@
 import {AdminComponent} from './admin/admin.component';
 import {AuthGuardService} from './auth/auth-guard.service';
+import { SocialAuthComponent } from './auth/social-auth/social-auth.component';
 import {AddCityComponent} from './city/add-city.component';
 import {CountryListComponent} from './country/country-list.component';
 import {AddDistrictComponent} from './district/add-district.component';
@@ -16,6 +17,9 @@ import {NgModule} from '@angular/core';
 const appRoutes: Routes = [
   {
     path: 'login', component: LoginComponent
+  },
+  {
+    path: 'social-login', component: SocialAuthComponent
   },
   {
     path: '', component: HomeComponent

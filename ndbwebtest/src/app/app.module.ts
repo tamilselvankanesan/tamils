@@ -10,9 +10,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AdminComponent} from './admin/admin.component';
 import {AdminService} from './admin/admin.service';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { AuthService } from './auth/auth.service';
-import { JWTInterceptor } from './auth/jwt.interceptor';
+import {AuthGuardService} from './auth/auth-guard.service';
+import {AuthService} from './auth/auth.service';
+import {JWTInterceptor} from './auth/jwt.interceptor';
 import {TokenInterceptor} from './auth/token.interceptor';
 import {AddCityComponent} from './city/add-city.component';
 import {CityService} from './city/city.service';
@@ -21,7 +21,7 @@ import {AddDistrictComponent} from './district/add-district.component';
 import {DistrictService} from './district/district.service';
 import {AddStateComponent} from './state/add-state.component';
 import {HandsOnComponent} from './handson/hands-on/hands-on.component';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
 import {PersonDetailComponent} from './person/person-detail.component';
 import {PersonSearchComponent} from './person/person-search.component';
 import {PersonService} from './person/person.service';
@@ -29,6 +29,20 @@ import {SharedModule} from './shared.module';
 import {StateService} from './state/state.service';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, SocialLoginModule} from 'angular4-social-login';
+import {SocialAuthComponent} from './auth/social-auth/social-auth.component';
+import { SocialAuthService } from './auth/social-auth/social-auth.service';
+
+let config = new AuthServiceConfig([
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('329977280847388')
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -41,10 +55,11 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     AddDistrictComponent,
     PersonSearchComponent,
     PersonDetailComponent,
-    HomeComponent
+    HomeComponent,
+    SocialAuthComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule
+    BrowserModule, ReactiveFormsModule, HttpModule, CountryModule, AppRoutingModule, FormsModule, SharedModule, SocialLoginModule
   ],
   providers: [
     {provide: AdminService, useClass: AdminService},
@@ -54,8 +69,10 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     {provide: PersonService, useClass: PersonService},
     {provide: AuthService, useClass: AuthService},
     {provide: AuthGuardService, useClass: AuthGuardService},
+    {provide: SocialAuthService, useClass: SocialAuthService},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true},
+    {provide: AuthServiceConfig, useFactory: provideConfig}
   ],
   bootstrap: [AppComponent]
 })
