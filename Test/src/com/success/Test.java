@@ -25,11 +25,75 @@ import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Test {
+
+  private static void queryString(){
+    String pattern = "\\{,\\}";
+    String qs = "\\{or\\},\\{Testing";
+    String[] result = qs.split(pattern);
+    for(String r : result){
+      System.out.println(r);
+    }
+  }
+  private static void releaseName(){
+    String release = null;
+    String releaseName = "NextGen CM/ECF Release 1.2 (Revision 1.2.0.1)";
+    if (releaseName.indexOf("Revision") != -1 && releaseName.lastIndexOf(")") != -1 && releaseName.indexOf("Revision") + 8 < releaseName.lastIndexOf(")")) {
+      release = releaseName.substring(releaseName.indexOf("Revision") + 8, releaseName.lastIndexOf(")"));
+    }
+    else if (releaseName.indexOf("Release") != -1) {
+      release = releaseName.substring(releaseName.indexOf("Release") + 8);
+    }
+    System.out.println(release);
+  }
+  
+  private static void compareList(){
+    releaseName();
+    List<String> a = new ArrayList<>();
+    List<String> b = new ArrayList<>();
+    
+    a.add("A");
+    a.add("B");
+    a.add("D");
+    
+    
+    b.add("B");
+    b.add("A");
+    b.add("C");
+    
+
+    if(a.size()!=b.size() || a.retainAll(b)){ 
+      System.out.println("ne");
+    }else{
+      System.out.println("eq");
+    }
+    
+    
+    List<String> c = new ArrayList<>();
+    c.add("AS");
+    c.add("X");
+    if(Collections.disjoint(a, c)){
+      System.out.println("ne11");
+    }else{
+      System.out.println("eq11");
+    }
+    
+    if(a.size()==b.size() ){/*
+      if(a.retainAll(b)){
+        System.out.println("true 1 ");  
+      }else{
+        System.out.println("false 1");
+      }
+      
+    */}else{
+//      System.out.println("false");
+    }
+    
+  }
+  
 	private static void andTest(){
 		String s1 = null;
 		String s2 = "tes";
@@ -410,6 +474,10 @@ public class Test {
 		  System.out.println("flag --> "+flag);
 	  }
 	private static void readFile(){
+	  
+	  String abc = null;
+	  System.out.println("Hello "+abc);
+	  
     BufferedReader br = null;
      
     try {
@@ -516,10 +584,12 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args)  {
-	  readFile();
+	  queryString();
+	  compareList();
 		if(true){
 			return;
 		}
+	  readFile();
 		readFile();
 		spilt();
 		
