@@ -74,7 +74,7 @@ public class LongestSubString {
     int length = 0;
     int itr = 0;
     //push each element from input array to temp array.. and increase the counter... before push compare the ip element in the temp array.. if not found push ..
-    //if found then set the count in the length and adjust the start position for the temp array and also adjust the count...
+    //if found then set the count in the length and adjust the start position for the temp array and also revise the count...
     outer:
     for(int i=0; i<ipArr.length; i++){
       itr = 0;
