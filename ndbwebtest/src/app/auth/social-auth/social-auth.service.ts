@@ -1,9 +1,11 @@
+import { ApplicationUser } from '../../user/application-user';
 import {Injectable} from '@angular/core';
 import { SocialUser } from 'angular4-social-login';
 
 @Injectable()
 export class SocialAuthService {
 
+  loggedIn = false;
   constructor() {}
 
   isAuthenticated(): boolean {
@@ -18,6 +20,10 @@ export class SocialAuthService {
     return localStorage.getItem('ndbsocialtoken');
   }
   setToken(socialUser: SocialUser) {
+    console.log('inside auth service - settotkem->');
+//    localStorage.setItem('ndbsocialtoken', 'Bearer ' + token);
+  }
+  setNdbToken(appUser: ApplicationUser) {
     console.log('inside auth service - settotkem->');
 //    localStorage.setItem('ndbsocialtoken', 'Bearer ' + token);
   }

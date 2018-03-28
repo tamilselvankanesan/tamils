@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -28,6 +29,8 @@ public class ApplicationUser {
 	@Column(name="user_id")
 	@Id
 	private int userId;
+	@Transient
+	private String token;
 
 	public String getFirstName() {
 		return firstName;
@@ -67,5 +70,13 @@ public class ApplicationUser {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

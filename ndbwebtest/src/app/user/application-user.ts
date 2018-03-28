@@ -5,4 +5,5 @@ export class ApplicationUser extends Base {
   applicationLogin: string;
   applicationPassword: string;
   userId: number;
+  token: string;
 }
