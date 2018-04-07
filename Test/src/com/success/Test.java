@@ -30,6 +30,14 @@ import org.json.simple.JSONObject;
 
 public class Test {
 
+  
+  private static void substring(){
+    String ss = "01234";
+    System.out.println(ss.substring(3));
+    System.out.println(ss.substring(0,0));
+    System.out.println(String.valueOf(new char[]{'a','b','d'}));
+  }
+  
   private static void queryString(){
     String pattern = "\\{,\\}";
     String qs = "\\{or\\},\\{Testing";
@@ -584,6 +592,7 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args)  {
+	  substring();
 	  queryString();
 	  compareList();
 		if(true){
