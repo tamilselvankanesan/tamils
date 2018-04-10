@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { PacketsComponent } from './packets/packets.component';
 import { BreadCrumbComponent } from './bread-crumb/bread-crumb.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { JrpService } from './services/jrp.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -21,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule, AppRoutingModule, MatMenuModule, BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [JrpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

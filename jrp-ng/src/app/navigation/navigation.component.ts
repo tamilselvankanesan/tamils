@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {MenuItem} from '../data/menu-item';
+import {JrpService} from '../services/jrp.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  navItems: MenuItem[];
+
+  constructor(private jrpService: JrpService) {}
 
   ngOnInit() {
+    this.navItems = this.jrpService.getMenuItems();
   }
 
 }
