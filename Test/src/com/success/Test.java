@@ -32,6 +32,18 @@ public class Test {
 
   
   private static void substring(){
+    
+ List<String> b = new ArrayList<>();
+    System.out.println(Float.compare(10f, 11f));
+    b.add("A");
+    b.add("B");
+    b.add("D");
+    b.add("D");
+    
+    System.out.println("Size = "+b.subList(0, 3).size());
+    
+    System.out.println(Integer.parseInt(String.valueOf('1')));
+    
     String ss = "01234";
     System.out.println(ss.substring(3));
     System.out.println(ss.substring(0,0));
