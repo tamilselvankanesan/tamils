@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.success.programs.dto.Country;
 import com.success.programs.dto.State;
 
@@ -28,6 +31,8 @@ public class JacksonMapperTest {
       parseUsingJsonNode(callRest());
       System.out.println("Before doing state json node");
       parseStateUsingJsonNode(callRestState());
+      System.out.println("custom serializer");
+      writeUsingCustomSerializer();
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -50,6 +55,7 @@ public class JacksonMapperTest {
       return;
     }
     ObjectMapper mapper = new ObjectMapper();
+//    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     State s = mapper.readValue(data, State.class);
     System.out.println("Retrieved country for state is "+s.getCountry().getName());
   }
@@ -59,12 +65,14 @@ public class JacksonMapperTest {
       return;
     }
     ObjectMapper mapper = new ObjectMapper();
+//    mapper.setDateFormat(new SimpleDateFormat("MM/dd/yyyy"));
+//    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     TypeReference<List<Country>> ref = new TypeReference<List<Country>>() {};
     List<Country> countries = mapper.readValue(data, ref);
 //    String countryName = 
     System.out.println("Retrieved countries size "+countries.size());
     for(Country country : countries){
-      System.out.println("Retrieved country name "+country.getName());  
+      System.out.println("Retrieved country name "+country.getName()+ " Date "+country.getCreatedDate());  
     }
   }
   
@@ -177,6 +185,23 @@ public class JacksonMapperTest {
       }
     }
     catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  static void writeUsingCustomSerializer(){
+    State s = new State();
+    s.setId(1);
+    s.setCode("TN");
+    s.setName("Tamil Nadu");
+    s.setCreatedDate(new Date());
+    ObjectMapper mapper = new ObjectMapper();
+    SimpleModule module = new SimpleModule();
+    module.addSerializer(State.class, new JacksonCustomSerializer());
+    mapper.registerModule(module);
+    try {
+      System.out.println(mapper.writeValueAsString(s));
+    }
+    catch (JsonProcessingException e) {
       e.printStackTrace();
     }
   }

@@ -15,7 +15,7 @@ public class State extends BaseDTO implements Serializable  {
 	private String code;
 
 	private String name;
-
+	
 	private List<District> districts;
 
 	private Country country;

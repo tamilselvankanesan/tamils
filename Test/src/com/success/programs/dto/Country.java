@@ -14,7 +14,7 @@ public class Country extends BaseDTO implements Serializable{
 	private String code;
 
 	private String name;
-
+	
 	//bi-directional many-to-one association to State
 	private List<State> states;
 
@@ -49,4 +49,5 @@ public class Country extends BaseDTO implements Serializable{
 	public void setStates(List<State> states) {
 		this.states = states;
 	}
+  
 }

@@ -1,11 +1,14 @@
 package com.success.programs.dto;
 
+import java.util.Date;
+
 public abstract class BaseDTO {
 
 	private boolean warning;
 	private boolean error;
 	private boolean success;
 	private String message;
+	private Date createdDate;
 	public boolean isWarning() {
 		return warning;
 	}
@@ -30,6 +33,12 @@ public abstract class BaseDTO {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
+  }
 	
 	
 }
