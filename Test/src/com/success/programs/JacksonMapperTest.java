@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +66,7 @@ public class JacksonMapperTest {
       return;
     }
     ObjectMapper mapper = new ObjectMapper();
-//    mapper.setDateFormat(new SimpleDateFormat("MM/dd/yyyy"));
+    mapper.setDateFormat(new SimpleDateFormat("MM/dd/yyyy"));
 //    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     TypeReference<List<Country>> ref = new TypeReference<List<Country>>() {};
     List<Country> countries = mapper.readValue(data, ref);

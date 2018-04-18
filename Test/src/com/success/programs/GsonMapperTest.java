@@ -9,11 +9,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.success.programs.dto.Country;
@@ -25,7 +29,7 @@ public class GsonMapperTest {
     // List<Class<Country>> countries = fromJson(Country.class, restGet("http://localhost:8080/ndb/rest/countries"));
     List<Country> countries = fromJson(restGet("http://localhost:8080/ndb/rest/countries"), Country.class);
     for (Country c : countries) {
-      System.out.print("c name = " + c.getName());  
+      System.out.print(" c name = " + c.getName() +" date "+c.getCreatedDate());  
     }
     List<State> states = fromJson(restGet("http://localhost:8080/ndb/rest/state/TN"), State.class);
     for (State s : states) {
@@ -33,18 +37,26 @@ public class GsonMapperTest {
     }
     parseAsJsonObject(restGet("http://localhost:8080/ndb/rest/state/country/IN"));
     toJson();
+    parseAsJsonObject1(restGet("http://localhost:8080/ndb/hello/method1"));
   }
 
   static <T> List<T> fromJson(String data, Class<T> target) {
     JsonElement e = new JsonParser().parse(data);
     List<T> result = new ArrayList<>();
+    Gson gson = new GsonBuilder().registerTypeAdapter(java.util.Date.class, new JsonDeserializer<java.util.Date>() {
+      @Override
+      public java.util.Date deserialize(JsonElement je, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(je.getAsJsonPrimitive().getAsLong());
+        return c.getTime(); 
+      }}).create();
     if(e instanceof JsonArray){
       JsonArray arr = new JsonParser().parse(data).getAsJsonArray();
       for (JsonElement el : arr) {
-        result.add(new Gson().fromJson(el, target));
+        result.add(gson.fromJson(el, target));
       }
     }else{
-      result.add(new Gson().fromJson(e, target));
+      result.add(gson.fromJson(e, target));
     }
     return result;  
   }
@@ -53,6 +65,13 @@ public class GsonMapperTest {
     for(JsonElement jb : arr){
       System.out.println("parse as json object: "+jb.getAsJsonObject().get("name"));
     }
+  }
+  static void parseAsJsonObject1(String data) {
+    JsonElement je = new JsonParser().parse(data);
+    System.out.println(je.getAsJsonObject().get("name"));
+    int count = je.getAsJsonObject().getAsJsonPrimitive("count").getAsInt();
+    System.out.println("Count is "+count);
+//    System.out.println("parse as json object: "+jb.getAsJsonObject().get("name"));
   }
 
   static void toJson(){
