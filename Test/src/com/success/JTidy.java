@@ -8,11 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.w3c.tidy.Node;
-import org.w3c.tidy.Tidy;
+/*import org.w3c.tidy.Node;
+import org.w3c.tidy.Tidy;*/
 
 public class JTidy {
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws FileNotFoundException, IOException {/*
 		Tidy tidy = new Tidy();
 		BufferedOutputStream bos = new BufferedOutputStream(
 				new FileOutputStream(File.createTempFile("dfdsf", ".txt")));
@@ -22,5 +22,5 @@ public class JTidy {
 		FileInputStream bis = new FileInputStream(f);
 		Node node =  tidy.parse(bis, bos);
 		System.out.println("dfdsf");
-	}
+	*/}
 }

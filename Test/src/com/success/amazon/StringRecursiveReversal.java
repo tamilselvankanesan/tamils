@@ -18,5 +18,7 @@ public class StringRecursiveReversal {
     public static void main(String a[]){
         StringRecursiveReversal srr = new StringRecursiveReversal();
         System.out.println("Result: "+srr.reverseString("Java2novice"));
+        String s ="hello";
+        System.out.println(s.substring(0, s.length()-1));
     }
 }

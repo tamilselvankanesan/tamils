@@ -7,7 +7,7 @@ import java.util.List;
 public class NextHighestSameDigits {
 
 	public static void main(String[] args) {
-		new NextHighestSameDigits().findNext(121);
+		new NextHighestSameDigits().findNext(489);
 	}
 	
 	private void findNext(int current){

@@ -2,7 +2,20 @@
 	<h1>CM/ECF Menu</h1>
 </div>
 <div style="clear: both;">
-	<app-navigation></app-navigation>
+
+	<div class="basic-container">
+		<span *ngFor="let item of items"> <!-- Handle branch node buttons here -->
+			<span *ngIf="item.children && item.children.length > 0">
+				<button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu">{{item.name}}</button> 
+				<app-navigation #menu [items]="item.children"></app-navigation>
+		</span> <!-- Leaf node buttons here --> 
+		<span *ngIf="!item.children || item.children.length === 0">
+				<button mat-button color="primary" >
+					{{item.name}}</button>
+		</span>
+		</span>
+	</div>
+
 </div>
 <div style="padding-bottom: 10px">
 	<app-bread-crumb></app-bread-crumb>

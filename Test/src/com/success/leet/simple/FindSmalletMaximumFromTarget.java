@@ -3,7 +3,7 @@ package com.success.leet.simple;
 public class FindSmalletMaximumFromTarget {
 
   public static void main(String[] args) {
-    System.out.println(findSmallestMaximum(new int[]{1,7,8,9,28,30,50,70}, 8));
+    System.out.println(findSmallestMaximum(new int[]{1,7,8,9,28,30,50,70}, 28));
   }
   
   private static int findSmallestMaximum(int[] input, int target){
@@ -20,7 +20,7 @@ public class FindSmalletMaximumFromTarget {
         return middle+1;
       }*/
       if(input[middle] == target){
-        return middle+1;
+        return input[middle+1];
       }
       if(input[middle] > target){
         high = middle -1;
@@ -28,6 +28,6 @@ public class FindSmalletMaximumFromTarget {
         low = middle +1;
       }
     }
-    return middle;
+    return input[middle];
   }
 }

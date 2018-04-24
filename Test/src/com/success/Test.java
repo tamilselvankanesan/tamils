@@ -25,14 +25,20 @@ import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+/*import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;*/
 
 public class Test {
 
+
+  private static void strPattern(){
+    
+    Pattern p = Pattern.compile(".*[^0-9]");
+    System.out.println(p.matcher("1224g").matches());
+  }
   
   private static void substring(){
-    
+    System.out.println(System.currentTimeMillis());
  List<String> b = new ArrayList<>();
     System.out.println(Float.compare(10f, 11f));
     b.add("A");
@@ -604,6 +610,7 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args)  {
+	  strPattern();
 	  substring();
 	  queryString();
 	  compareList();
@@ -759,14 +766,14 @@ public class Test {
 	private void jsonArray(){
 		String key = "test";
 //		String[] val = new String[]{"111", "2222"};
-		JSONArray arr = new JSONArray();
+		/*JSONArray arr = new JSONArray();
 		arr.add("111");
 		arr.add("122");
 		JSONObject object = new JSONObject();
 		object.put(key, arr);
 		
 		System.out.println(object.toJSONString());
-		String ss = object.toJSONString();
+		String ss = object.toJSONString();*/
 		
 		
 	}

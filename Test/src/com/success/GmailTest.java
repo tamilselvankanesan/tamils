@@ -5,13 +5,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.mail.Folder;
+/*import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Store;
+import javax.mail.Store;*/
 
-public class GmailTest {
+public class GmailTest {/*
 
 	private void test(){
 		Properties props = new Properties();
@@ -40,4 +40,4 @@ public class GmailTest {
 	public static void main(String[] args) {
 		new GmailTest().test();		
 	}
-}
+*/}
