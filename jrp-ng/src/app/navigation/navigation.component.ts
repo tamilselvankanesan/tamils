@@ -1,6 +1,6 @@
-import {MenuItem} from '../data/menu-item';
 import {JrpService} from '../services/jrp.service';
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-navigation',
@@ -9,13 +9,11 @@ import {Component, OnInit, Input, ViewChild} from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  @Input() items: MenuItem[];
-  @ViewChild('childMenu') public childMenu;
-
+  items: MenuItem[];
   constructor(private jrpService: JrpService) {}
 
   ngOnInit() {
-//    this.navItems = this.jrpService.getMenuItems();
+    this.items = this.jrpService.getMenuItems();
   }
 
 }

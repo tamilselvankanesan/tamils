@@ -1,6 +1,6 @@
-import {MenuItem} from '../data/menu-item';
-import { Data, menuIems } from './data';
+import { menuIems } from './data';
 import {Injectable} from '@angular/core';
+import {MenuItem} from 'primeng/api';
 
 @Injectable()
 export class JrpService {
