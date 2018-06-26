@@ -1,10 +1,14 @@
-import { PacketsComponent } from './packets/packets.component';
+import {PacketsComponent} from './packets/packets.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
     path: '', component: PacketsComponent
+  },
+  {
+    path: 'inbox/:id',
+    component: PacketsComponent
   }
 ];
 

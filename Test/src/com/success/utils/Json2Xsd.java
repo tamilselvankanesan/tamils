@@ -16,7 +16,7 @@ public class Json2Xsd {
 
 	public static void main(String[] args) {
 		try {
-			Reader r = new InputStreamReader(new FileInputStream(new File("C:\\Users\\btamilselvan\\Desktop\\a.json")));
+			Reader r = new InputStreamReader(new FileInputStream(new File("C:\\Users\\btamilselvan\\Desktop\\VRSPIResponse001.schema_modified.json")));
 			final Config cfg = new Config.Builder().targetNamespace("http://example.com/myschema.xsd").name("array").build();
 			final Document doc = Jsons2Xsd.convert(r, cfg);
 			System.out.println(XmlUtil.asXmlString(doc.getDocumentElement()));
@@ -24,5 +24,4 @@ public class Json2Xsd {
 			e.printStackTrace();
 		}
 	}
-
 }

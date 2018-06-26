@@ -1,6 +1,7 @@
 package com.success.ndb.assemblers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.success.ndb.dto.CountryDTO;
@@ -18,6 +19,7 @@ public class CountryAssembler {
 		if(assembleState && country.getStates()!=null){
 			dto.setStates(StateAssembler.assemble(country.getStates(), false));
 		}
+		dto.setCreatedDate(new Date());
 		return dto;
 	}
 	public static List<CountryDTO> assemble(List<Country> countries, boolean assembleState){
