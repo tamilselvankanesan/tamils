@@ -24,8 +24,7 @@ export const menuIems: MenuItem[] = [{
     },
     {
       label: 'Other - Miscellaneous',
-      routerLink: 'inbox/114',
-      command: (event) => {}
+      routerLink: 'inbox/114'
     },
     ]
   },
@@ -94,38 +93,38 @@ export const menuIems: MenuItem[] = [{
     {
       label: 'Search',
       items: [
-        {label: 'Advanced', routerLink: 'inbox/211'},
-        {label: 'Case/Party', routerLink: 'inbox/212'},
-        {label: 'Date', routerLink: 'inbox/213'},
-        {label: 'Packet', routerLink: 'inbox/214'}
+        {label: 'Advanced', routerLink: 'search/211'},
+        {label: 'Case/Party', routerLink: 'search/212'},
+        {label: 'Date', routerLink: 'search/213'},
+        {label: 'Packet', routerLink: 'search/214'}
       ]
     },
     {
-      label: 'Hearing', routerLink: 'inbox/22',
+      label: 'Hearing', routerLink: 'search/22',
       items: [{
         label: 'Judge Harmon',
         items: [{
-          label: 'Today', routerLink: 'inbox/221'
+          label: 'Today', routerLink: 'search/221'
         },
-        {label: 'This Week', routerLink: 'inbox/222'}]
+        {label: 'This Week', routerLink: 'search/222'}]
       }]
     },
-    {label: 'Saved Search', routerLink: 'inbox/23'}
+    {label: 'Saved Search', routerLink: 'search/23'}
   ]
 },
 {
   label: 'Create',
   items: [
-    {label: 'New Packet', routerLink: 'inbox/31'},
-    {label: 'Other - Claims (BK only)', routerLink: 'inbox/32'},
-    {label: 'Other - Miscellaneous', routerLink: 'inbox/33'}
+    {label: 'New Packet', routerLink: 'create/31'},
+    {label: 'Other - Claims (BK only)', routerLink: 'create/32'},
+    {label: 'Other - Miscellaneous', routerLink: 'create/33'}
   ]
 },
 {
   label: 'Configuration',
   items: [
-    {label: 'My Configuration', routerLink: 'inbox/41'},
-    {label: 'NextGen Configuration', routerLink: 'inbox/42'}
+    {label: 'My Configuration', routerLink: 'configuration/41'},
+    {label: 'NextGen Configuration', routerLink: 'configuration/42'}
   ]
 },
 {

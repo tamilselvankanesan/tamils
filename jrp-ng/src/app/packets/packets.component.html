@@ -1,3 +1,21 @@
-<p>
-  {{text}}
-</p>
+<p-table [value]="packets"> 
+
+<ng-template pTemplate="header">
+<tr>
+	<th>Packet ID</th>
+	<th>Packet Name</th>
+	<th>Docket Text</th>
+	<th></th>
+</tr>
+</ng-template> 
+
+<ng-template pTemplate="body" let-packet>
+<tr>
+	<td>{{packet.packetId}}</td>
+	<td>{{packet.packetName}}</td>
+	<td>{{packet.docketText}}</td>
+	<td></td>
+</tr>
+</ng-template> 
+
+</p-table>

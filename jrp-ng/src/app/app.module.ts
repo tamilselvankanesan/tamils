@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 
 import {MenubarModule} from 'primeng/menubar';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {TableModule} from 'primeng/table';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -14,6 +15,8 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {JrpService} from './services/jrp.service';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MenuComponent} from './menu/menu.component';
+import {PacketsService} from './packets/packets.service';
 
 
 @NgModule({
@@ -21,12 +24,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppComponent,
     PacketsComponent,
     BreadCrumbComponent,
-    NavigationComponent
+    NavigationComponent,
+    MenuComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, BrowserAnimationsModule, CommonModule, MenubarModule, BreadcrumbModule
+    BrowserModule, AppRoutingModule, BrowserAnimationsModule, CommonModule, MenubarModule, BreadcrumbModule, TableModule
   ],
-  providers: [JrpService, BreadCrumbService],
+  providers: [JrpService, BreadCrumbService, PacketsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
