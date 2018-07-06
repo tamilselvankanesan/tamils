@@ -1,5 +1,6 @@
 import { NavigationComponent } from './navigation/navigation.component';
 import {PacketsComponent} from './packets/packets.component';
+import { AdvancedSearchComponent } from './search/advanced-search/advanced-search.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'packets',
     component: PacketsComponent
+  },
+  {
+    path: 'AdvancedSearch',
+    component: AdvancedSearchComponent
   }
 ];
 

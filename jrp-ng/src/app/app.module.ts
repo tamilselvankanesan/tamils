@@ -6,6 +6,8 @@ import {CommonModule} from '@angular/common';
 import {MenubarModule} from 'primeng/menubar';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {TableModule} from 'primeng/table';
+import {FieldsetModule} from 'primeng/fieldset';
+import {CardModule} from 'primeng/card';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -17,6 +19,8 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MenuComponent} from './menu/menu.component';
 import {PacketsService} from './packets/packets.service';
+import { AdvancedSearchComponent } from './search/advanced-search/advanced-search.component';
+import { CaseSearchByCaseNumberComponent } from './components/case-search-by-case-number/case-search-by-case-number.component';
 
 
 @NgModule({
@@ -25,10 +29,13 @@ import {PacketsService} from './packets/packets.service';
     PacketsComponent,
     BreadCrumbComponent,
     NavigationComponent,
-    MenuComponent
+    MenuComponent,
+    AdvancedSearchComponent,
+    CaseSearchByCaseNumberComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, BrowserAnimationsModule, CommonModule, MenubarModule, BreadcrumbModule, TableModule
+    BrowserModule, AppRoutingModule, BrowserAnimationsModule, CommonModule, MenubarModule, BreadcrumbModule, 
+    TableModule, FieldsetModule, CardModule
   ],
   providers: [JrpService, BreadCrumbService, PacketsService],
   bootstrap: [AppComponent]

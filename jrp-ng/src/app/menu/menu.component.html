@@ -1,4 +1,10 @@
-<div class="content-section implementation">
-    <p-menubar [model]="items">
-    </p-menubar>
+<div style="float: left;">
+	<img [src]="'assets/images/logo-cmecf-sm.png'" alt="image">
+</div>
+<div style="float: left;">
+	<p-menubar [model]="cmecfMenuItems" styleClass="cmecfmenuBar">
+	</p-menubar>
+</div>
+<div style="clear: both;">
+	<p-menubar [model]="items" styleClass="jrpMenuBar"></p-menubar>
 </div>

@@ -1,6 +1,7 @@
 import {BreadCrumbService} from '../bread-crumb/bread-crumb.service';
 import {Packet} from '../dto/packet';
 import {PacketsService} from '../packets/packets.service';
+import {JrpMenuEnum} from '../util/jrpmenuenum';
 import {Time} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, PRIMARY_OUTLET, NavigationEnd} from '@angular/router';
@@ -19,8 +20,16 @@ export class NavigationComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private breadcrumbService: BreadCrumbService, private router: Router,
     private packetService: PacketsService) {
+
+    const urlString = '' + this.activatedRoute.snapshot['_routerState'].url;
+
     this.updateBreadCrumb();
-    this.retrievePackets();
+
+    if (urlString.indexOf(JrpMenuEnum.AdvancedSearch) !== -1) {
+      this.router.navigate(['AdvancedSearch']);
+    } else {
+      this.retrievePackets();
+    }
   }
 
   updateBreadCrumb() {
@@ -33,9 +42,19 @@ export class NavigationComponent implements OnInit {
         console.log(item.outlet);
       });
       this.text = new Date().toLocaleString();
-      console.log('url is ' + this.activatedRoute.snapshot['_routerState'].url);
+
+      const urlString = '' + this.activatedRoute.snapshot['_routerState'].url;
+      console.log('url is ' + urlString);
+
       this.breadcrumbs = [{label: 'Home'}];
-      this.breadcrumbs.push({label: this.text});
+      if (urlString.indexOf(JrpMenuEnum.AdvancedSearch) !== -1) {
+        console.log('advanced search');
+        this.breadcrumbs.push({label: 'Packet Searching'});
+        this.breadcrumbs.push({label: 'Search'});
+        this.breadcrumbs.push({label: 'Advanced Search'});
+      } else {
+        this.breadcrumbs.push({label: this.text});
+      }
       this.breadcrumbService.setBreadcrumb(this.breadcrumbs);
     });
   }
