@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns:x="http://example.com/myschema.xsd" elementFormDefault="qualified" targetNamespace="http://example.com/myschema.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+  <complexType name="array">
+    <sequence>
+      <element minOccurs="0" name="correlationGuid">
+        <simpleType>
+          <restriction base="string">
+            <pattern value="^[a-f\d]{8}-[a-f\d]{4}-4[a-f\d]{3}-[89ab][a-f\d]{3}-[a-f\d]{12}$"/>
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="responderGLN">
+        <simpleType>
+          <restriction base="string">
+            <minLength value="13"/>
+            <maxLength value="13"/>
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="data">
+        <complexType name="data">
+          <sequence>
+            <element name="verified" type="boolean"/>
+            <element minOccurs="0" name="verifiedInfo">
+              <simpleType>
+                <restriction base="string">
+                  <enumeration value="001"/>
+                  <enumeration value="002"/>
+                  <enumeration value="003"/>
+                  <enumeration value="004"/>
+                </restriction>
+              </simpleType>
+            </element>
+            <element minOccurs="0" name="additionalInfo">
+              <simpleType>
+                <restriction base="string">
+                  <enumeration value="001"/>
+                  <enumeration value="002"/>
+                  <enumeration value="003"/>
+                </restriction>
+              </simpleType>
+            </element>
+            <element minOccurs="0" name="errorMessage" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

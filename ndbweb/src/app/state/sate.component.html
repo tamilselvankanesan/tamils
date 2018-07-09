@@ -1,0 +1,10 @@
+<p>
+  The list of States in {{selectedCountry.name}}
+</p>
+<a routerLink="/addState">Add State</a>
+<router-outlet name='addState1'></router-outlet>
+<br/>
+<div *ngFor="let state of states">
+	<h4>{{state.id}} : {{state.name}}</h4>
+</div>
+<button (click)="goBack()">Back</button>

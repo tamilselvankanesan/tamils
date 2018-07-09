@@ -1,0 +1,4 @@
+<select (change)="onDistrictSelect(districts[$event.target.value])" class="form-control">
+	<option>
+	<option *ngFor="let district of districts let i=index" [value]="i">{{district.name}}</option>
+</select>

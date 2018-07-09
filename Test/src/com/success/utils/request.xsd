@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns:x="http://example.com/myschema.xsd" elementFormDefault="qualified" targetNamespace="http://example.com/myschema.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+  <complexType name="array">
+    <sequence>
+      <element minOccurs="0" name="correlationGuid">
+        <simpleType>
+          <restriction base="string">
+            <pattern value="^[a-f\d]{8}-[a-f\d]{4}-4[a-f\d]{3}-[89ab][a-f\d]{3}-[a-f\d]{12}$"/>
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="requestorGLN">
+        <simpleType>
+          <restriction base="string">
+            <minLength value="13"/>
+            <maxLength value="13"/>
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="data">
+        <complexType name="data">
+          <sequence>
+            <element name="lotNum" type="string"/>
+            <element name="expiry">
+              <simpleType>
+                <restriction base="string">
+                  <minLength value="6"/>
+                  <maxLength value="6"/>
+                </restriction>
+              </simpleType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

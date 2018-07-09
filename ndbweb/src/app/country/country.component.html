@@ -1,0 +1,12 @@
+<h2>Here are the list of Countries</h2>
+
+ <input type="text" [formControl]="term" placeholder="Country Search">
+
+<table>
+      <tr *ngFor="let country of countries1">
+        <td><a routerLink="/states/{{country.code}}">{{country.name}}</a></td>
+      </tr>
+    </table>
+
+<br/><br/>
+

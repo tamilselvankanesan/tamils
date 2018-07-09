@@ -1,0 +1,4 @@
+<select (change)="onCountryChange(countries[$event.target.value])" class="form-control">
+	<option>
+	<option *ngFor='let country of countries; let i=index' [value]="i">{{country.name}}</option>
+</select>

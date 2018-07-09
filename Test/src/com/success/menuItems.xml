@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MenuItems>
+	<MenuItem>
+		<name>Inbox</name>
+		<code>1</code>
+		<navigateTo>/pages/view/packetView.jsf</navigateTo>
+		<MenuItem>
+			<name>New</name>
+			<code>11</code>
+			<navigateTo>/pages/view/packetView.jsf</navigateTo>
+			<MenuItem>
+				<name>Today</name>
+				<code>111</code>
+				<navigateTo>/pages/view/packetView.jsf</navigateTo>
+			</MenuItem>
+			<MenuItem>
+				<name>Last Week</name>
+				<code>112</code>
+				<navigateTo>/pages/view/packetView.jsf</navigateTo>
+			</MenuItem>
+		</MenuItem>
+		<MenuItem>
+			<name>Due date</name>
+			<code>12</code>
+			<MenuItem>
+				<name>Tomorrow</name>
+				<code>121</code>
+				<navigateTo>/pages/view/packetView.jsf</navigateTo>
+			</MenuItem>
+			<MenuItem>
+				<name>Next Week</name>
+				<code>122</code>
+				<navigateTo>/pages/view/packetView.jsf</navigateTo>
+			</MenuItem>
+		</MenuItem>
+	</MenuItem>
+	<MenuItem>
+		<name>Packet</name>
+		<code>2</code>
+		<MenuItem>
+			<name>Case Number</name>
+			<code>21</code>
+			<navigateTo>/pages/view/search.jsf</navigateTo>
+		</MenuItem>
+		<MenuItem>
+			<name>Packet lookup</name>
+			<code>22</code>
+			<navigateTo>/pages/view/search.jsf</navigateTo>
+		</MenuItem>
+	</MenuItem>
+	<MenuItem>
+		<name>Create</name>
+		<code>3</code>
+		<MenuItem>
+			<name>New Packet</name>
+			<code>31</code>
+			<navigateTo>/pages/view/create/newPacket.jsf</navigateTo>
+		</MenuItem>
+		<MenuItem>
+			<name>New Claim</name>
+			<code>32</code>
+			<navigateTo>/pages/view/create/newPacket.jsf</navigateTo>
+		</MenuItem>
+	</MenuItem>
+	<MenuItem>
+		<name>Configuration</name>
+		<code>4</code>
+		<MenuItem>
+			<name>Nextgen Configuration</name>
+			<code>41</code>
+			<navigateTo>/pages/view/config/nextgenConfig.jsf</navigateTo>
+		</MenuItem>
+		<MenuItem>
+			<name>My Configuration</name>
+			<code>42</code>
+			<navigateTo>/pages/view/config/myConfig.jsf</navigateTo>
+		</MenuItem>
+	</MenuItem>
+	<MenuItem>
+		<name>About</name>
+		<code>5</code>
+		<MenuItem>
+			<name>Help</name>
+			<code>51</code>
+			<navigateTo>/pages/view/about/help.jsf</navigateTo>
+		</MenuItem>
+		<MenuItem>
+			<name>News</name>
+			<code>52</code>
+			<navigateTo>/pages/view/about/news.jsf</navigateTo>
+		</MenuItem>
+		<MenuItem>
+			<name>Tutorials</name>
+			<code>53</code>
+			<navigateTo>/pages/view/about/tutorials.jsf</navigateTo>
+		</MenuItem>
+	</MenuItem>
+</MenuItems>

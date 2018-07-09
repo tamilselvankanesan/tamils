@@ -1,0 +1,54 @@
+<h1>Add a new Person record</h1>
+<form #addPersonForm="ngForm" (ngSubmit)="addPerson()">
+
+	<div class="form-group">
+		<label for="fName">First Name: </label>
+		<input type="text" name="fName" #fName="ngModel" class="form-control" id="fName"
+				[(ngModel)]="person.firstName" required>
+	</div>
+	<div class="form-group">
+		<label for="lName">Last Name: </label>
+		<input type="text" name="lName" #lName="ngModel"  class="form-control" id="lName" 
+				[(ngModel)]="person.lastName">
+	</div>
+	<div class="form-group">
+		<label for="address1">Address: </label>
+		<input type="text" name="address1" #address1="ngModel"  class="form-control" 
+				[(ngModel)]="person.address1" id="address1">
+		<input type="text" name="address1" #address2="ngModel"  class="form-control" 
+				[(ngModel)]="person.address2">	
+	</div>
+	<div class="form-group">
+		<label for="village">Village/Town: </label>
+		<input type="text" name="village" class="form-control" id="village"
+				#village="ngModel" [(ngModel)]="person.village">
+	</div>
+
+	<div class="form-group">
+		<label for="zip">Zip Code: </label>
+		<input type="text" name="zip" id="zip" class="form-control"
+				#zip="ngModel" [(ngModel)]="person.zipCode">
+	</div>
+	
+	<div class="form-group">
+		<label>State: </label>
+		<app-state-dropdown
+					(selectedState)="onStateChange($event)"></app-state-dropdown>
+	</div>
+	<div class="form-group" [hidden]="selectedState===null">
+		<label>District: </label>
+		<app-district-list [stateId]="selectedState?.id" 
+					(event)="onDistrictChange($event)"></app-district-list>
+	</div>
+	<div class="form-group" [hidden]="selectedDistrict===null">
+		<label>City: </label>
+		<app-city-dropdown (citySelect)="onCityChange($event)" 
+					[districtId]="selectedDistrict?.id"></app-city-dropdown>
+	</div>
+	<button type="submit" class="btn btn-default" [disabled]="!addPersonForm.valid || !selectedState || !selectedDistrict">Submit</button>
+	<button type="button" (click)="reset()" class="btn btn-default" >Reset</button>
+	<div [hidden]="message==null" [ngClass]="{'alert alert-success': success, 'alert alert-danger': !success}">
+		<br/>
+		{{message}}
+	</div>
+</form>

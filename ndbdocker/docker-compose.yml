@@ -1,0 +1,23 @@
+version: '3.3'
+services:
+        ndbsql:
+                build: mysql
+                environment:
+                        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+                        MYSQL_DATABASE: ${MYSQL_DATABASE}
+                        MYSQL_USER: ${MYSQL_USER}
+                        MYSQL_PASSWORD: ${MYSQL_APP_PASSWORD}
+                ports:
+                        - "3306:3306"
+        web:
+                build: tomcat
+                depends_on:
+                        - ndbsql
+                environment:
+                        - datasource.url=${TOMCAT_MYSQL_JDBC_URL}
+                        - datasource.username=${TOMCAT_MYSQL_USERNAME}
+                        - datasource.password=${TOMCAT_MYSQL_PASSWORD}
+                ports:
+                        - "9090:8080"
+                links:
+                        - ndbsql
