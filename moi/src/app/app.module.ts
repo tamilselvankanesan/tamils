@@ -9,6 +9,7 @@ import { MoiMainService } from './moi-main/moi-main.service';
 import { FormsModule } from '@angular/forms';
 import { MoiSearchPipe } from './moi-main/moi-search.pipe';
 import { HomeComponent } from './home/home.component';
+import { PasswordValidator } from './home/password_validator';
 import { MoiHomeComponent } from './moi-home/moi-home.component';
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
     MoiMainComponent,
     MoiSearchPipe,
     HomeComponent,
-    MoiHomeComponent
+    MoiHomeComponent,
+    PasswordValidator
   ],
   imports: [
     BrowserModule, FormsModule,
