@@ -1,5 +1,7 @@
+import {UserService} from '../service/user.service';
 import {User} from './user';
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import * as $ from 'jquery';
 
 @Component({
@@ -11,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   user = new User();
 
-  constructor() {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
   }
@@ -26,7 +28,10 @@ export class HomeComponent implements OnInit {
   }
 
   signup() {
-
+    this.userService.signup(this.user).subscribe(data => {
+      this.user = data;
+    });
+    this.router.navigate(['Moi-Home']);
   }
 
 }

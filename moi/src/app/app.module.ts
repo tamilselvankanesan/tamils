@@ -11,10 +11,12 @@ import { MoiSearchPipe } from './moi-main/moi-search.pipe';
 import { HomeComponent } from './home/home.component';
 import { PasswordValidator } from './home/password_validator';
 import { MoiHomeComponent } from './moi-home/moi-home.component';
+import { UserService } from './service/user.service';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'Moi', component: MoiMainComponent}
+  {path: 'Moi', component: MoiMainComponent},
+  {path: 'Moi-Home', component: MoiHomeComponent}
 ];
 
 
@@ -31,7 +33,7 @@ const routes: Routes = [
     BrowserModule, FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [MoiMainService],
+  providers: [MoiMainService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

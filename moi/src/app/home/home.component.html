@@ -119,11 +119,22 @@
 					<div class="form-group">
 						<label for="password" class="col-md-3 control-label">Password</label>
 						<div class="col-md-9">
-							<input type="password" class="form-control" name="passwd"
-								placeholder="Password" [(ngModel)]="user.password" required passwordValidator>
+							<input type="password" class="form-control" name="passwd" minlength=8
+								placeholder="Password" [(ngModel)]="user.password" required #Passwd="ngModel" passwordValidator>
 						</div>
 					</div>
 
+					<div class="form-group">
+						<label for="confirmPasswd" class="col-md-3 control-label">Confirm Password</label>
+						<div class="col-md-9">
+							<input type="password" class="form-control" name="confirmPasswd" #confirmPasswd="ngModel" passwordValidator minlength=8
+								placeholder="Confirm Password" [(ngModel)]="user.confirmPassword" required>
+						</div>
+					</div>
+					
+					<div class="alert alert-danger" *ngIf="confirmPasswd.errors && confirmPasswd.errors.Match && (confirmPasswd.dirty || confirmPasswd.touched)">Password not match</div>
+					<div class="alert alert-danger" *ngIf="confirmPasswd.errors && confirmPasswd.errors.Strong && (confirmPasswd.dirty || confirmPasswd.touched)">Password not strong enough</div>
+										
 					<div class="form-group">
 						<label for="icode" class="col-md-3 control-label">Invitation
 							Code</label>
