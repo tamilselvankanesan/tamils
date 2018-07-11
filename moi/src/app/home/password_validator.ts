@@ -9,72 +9,47 @@ import {NG_VALIDATORS, AbstractControl} from '@angular/forms';
 })
 export class PasswordValidator {
 
-  static strong(control: AbstractControl): boolean {
-    console.log('check strong');
-    let hasNumber = /\d/.test(control.value);
-    let hasUpper = /[A-Z]/.test(control.value);
-    let hasLower = /[a-z]/.test(control.value);
-    return hasNumber && hasUpper && hasLower;
-  }
-
   constructor( @Attribute('passwordValidator') public targetComponent: string, @Attribute('reverse') public reverse: string) {}
 
   validate(c: AbstractControl): {[key: string]: boolean | null} {
 
-    if (c && c.parent.get(this.targetComponent)) {
-      console.log('clear = ');
-      c.setErrors({Match: true});
-      c.parent.get(this.targetComponent).setErrors({Match: true});
-      
-      
-      c.setErrors(null);
-      c.parent.get(this.targetComponent).setErrors(null);
+    // c is either password or confirmPasswordField
+    let v = c.value;
 
-      if (c.value && c.parent.get(this.targetComponent).value) {
+    // if v is password then other is confirmPassword and viceversa
+    let other = c.parent.get(this.targetComponent);
 
-        console.log('inside ' + c.value);
-        console.log('inside target ' + c.root.get(this.targetComponent).value);
-        if (c.value !== c.parent.get(this.targetComponent).value) {
-          console.log('doesnt match = :');
-
-          c.setErrors({'Match': false});
-          c.parent.get(this.targetComponent).setErrors(null);
-
-          //        if (this.reverse) {
-          //          console.log(' password comp = :');
-          //          c.parent.get(this.targetComponent).setErrors(null);
-          //          c.setErrors({Match: false});
-          //        } else {
-          //          console.log(' confirm password comp = :');
-          //          c.parent.get(this.targetComponent).setErrors(null);
-          //          c.parent.get('confirmPasswd').setErrors({Match: false});
-          //        }
-          return {'Match': false};
-        }
-        console.log(' password match ');
-        c.setErrors(null);
-        c.parent.get(this.targetComponent).setErrors(null);
-
-      }
-
-
+    if (other && v !== other.value && !this.reverse) {
+      // when reverse is null or false then c will be password field
+      return {DoesNotMatch: true};
     }
 
+    if (other && v === other.value && this.reverse) {
+      delete other.errors['DoesNotMatch']; // when the password matches then remove the errors
+    }
 
-    //    if (c.parent.get('confirmPasswd') && c.parent.get('passwd') && c.parent.get('confirmPasswd').value && c.parent.get('passwd').value) {
-    //      let cp = c.parent.get('confirmPasswd').value;
-    //      let p = c.parent.get('passwd').value;
-    //      if (cp != p) {
-    //        c.parent.get('confirmPasswd').setErrors({Match: true});
-    //        console.log('doesnt match = :' + cp + ' :p: ' + p);
-    //        return {'Match': false};
-    //      }
-    //      if (!PasswordValidator.strong(c)) {
-    //        c.parent.get('confirmPasswd').setErrors({Strong: true});
-    //        console.log('not a strong password = ');
-    //        return {'Strong': false};
-    //      }
-    //    }
+    if (other && v !== other.value && this.reverse) {
+      other.setErrors({DoesNotMatch: true}); // set error in the confirmPassword field
+      return null;
+    }
+
+    return this.strong(c, other);
+  }
+
+  strong(c: AbstractControl, other: AbstractControl): {[key: string]: boolean} {
+
+    let hasNumber = /\d/.test(c.value);
+    let hasUpper = /[A-Z]/.test(c.value);
+    let hasLower = /[a-z]/.test(c.value);
+    if (!(hasNumber && hasUpper && hasLower)) {
+      console.log('Not strong');
+      if (other && this.reverse) {
+        other.setErrors({NotStrong: true}); // set error in the confirmPassword field
+      } else {
+        return {NotStrong: true};
+      }
+    }
     return null;
   }
+
 }

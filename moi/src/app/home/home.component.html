@@ -124,8 +124,9 @@
 						</div>
 					</div>
 
-					<div class="alert alert-danger" *ngIf="passwd.invalid  && (passwd.dirty || passwd.touched)">Password Required</div>
-					<pre *ngIf="passwd.errors" class="margin-20">{{ passwd.errors | json }}</pre>
+					<div class="alert alert-danger" *ngIf="passwd.errors?.required  && (passwd.dirty || passwd.touched)">Password Required</div>
+					<div class="alert alert-danger" *ngIf="passwd.errors?.minlength  && (passwd.dirty || passwd.touched)">Minimum length should be 8</div>
+					<!-- <pre *ngIf="passwd.errors" class="margin-20">{{ passwd.errors | json }}</pre> -->
 
 					<div class="form-group">
 						<label for="confirmPasswd" class="col-md-3 control-label">Confirm Password</label>
@@ -135,16 +136,10 @@
 						</div>
 					</div>
 					
-					<div class="alert alert-danger" *ngIf="confirmPasswd.invalid  && (confirmPasswd.dirty || confirmPasswd.touched)">Confirm Password Required</div>
-					<div class="alert alert-danger" *ngIf="!confirmPasswd.errors?.Match  && (confirmPasswd.dirty || confirmPasswd.touched)">Password not match</div>
-					<pre *ngIf="confirmPasswd.errors" class="margin-20">{{ confirmPasswd.errors | json }}</pre>
+					<div class="alert alert-danger" *ngIf="confirmPasswd.errors?.DoesNotMatch  && (confirmPasswd.dirty || confirmPasswd.touched)">Password does not match</div>
+					<div class="alert alert-danger" *ngIf="confirmPasswd.errors?.NotStrong  && (confirmPasswd.dirty || confirmPasswd.touched)">Password not strong enough</div>
+					<!-- <pre *ngIf="confirmPasswd.errors" class="margin-20">{{ confirmPasswd.errors | json }}</pre> -->
 					
-					<!-- <div class="alert alert-danger" *ngIf="confirmPasswd.errors  && (confirmPasswd.dirty || confirmPasswd.touched)">Password not match</div>
-					<div class="alert alert-danger" *ngIf="confirmPasswd.errors && confirmPasswd.errors.Strong && (confirmPasswd.dirty || confirmPasswd.touched)">Password not strong enough</div>
-					
-					<div class="alert alert-danger" *ngIf="passwd.invalid  && (passwd.dirty || passwd.touched)">Password not match1</div>
-					<div class="alert alert-danger" *ngIf="passwd.errors && passwd.errors.Strong && (passwd.dirty || passwd.touched)">Password not strong enough1</div> -->
-										
 					<div class="form-group">
 						<label for="icode" class="col-md-3 control-label">Invitation
 							Code</label>

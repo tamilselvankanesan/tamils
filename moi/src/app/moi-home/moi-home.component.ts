@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {MoiMainService} from '../moi-main/moi-main.service';
+import {MoiGroup} from './moi-group';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-moi-home',
@@ -7,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoiHomeComponent implements OnInit {
 
-  constructor() { }
+  moiGroups: MoiGroup[] = [];
+  constructor(private moiService: MoiMainService) {
+
+    this.moiService.getGroups(10).subscribe(data => {this.moiGroups = data;});
+
+  }
 
   ngOnInit() {
   }
