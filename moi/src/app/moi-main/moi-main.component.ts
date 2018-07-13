@@ -1,5 +1,5 @@
-import {MoiMainService} from './moi-main.service';
-import {MoiData} from './moidata';
+import { MoiData } from '../model/moidata';
+import {MoiMainService} from '../service/moi-main.service';
 import {Component, OnInit} from '@angular/core';
 
 @Component({

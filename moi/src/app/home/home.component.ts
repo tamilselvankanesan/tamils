@@ -1,5 +1,6 @@
+import { User } from '../model/user';
+import {AuthService} from '../service/auth.service';
 import {UserService} from '../service/user.service';
-import {User} from './user';
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService as SocialAuthService, FacebookLoginProvider} from 'angular5-social-login';
@@ -14,7 +15,8 @@ export class HomeComponent implements OnInit {
 
   user = new User();
 
-  constructor(private userService: UserService, private router: Router, private socialAuthService: SocialAuthService) {} // social step 5
+  constructor(private userService: UserService, private router: Router, private socialAuthService: SocialAuthService,
+    private authService: AuthService) {} // social step 5
 
   ngOnInit() {
   }
@@ -35,13 +37,20 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['Moi-Home']);
   }
 
-  signupUsingFacebook() { // social step 6
+  signInUsingFacebook() { // social step 6
     console.log('fb login => ');
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(data => {
       this.authenticateUsingAuthToken(data.token);
-    });
+    }, error => {console.log('error occurred while fb login');});
   }
   authenticateUsingAuthToken(token: string) {
     console.log('fb token is => ' + token);
+    
+    this.authService.validateToken(token).subscribe(data => {
+      console.log('valid token => ');
+      this.authService.setLoggedInUser(data);
+      this.router.navigate(['Moi-Home']);
+    }, error => {console.log('error occurred');});
+
   }
 }

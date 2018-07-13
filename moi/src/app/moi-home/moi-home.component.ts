@@ -1,5 +1,5 @@
-import {MoiMainService} from '../moi-main/moi-main.service';
-import {MoiGroup} from './moi-group';
+import { MoiGroup } from '../model/moi-group';
+import {MoiMainService} from '../service/moi-main.service';
 import {Component, OnInit} from '@angular/core';
 
 @Component({
