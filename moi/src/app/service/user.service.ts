@@ -1,4 +1,4 @@
-import {User} from '../home/user';
+import { User } from '../model/user';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

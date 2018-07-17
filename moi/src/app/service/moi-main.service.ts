@@ -1,5 +1,5 @@
-import {MoiGroup} from '../moi-home/moi-group';
-import {MoiData} from './moidata';
+import { MoiGroup } from '../model/moi-group';
+import { MoiData } from '../model/moidata';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
