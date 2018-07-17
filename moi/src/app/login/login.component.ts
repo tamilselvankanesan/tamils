@@ -14,6 +14,9 @@ import * as $ from 'jquery';
 export class LoginComponent implements OnInit {
 
   user = new User();
+  username: string;
+  password: string;
+  error: string;
 
   constructor(private userService: UserService, private router: Router, private socialAuthService: SocialAuthService,
     private authService: AuthService) {} // social step 5
@@ -28,6 +31,18 @@ export class LoginComponent implements OnInit {
       $('#signupbox').hide();
       $('#loginbox').show();
     }
+  }
+
+  login() {
+    console.log(this.username);
+    this.authService.loginUsingCredentials(this.username, this.password).subscribe(data => {
+      this.authService.setLoggedInUser(data);
+      this.router.navigate(['Moi-Home']);
+    },
+      error => {
+        this.error = 'Unable to login';
+      }
+    );
   }
 
   signup() {

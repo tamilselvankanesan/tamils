@@ -1,22 +1,25 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 import {SocialLoginModule, FacebookLoginProvider, AuthServiceConfig} from 'angular5-social-login'; // social step 1
 import {getAuthServiceConfigs} from './socialloginConfig';
 
 import {AppComponent} from './app.component';
 import {MoiMainComponent} from './moi-main/moi-main.component';
-import {MoiMainService} from './service/moi-main.service';
-import {FormsModule} from '@angular/forms';
-import {MoiSearchPipe} from './util/pipe/moi-search.pipe';
 import {HomeComponent} from './home/home.component';
-import {PasswordValidator} from './util/validator/password_validator';
 import {MoiHomeComponent} from './moi-home/moi-home.component';
+import { LoginComponent } from './login/login.component';
+
+import {MoiSearchPipe} from './util/pipe/moi-search.pipe';
+import {PasswordValidator} from './util/validator/password_validator';
+
+import {MoiMainService} from './service/moi-main.service';
 import {AuthGuradService} from './service/auth-gurad.service';
 import {AuthService} from './service/auth.service';
 import {UserService} from './service/user.service';
-import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -52,7 +55,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule, FormsModule, SocialLoginModule, // social step 2
-    RouterModule.forRoot(routes)
+    HttpClientModule, RouterModule.forRoot(routes)
   ],
   providers: [
     {provide: MoiMainService, useClass: MoiMainService},

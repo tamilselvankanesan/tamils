@@ -1,8 +1,11 @@
-import { MoiGroup } from '../model/moi-group';
-import { MoiData } from '../model/moidata';
+import {MoiGroup} from '../model/moi-group';
+import {MoiData} from '../model/moidata';
+import {BaseService} from './base.service';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
 
 const moiGroup: MoiGroup[] = [
   {groupId: 1, groupName: 'Marurpatti Group 1', groupCreatedDate: Date.now.toString(), groupOwnerId: 12},
@@ -11,11 +14,13 @@ const moiGroup: MoiGroup[] = [
 ];
 
 @Injectable()
-export class MoiMainService {
+export class MoiMainService extends BaseService {
 
   datas: MoiData[] = [];
 
-  constructor() {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   getAllData(): MoiData[] {
     this.datas = [
@@ -44,6 +49,6 @@ export class MoiMainService {
     return ob;
   }
   getGroups(userId: number): Observable<MoiGroup[]> {
-    return Observable.of(moiGroup);
+    return this.http.get(this.moiUrl + 'groups/' + userId, {headers: this.headers}).map(data => data as MoiGroup[], error => super.handleError(error));
   }
 }

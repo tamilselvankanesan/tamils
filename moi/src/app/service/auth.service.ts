@@ -1,4 +1,4 @@
-import { User } from '../model/user';
+import {User} from '../model/user';
 import {Injectable, EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -13,6 +13,15 @@ export class AuthService {
 
   setLoggedInUser(user: User) {
     this.loggedInUser.next(user);
+  }
+
+  loginUsingCredentials(username: string, password: string): Observable<User> {
+    let user = new User();
+    user.firstName = username;
+    user.lastName = username;
+    user.email = 'ss@ss.com';
+    this.setToken(username);
+    return Observable.of(user);
   }
 
   validateToken(token: string): Observable<User> {
