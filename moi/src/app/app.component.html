@@ -1,5 +1,15 @@
 <div id="container">
-	<div id="header">header</div>
+	<div id="header">
+	
+		<div style="float:right;" *ngIf="user">
+			<label>Welcome {{user?.firstName}}</label>
+			<a href="javascript:void(0)" (click)="logout()">Logout</a>			
+		</div>
+		<div style="clear: both;">
+		
+		</div>
+	
+	</div>
 	<div id="body">
 		<router-outlet></router-outlet>
 
