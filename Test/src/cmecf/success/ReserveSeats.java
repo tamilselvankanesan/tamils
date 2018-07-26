@@ -1,4 +1,4 @@
-package com.success;
+package cmecf.success;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class ReserveSeats {
 			System.out.println(" Input received... ready to process seat requests... ");
 			assignSeats();
 		} catch (IOException e) {
-			System.out.println("Unable to read the input... ");
+			System.out.println("\n Unable to read the input... ");
 			e.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("\n"+e.getMessage());
@@ -61,20 +61,36 @@ public class ReserveSeats {
 
 	private void readLayout(String line) throws Exception {
 		String[] array = line.split(" +");
-		int layoutMapSize = layoutMap.size() + 1;
-		for (String partition : array) {
-			if(partition.chars().allMatch(Character::isDigit)){
-				totalSeats += Integer.parseInt(partition);
-				layoutMap.computeIfAbsent(layoutMapSize, layoutList -> new ArrayList<>()).add(Integer.parseInt(partition));	
+		int rowNum = layoutMap.size() + 1;
+		for (String section : array) {
+			if(isNumber(section)){
+				totalSeats += Integer.parseInt(section);
+				addToLayoutMap(rowNum, Integer.parseInt(section));
 			}else{
 				throw new Exception("Invalid Layout");
 			}
 		}
 	}
+	
+	private void addToLayoutMap(Integer rowNum, Integer section){
+		if(!layoutMap.containsKey(rowNum)){
+			layoutMap.put(rowNum, new ArrayList<>());
+		}
+		layoutMap.get(rowNum).add(section);
+	}
+	
+	private boolean isNumber(String ip){
+		try {
+			Integer.parseInt(ip);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
 
 	private void readTicketsRequest(String line) throws Exception {
 		String[] array = line.split(" +");
-		if (array.length != 2 || !array[1].chars().allMatch(Character::isDigit)) {
+		if (array.length != 2 || !isNumber(array[1])) {
 			// invalid request
 			throw new Exception("Invalid ticket request ");
 		}
