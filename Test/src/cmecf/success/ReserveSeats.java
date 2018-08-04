@@ -29,16 +29,23 @@ public class ReserveSeats {
 		rs.compute();
 	}
 
+	private void overview(){
+		System.out.println("#############################################  Application Overview  #############################################");
+		System.out.println("The theater layout is made up of 1 or more rows.  Each row is made up of 1 or more sections separated by a space.");
+		System.out.println("After the theater layout, there is one empty line, followed by 1 or more theater requests. ");
+		System.out.println("The theater request is made up of a name followed by a space and the number of requested tickets.");
+		System.out.println("##################################################################################################################");
+	}
 	private void compute() {
 		try {
-			System.out.println("enter input ... ");
+			overview();
+			System.out.println("\nEnter seat layout  .... ");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 			int emptyLines = 0;
 			while (emptyLines < 2) {
 				String line = reader.readLine();
 				if (line == null || "".equals(line.trim())) {
-					System.out.println("--------------------------------------------------");
 					emptyLines++;
 				} else if (emptyLines == 0) {
 					// read layout
@@ -47,9 +54,11 @@ public class ReserveSeats {
 					// read tickets request
 					readTicketsRequest(line);
 				}
+				if(emptyLines == 1 && (line == null || "".equals(line.trim()))){
+					System.out.println("Enter seat requests .... ");
+				}
 			}
 			reader.close();
-			System.out.println(" Input received... ready to process seat requests... ");
 			assignSeats();
 		} catch (IOException e) {
 			System.out.println("\n Unable to read the input... ");
@@ -100,8 +109,11 @@ public class ReserveSeats {
 	private void assignSeats() {
 		if (layoutMap.isEmpty() || requests.isEmpty()) {
 			// no action
+			System.out.println("This request cannot be processed. Seat layout and Ticket request is required to process this request.");
 			return;
 		}
+		System.out.println("Input received... Ready to process seat requests... \n");
+		System.out.println("Here are the seat allocations ... \n ");
 		/**
 		 * for each request, go thru the seat map and fill the possible requests
 		 * from the first row and reduce the total number of available seats
