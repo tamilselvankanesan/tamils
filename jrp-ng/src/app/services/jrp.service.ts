@@ -1,6 +1,9 @@
-import {menuIems} from './data';
+import {SimplePerson} from '../dto/simple-person';
+import {menuIems, judges} from './data';
 import {Injectable} from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class JrpService {
@@ -25,4 +28,7 @@ export class JrpService {
     return cmecfMenuItems;
   }
 
+  getJudges(): Observable<SimplePerson[]> {
+    return Observable.of(judges);
+  }
 }

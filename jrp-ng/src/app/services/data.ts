@@ -1,3 +1,4 @@
+import {SimplePerson} from '../dto/simple-person';
 import {PacketsComponent} from '../packets/packets.component';
 import {MenuItem} from 'primeng/api';
 import {RouterModule} from '@angular/router';
@@ -138,6 +139,12 @@ export const menuIems: MenuItem[] = [
       {label: 'Tutorial', routerLink: 'inbox/52'}
     ]
   }
+];
+
+
+export const judges: SimplePerson[] = [
+  {id: 1, name: 'Aguila, Ricky Middle, II'},
+  {id: 2, name: 'AJTA, JudgeTwoB'}
 ];
 
 export class Data {

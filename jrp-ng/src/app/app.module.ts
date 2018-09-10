@@ -8,6 +8,10 @@ import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {TableModule} from 'primeng/table';
 import {FieldsetModule} from 'primeng/fieldset';
 import {CardModule} from 'primeng/card';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
+import {PanelModule} from 'primeng/panel';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -34,8 +38,8 @@ import { CaseSearchByCaseNumberComponent } from './components/case-search-by-cas
     CaseSearchByCaseNumberComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, BrowserAnimationsModule, CommonModule, MenubarModule, BreadcrumbModule, 
-    TableModule, FieldsetModule, CardModule
+    BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, 
+    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule
   ],
   providers: [JrpService, BreadCrumbService, PacketsService],
   bootstrap: [AppComponent]
