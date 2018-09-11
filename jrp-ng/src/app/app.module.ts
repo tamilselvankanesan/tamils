@@ -12,6 +12,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
+import {ListboxModule} from 'primeng/listbox';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -39,7 +40,7 @@ import { CaseSearchByCaseNumberComponent } from './components/case-search-by-cas
   ],
   imports: [
     BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, 
-    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule
+    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule, ListboxModule
   ],
   providers: [JrpService, BreadCrumbService, PacketsService],
   bootstrap: [AppComponent]

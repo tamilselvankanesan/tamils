@@ -2,7 +2,6 @@ import {SearchCriteria} from '../../dto/search-criteria';
 import {SimplePerson} from '../../dto/simple-person';
 import {JrpService} from '../../services/jrp.service';
 import {Component, OnInit} from '@angular/core';
-import {SelectItem} from 'primeng/api';
 
 @Component({
   selector: 'app-advanced-search',
@@ -12,15 +11,10 @@ import {SelectItem} from 'primeng/api';
 export class AdvancedSearchComponent implements OnInit {
 
   criteria = new SearchCriteria();
-  jduges: SelectItem[] = [];
+  jduges: SimplePerson[] = [];
 
   constructor(private jrpService: JrpService) {
-    this.jrpService.getJudges().subscribe(data => {
-      for (let judge of data) {
-        this.jduges.push({label: judge.name, value: judge.id});
-      }
-    });
-
+    this.jrpService.getJudges().subscribe(data => this.jduges = data);
   }
 
   ngOnInit() {
