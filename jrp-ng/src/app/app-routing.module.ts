@@ -3,6 +3,7 @@ import {PacketsComponent} from './packets/packets.component';
 import { AdvancedSearchComponent } from './search/advanced-search/advanced-search.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { JrpHomeComponent } from './jrp-home/jrp-home.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'search/:id',
     component: NavigationComponent
+  },
+  {
+    path: 'home',
+    component: JrpHomeComponent
   },
   {
     path: 'packets',

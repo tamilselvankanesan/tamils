@@ -67,7 +67,7 @@ export class NavigationComponent implements OnInit {
       {packetId: index + 3, packetName: '04-44444 # 1 Test packet Three', docketText: new Date().toLocaleString()}
     ];
     this.packetService.setPackets(packetsList);
-    this.router.navigate(['packets']);
+    this.router.navigate(['home']);
   }
   ngOnInit() {
   }

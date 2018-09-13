@@ -26,6 +26,7 @@ import {MenuComponent} from './menu/menu.component';
 import {PacketsService} from './packets/packets.service';
 import { AdvancedSearchComponent } from './search/advanced-search/advanced-search.component';
 import { CaseSearchByCaseNumberComponent } from './components/case-search-by-case-number/case-search-by-case-number.component';
+import { JrpHomeComponent } from './jrp-home/jrp-home.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { CaseSearchByCaseNumberComponent } from './components/case-search-by-cas
     NavigationComponent,
     MenuComponent,
     AdvancedSearchComponent,
-    CaseSearchByCaseNumberComponent
+    CaseSearchByCaseNumberComponent,
+    JrpHomeComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, 
