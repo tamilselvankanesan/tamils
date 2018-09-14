@@ -1,11 +1,9 @@
-import {BreadCrumbService} from '../bread-crumb/bread-crumb.service';
 import {Packet} from '../dto/packet';
-import {PacketsService} from './packets.service';
-import {Time} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, PRIMARY_OUTLET, NavigationEnd} from '@angular/router';
-import {MenuItem} from 'primeng/api';
+import {Component, OnInit, Input} from '@angular/core';
 import 'rxjs/add/operator/filter';
+import { ColumnSettings } from '../util/column-settings';
+import { ComponentConfigValue } from '../dto/component-config-value';
+import { Column } from '../util/column';
 
 @Component({
   selector: 'app-packets',
@@ -14,21 +12,29 @@ import 'rxjs/add/operator/filter';
 })
 export class PacketsComponent implements OnInit {
 
-  text = 'hello';
-  packets: Packet[] = [];
-
-  constructor(private activatedRoute: ActivatedRoute, private breadcrumbService: BreadCrumbService, private router: Router,
-    private packetService: PacketsService) {
-    this.text = new Date().toLocaleString();
-    this.packets = this.packetService.packets;
+  @Input('packets') packets: Packet[] = [];
+  @Input('savedColumns') savedColumns: ComponentConfigValue[] = [];
+  allColumns: Column[];
+  selectedColumns: Column[];
+  cs = new ColumnSettings();
+  selectedPackets: Packet[] = [];
+  
+  constructor() {
+    this.ngOnInit();
   }
 
   ngOnInit() {
-
+    this.allColumns = this.cs.getPacketColumns().columns;
+    // this.selectedColumns = this.cs.getPacketColumns().columns.filter(c => this.savedColumns.some(cv => 
+    //   cv.userInterfaceScreenFieldKey.startsWith("panelPacketListColumn") && cv.userInterfaceScreenFieldKey.endsWith(c.field)
+    // ));
+    console.log('init packets ');
   }
 
   handleNavigation() {
 
   }
 
+
+  
 }

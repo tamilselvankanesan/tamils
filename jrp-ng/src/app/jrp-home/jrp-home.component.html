@@ -1,21 +1,53 @@
-<p-table [value]="packets"> 
+<p-table [value]="packets" [columns]="selectedPacketColumns" sortMode="multiple" 
+[(selection)]="selectedPackets" dataKey="packetId"> 
 
-  <ng-template pTemplate="header">
-  <tr>
-    <th>Packet ID</th>
-    <th>Packet Name</th>
-    <th>Docket Text</th>
-    <th></th>
-  </tr>
+  <ng-template pTemplate="caption">
+      <div style="text-align:left">
+          <p-multiSelect [options]="packetColumns" [(ngModel)]="selectedPacketColumns" 
+          optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
+      </div>
+  </ng-template>
+
+
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th style="width: 3em">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      <th></th>
+    </tr>
   </ng-template> 
   
-  <ng-template pTemplate="body" let-packet>
-  <tr>
-    <td>{{packet.packetId}}</td>
-    <td>{{packet.packetName}}</td>
-    <td>{{packet.docketText}}</td>
-    <td></td>
-  </tr>
-  </ng-template> 
+  <ng-template pTemplate="body" let-columns="columns" let-rowData let-expanded="expanded">
+    <tr>
+      <td>
+            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+      </td>
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}    
+      </td>
+      <td>
+        <a href="javascript::void()" [pRowToggler]="rowData">View All</a>
+        <!-- <a href="javascript::void()">Items</a>
+        <a href="javascript::void()">Notes</a>
+        <a href="javascript::void()">Files</a> -->
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+    <tr>
+      <td [attr.colspan]="columns.length + 2">
+        <div>Itesm</div>
+        <div>Notes</div>
+        <div>Files</div>
+      </td>
+
+    </tr>
+
+  </ng-template>
   
   </p-table>

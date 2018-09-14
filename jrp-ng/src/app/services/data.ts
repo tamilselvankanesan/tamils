@@ -2,6 +2,7 @@ import {SimplePerson} from '../dto/simple-person';
 import {PacketsComponent} from '../packets/packets.component';
 import {MenuItem} from 'primeng/api';
 import {RouterModule} from '@angular/router';
+import { ComponentConfigValue } from '../dto/component-config-value';
 
 export const menuIems: MenuItem[] = [
   {
@@ -145,6 +146,20 @@ export const menuIems: MenuItem[] = [
 export const judges: SimplePerson[] = [
   {id: 1, name: 'Aguila, Ricky Middle, II'},
   {id: 2, name: 'AJTA, JudgeTwoB'}
+];
+
+export const columnSettingsConfig: ComponentConfigValue[] = [
+  {userInterfaceScreenFieldKey: 'panelPacketListColumn_packetName',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListColumn_caseMatterDescription',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListColumn_caseNumber',genericStringValue: 'ASC'},
+  
+  {userInterfaceScreenFieldKey: 'panelPacketListItemsColumn_caseDocNum',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListItemsColumn_caseMatterDescription',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListItemsColumn_caseNumber',genericStringValue: 'ASC'},
+
+  {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_subject',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_notesEntry',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_dateEntered',genericStringValue: 'ASC'}
 ];
 
 export class Data {

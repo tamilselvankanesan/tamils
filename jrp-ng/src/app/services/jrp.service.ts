@@ -1,9 +1,10 @@
 import {SimplePerson} from '../dto/simple-person';
-import {menuIems, judges} from './data';
+import {menuIems, judges, columnSettingsConfig} from './data';
 import {Injectable} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { ComponentConfigValue } from '../dto/component-config-value';
 
 @Injectable()
 export class JrpService {
@@ -30,5 +31,9 @@ export class JrpService {
 
   getJudges(): Observable<SimplePerson[]> {
     return Observable.of(judges);
+  }
+
+  getColumnSettings(): Observable<ComponentConfigValue[]>{
+    return Observable.of(columnSettingsConfig);
   }
 }

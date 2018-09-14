@@ -62,9 +62,9 @@ export class NavigationComponent implements OnInit {
     console.log('retrieve packets');
     const index = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
     const packetsList: Packet[] = [
-      {packetId: index + 1, packetName: '04-44444 # 1 Test packet One', docketText: new Date().toLocaleString()},
-      {packetId: index + 2, packetName: '04-44444 # 1 Test packet Two', docketText: new Date().toLocaleString()},
-      {packetId: index + 3, packetName: '04-44444 # 1 Test packet Three', docketText: new Date().toLocaleString()}
+      {packetId: index + 1, packetName: '04-44444 # 1 Test packet One', caseMatterDescription: new Date().toLocaleString()},
+      {packetId: index + 2, packetName: '04-44444 # 1 Test packet Two', caseMatterDescription: new Date().toLocaleString()},
+      {packetId: index + 3, packetName: '04-44444 # 1 Test packet Three', caseMatterDescription: new Date().toLocaleString()}
     ];
     this.packetService.setPackets(packetsList);
     this.router.navigate(['home']);
