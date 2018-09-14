@@ -25,10 +25,9 @@ export class PacketsComponent implements OnInit {
 
   ngOnInit() {
     this.allColumns = this.cs.getPacketColumns().columns;
-    // this.selectedColumns = this.cs.getPacketColumns().columns.filter(c => this.savedColumns.some(cv => 
-    //   cv.userInterfaceScreenFieldKey.startsWith("panelPacketListColumn") && cv.userInterfaceScreenFieldKey.endsWith(c.field)
-    // ));
-    console.log('init packets ');
+    this.selectedColumns = this.cs.getPacketColumns().columns.filter(c => this.savedColumns.some(cv => 
+      cv.userInterfaceScreenFieldKey.startsWith("panelPacketListColumn") && cv.userInterfaceScreenFieldKey.endsWith(c.field)
+    ));
   }
 
   handleNavigation() {
