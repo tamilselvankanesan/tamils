@@ -9,10 +9,8 @@ import {MenuItem} from 'primeng/api';
 })
 export class BreadCrumbComponent {
 
-  breadcrumb: MenuItem[] = [{
-    label: 'Home'
-  }];
+  breadcrumb: MenuItem[];
   constructor(private breadcrumbService: BreadCrumbService) {
-    this.breadcrumbService.breadcrumbChanged.subscribe(breadcrumb => {this.breadcrumb = breadcrumb});
+    this.breadcrumbService.breadCrumbs$.subscribe(breadcrumb => {this.breadcrumb = breadcrumb});
   }
 }

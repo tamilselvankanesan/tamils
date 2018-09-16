@@ -1,4 +1,4 @@
-import { Column } from "./column";
+import { Column } from "../util/column";
 
 export class PacketColumns{
     columns: Column[] = [

@@ -1,3 +1,7 @@
+import { PacketEvent } from "./packet-event";
+import { PacketNote } from "./packet-note";
+import { PacketFile } from "./packet-file";
+
 export class Packet {
   packetName: string;
   packetId: number;
@@ -7,4 +11,7 @@ export class Packet {
   showItems?: boolean;
   showFiles?: boolean;
   showNotes?: boolean;
+  events?: PacketEvent[];
+  notes?: PacketNote[];
+  files?: PacketFile[];
 }

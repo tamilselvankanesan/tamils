@@ -3,6 +3,7 @@ import {PacketsComponent} from '../packets/packets.component';
 import {MenuItem} from 'primeng/api';
 import {RouterModule} from '@angular/router';
 import { ComponentConfigValue } from '../dto/component-config-value';
+import { Packet } from '../dto/packet';
 
 export const menuIems: MenuItem[] = [
   {
@@ -160,6 +161,51 @@ export const columnSettingsConfig: ComponentConfigValue[] = [
   {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_subject',genericStringValue: 'ASC'},
   {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_notesEntry',genericStringValue: 'ASC'},
   {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_dateEntered',genericStringValue: 'ASC'}
+];
+
+export const sampleData: Packet[] = [
+  {packetId: 1, packetName: '04-44444 # 1 Test packet One Twenty', caseMatterDescription: new Date().toLocaleString(), caseNumber: '04-444441 raq11ddd',
+        events: [
+          {caseNumber: '04-44444 Test Case NUmber 1',
+          caseMatterDescription: 'Motion to Compel',
+          caseMatterFiledBy: 'Tamilselvan Balasubramaniam',
+          caseMatterFiledDate: '01/01/2018',
+          caseDocNum: 1
+          },
+          {caseNumber: '04-44446 Test Case NUmber 1',
+          caseMatterDescription: 'Motion to Reconsider',
+          caseMatterFiledBy: 'Tamilselvan Balasubramaniam',
+          caseMatterFiledDate: '02/01/2018',
+          caseDocNum: 120
+          }
+        ],
+        notes: [
+          {
+            subject: 'Test Note',
+            notesEntry: 'Hello world. This is a test note mode.',
+            dateEntered: '01/01/2017'
+          },
+          {
+            subject: 'Test Note 222 ',
+            notesEntry: 'Hello world. This is a test note note ABC 1.',
+            dateEntered: '01/01/2016'
+          }
+        ],
+        files: [
+          {
+            fileName: 'Test.pdf',
+            fileCreatedDate: '01/01/2016',
+            fileDescription: 'Sample Tets PDF file'
+          },
+          {
+            fileName: 'Test2.pdf',
+            fileCreatedDate: '01/01/2018',
+            fileDescription: 'Sample Tets PDF file 2'
+          }
+        ]
+      },
+  {packetId: 2, packetName: '04-44444 # 1 Test packet Two', caseMatterDescription: new Date().toLocaleString(), caseNumber: '04-444441 raq111'},
+  {packetId: 3, packetName: '04-44444 # 1 Test packet Three', caseMatterDescription: new Date().toLocaleString(), caseNumber: '04-444441 raq'}
 ];
 
 export class Data {

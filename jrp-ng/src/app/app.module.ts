@@ -7,7 +7,6 @@ import {MenubarModule} from 'primeng/menubar';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {TableModule} from 'primeng/table';
 import {FieldsetModule} from 'primeng/fieldset';
-import {CardModule} from 'primeng/card';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
@@ -27,6 +26,9 @@ import {PacketsService} from './packets/packets.service';
 import { AdvancedSearchComponent } from './search/advanced-search/advanced-search.component';
 import { CaseSearchByCaseNumberComponent } from './components/case-search-by-case-number/case-search-by-case-number.component';
 import { JrpHomeComponent } from './jrp-home/jrp-home.component';
+import { EventsComponent } from './events/events.component';
+import { FilesComponent } from './files/files.component';
+import { NotesComponent } from './notes/notes.component';
 
 
 @NgModule({
@@ -38,7 +40,10 @@ import { JrpHomeComponent } from './jrp-home/jrp-home.component';
     MenuComponent,
     AdvancedSearchComponent,
     CaseSearchByCaseNumberComponent,
-    JrpHomeComponent
+    JrpHomeComponent,
+    EventsComponent,
+    FilesComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, 

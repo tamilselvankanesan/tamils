@@ -1,10 +1,10 @@
-.cmecfmenuBar {
+:host ::ng-deep .cmecfmenuBar {
 	background: none !important;
 	border: 0px !important;
 	border-radius: 0px !important;
 }
 
-.ui-breadcrumb {
+:host ::ng-deep .ui-breadcrumb {
 	background: none !important;
 	border: 0px !important;
 }

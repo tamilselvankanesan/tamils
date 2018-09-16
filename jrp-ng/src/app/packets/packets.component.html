@@ -41,7 +41,9 @@
   <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
     <tr>
       <td [attr.colspan]="columns.length + 2">
-        <div>Itesm</div>
+        <div>
+            <jrp-events [savedColumns]="savedColumns"></jrp-events>
+        </div>
         <div>Notes</div>
         <div>Files</div>
       </td>

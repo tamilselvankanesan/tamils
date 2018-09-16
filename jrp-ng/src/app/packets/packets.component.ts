@@ -4,6 +4,7 @@ import 'rxjs/add/operator/filter';
 import { ColumnSettings } from '../util/column-settings';
 import { ComponentConfigValue } from '../dto/component-config-value';
 import { Column } from '../util/column';
+import { JRPConstants } from '../util/jrp-constants';
 
 @Component({
   selector: 'app-packets',
@@ -26,7 +27,7 @@ export class PacketsComponent implements OnInit {
   ngOnInit() {
     this.allColumns = this.cs.getPacketColumns().columns;
     this.selectedColumns = this.cs.getPacketColumns().columns.filter(c => this.savedColumns.some(cv => 
-      cv.userInterfaceScreenFieldKey.startsWith("panelPacketListColumn") && cv.userInterfaceScreenFieldKey.endsWith(c.field)
+      cv.userInterfaceScreenFieldKey.startsWith(JRPConstants.PacketsColumnPrefix.toString()) && cv.userInterfaceScreenFieldKey.endsWith(c.field)
     ));
   }
 

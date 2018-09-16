@@ -1,9 +1,10 @@
-import { PacketColumns } from "./packet-columns";
+import { PacketColumns } from "../packets/packet-columns";
+import { EventColumns } from "../events/event-columns";
 
 export class ColumnSettings {
 
     packetColumns = new PacketColumns();
-
+    eventColumns = new EventColumns();
     constructor(){
     }
 
@@ -16,7 +17,11 @@ export class ColumnSettings {
     getPacketColumns(){
         return this.packetColumns;
     }
+    getEventColumns(){
+        return this.eventColumns;
+    }
     getNoteColumns(){}
 
     getFileColumns(){}
+
 }
