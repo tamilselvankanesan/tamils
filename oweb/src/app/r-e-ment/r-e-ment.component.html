@@ -5,52 +5,74 @@
   <a href="javascript:void(0)" *ngIf="showSLOTable" (click)="showSLOTable=false">Show SLine </a>
   <br/><br/>
   <div *ngIf="!showSLOTable">
-    <table>
-      <tr>
-        <th>
+    
+    <p-dataTable [value]="rule.secondLineOwnership.ownerships" [responsive]="true">
+      <p-column>
+        <ng-template pTemplate="header">
           Business Unit
-        </th>
-        <th>
-          Legal Entity
-        </th>
-        <th>
+        </ng-template>
+        <ng-template let-row="rowData" pTemplate="body"  let-col>
+            <div *ngFor="let bu of row.businessUnit">
+                {{bu.text}}
+            </div>
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Legal Entity
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          {{row.legalEntity | json}}
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
           Role
-        </th>
-        <th>
-          Primart Contact
-        </th>
-        <th>
-          Additional Contacts
-        </th>
-        <th>
-          Notes
-        </th>
-        <th>
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          <input type="text" [(ngModel)]="row.role"/> 
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Primary Contact
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          {{row.primaryContact |json}}
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Additional Contacts
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          {{row.additionalContacts |json}}
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Notes
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          <input type="text" [(ngModel)]="row.notes"/> 
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
           Delete
-        </th>
-      </tr>
-      <tr *ngFor="let o of rule.secondLineOwnership.ownerships; let rowNum = index">
-        <td>
-          {{o.businessUnit |json}}
-        </td>
-        <td>
-          {{o.legalEntity |json}}
-        </td>
-        <td>
-            <input type="text" [(ngModel)]="o.role"/> 
-        </td>
-        <td>
-            {{o.primaryContact |json}}
-        </td>
-        <td>{{o.additionalContacts |json}}</td>
-        <td> 
-          <input type="text" [(ngModel)]="o.notes"/> 
-        </td>
-        <td>
-          <a href="javascript:void(0)" (click)="deleteSecondLineRole(rowNum)">Delete</a>
-        </td>
-      </tr>
-    </table>
+        </ng-template>
+        <ng-template pTemplate="body" let-ri="rowIndex">
+          <a href="javascript:void(0)" (click)="deleteSecondLineRole(rowIndex)">Delete</a>
+        </ng-template>
+      </p-column>
+    </p-dataTable>
+
     <br/>
     <input type="button" value="Add Second Line" (click)="addSecondLineRole()"/>
   </div>

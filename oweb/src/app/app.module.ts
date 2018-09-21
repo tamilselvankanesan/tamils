@@ -6,11 +6,12 @@ import {RouterModule, Route} from '@angular/router';
 import { AppComponent } from './app.component';
 import { REMentComponent } from './r-e-ment/r-e-ment.component';
 
+import {DataTableModule,SharedModule} from 'primeng/primeng';
 
 const routes : Route[] = [
 
   {
-    path: '', component: REMentComponent
+    path: 'rules', component: REMentComponent
   }
 ];
 
@@ -20,7 +21,7 @@ const routes : Route[] = [
     REMentComponent
   ],
   imports: [
-    BrowserModule, FormsModule,
+    BrowserModule, FormsModule, DataTableModule, SharedModule, 
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],

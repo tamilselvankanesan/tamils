@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Rule } from '../shared/r-model';
 import { EOShip } from '../shared/e-o-ship.model';
 import { OShip } from '../shared/o-ship.model';
@@ -10,16 +10,15 @@ import { OShip } from '../shared/o-ship.model';
 })
 export class REMentComponent implements OnInit {
 
-  rule: Rule;
+  @Input()rule: Rule;
   showEO = false;
   showSLOTable = false;
-
+  
   constructor() {
-    this.rule = new Rule();
-    this.setupOwnershipData();
    }
 
   ngOnInit() {
+    this.setupOwnershipData();
   }
 
   setEOSelected(){
@@ -56,10 +55,13 @@ export class REMentComponent implements OnInit {
   }
 
   deleteSecondLineRole(index: number){
-    this.rule.secondLineOwnership.ownerships.splice(index, 1);
+    let ownerships = [...this.rule.secondLineOwnership.ownerships];
+    ownerships.splice(index, 1);
+    this.rule.secondLineOwnership.ownerships = ownerships;
   }
   addSecondLineRole(){
     let ownership = new OShip();
+    let ownerships = [...this.rule.secondLineOwnership.ownerships];
     let count = this.rule.secondLineOwnership.ownerships.length + 1;
     ownership.businessUnit = [
       {
@@ -76,7 +78,8 @@ export class REMentComponent implements OnInit {
         type: 'Some Type', businessUnit: 'ADD BU'
       }
     ];
-    this.rule.secondLineOwnership.ownerships.push(ownership);
+    ownerships.push(ownership);
+    this.rule.secondLineOwnership.ownerships = ownerships;
   }
   save(){
     console.log('result is :'+JSON.stringify(this.rule));
