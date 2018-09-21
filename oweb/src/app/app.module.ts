@@ -2,22 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-import {RouterModule, Routes, Route} from '@angular/router';
+import {RouterModule, Route} from '@angular/router';
 import { AppComponent } from './app.component';
-import { RuleEnrichmentComponent } from './rule-enrichment/rule-enrichment.component';
+import { REMentComponent } from './r-e-ment/r-e-ment.component';
 
 
 const routes : Route[] = [
 
   {
-    path: '', component: RuleEnrichmentComponent
+    path: '', component: REMentComponent
   }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    RuleEnrichmentComponent
+    REMentComponent
   ],
   imports: [
     BrowserModule, FormsModule,

@@ -1,10 +1,10 @@
 import { Contact } from "./contact.model";
 import { TreeData } from "./tree-data.model";
-import { LegalEntity } from "./legal-entity.model";
+import { LEntity } from "./l-entity.model";
 
-export class Ownership{
+export class OShip{
     businessUnit: TreeData[];
-    legalEntity: LegalEntity;
+    legalEntity: LEntity;
     role?: string;
     primaryContact?: Contact;
     additionalContacts?: Contact[];

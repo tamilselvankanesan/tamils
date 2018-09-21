@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Rule } from '../shared/rule-model';
-import { EnhancedOwnership } from '../shared/enhanced-ownership.model';
-import { Ownership } from '../shared/ownership.model';
+import { Rule } from '../shared/r-model';
+import { EOShip } from '../shared/e-o-ship.model';
+import { OShip } from '../shared/o-ship.model';
 
 @Component({
-  selector: 'app-rule-enrichment',
-  templateUrl: './rule-enrichment.component.html',
-  styleUrls: ['./rule-enrichment.component.css']
+  selector: 'app-r-e-ment',
+  templateUrl: './r-e-ment.component.html',
+  styleUrls: ['./r-e-ment.component.css']
 })
-export class RuleEnrichmentComponent implements OnInit {
+export class REMentComponent implements OnInit {
 
   rule: Rule;
-  showEnhancedOwnership = false;
-  showSecondLineOwnershipTable = false;
+  showEO = false;
+  showSLOTable = false;
 
   constructor() {
     this.rule = new Rule();
@@ -22,9 +22,9 @@ export class RuleEnrichmentComponent implements OnInit {
   ngOnInit() {
   }
 
-  setEnhancedOwnershipSelected(){
+  setEOSelected(){
     console.log('toggle');
-    if(this.showEnhancedOwnership){
+    if(this.showEO){
       this.rule.enhancedOwnershipSelected = 'Y';
     }else{
       this.rule.enhancedOwnershipSelected = 'N';
@@ -32,8 +32,8 @@ export class RuleEnrichmentComponent implements OnInit {
   }
 
   setupOwnershipData(){
-    let eo = new EnhancedOwnership();
-    let ownership = new Ownership();
+    let eo = new EOShip();
+    let ownership = new OShip();
     ownership.businessUnit = [
       {
         id: 'BU1',text: 'Business Unit1'
@@ -59,7 +59,7 @@ export class RuleEnrichmentComponent implements OnInit {
     this.rule.secondLineOwnership.ownerships.splice(index, 1);
   }
   addSecondLineRole(){
-    let ownership = new Ownership();
+    let ownership = new OShip();
     let count = this.rule.secondLineOwnership.ownerships.length + 1;
     ownership.businessUnit = [
       {

@@ -1,10 +1,10 @@
-<input type="checkbox" [(ngModel)]="showEnhancedOwnership" (click)="setEnhancedOwnershipSelected()"/>
-<div *ngIf="showEnhancedOwnership">
+<input type="checkbox" [(ngModel)]="showEO" (click)="setEOSelected()"/>
+<div *ngIf="showEO">
   <br/>
-  <a href="javascript:void(0)" *ngIf="!showSecondLineOwnershipTable" (click)="showSecondLineOwnershipTable=true">Hide SecondLine Onwership</a>
-  <a href="javascript:void(0)" *ngIf="showSecondLineOwnershipTable" (click)="showSecondLineOwnershipTable=false">Show SecondLine Onwership</a>
+  <a href="javascript:void(0)" *ngIf="!showSLOTable" (click)="showSLOTable=true">Hide SLine </a>
+  <a href="javascript:void(0)" *ngIf="showSLOTable" (click)="showSLOTable=false">Show SLine </a>
   <br/><br/>
-  <div *ngIf="!showSecondLineOwnershipTable">
+  <div *ngIf="!showSLOTable">
     <table>
       <tr>
         <th>
@@ -52,7 +52,7 @@
       </tr>
     </table>
     <br/>
-    <input type="button" value="Add Second Line Role" (click)="addSecondLineRole()"/>
+    <input type="button" value="Add Second Line" (click)="addSecondLineRole()"/>
   </div>
 </div>
 <hr/>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RuleEnrichmentComponent } from './rule-enrichment.component';
+import { REMentComponent } from './r-e-ment.component';
 
 describe('RuleEnrichmentComponent', () => {
-  let component: RuleEnrichmentComponent;
-  let fixture: ComponentFixture<RuleEnrichmentComponent>;
+  let component: REMentComponent;
+  let fixture: ComponentFixture<REMentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RuleEnrichmentComponent ]
+      declarations: [ REMentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RuleEnrichmentComponent);
+    fixture = TestBed.createComponent(REMentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
