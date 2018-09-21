@@ -1,0 +1,59 @@
+<input type="checkbox" [(ngModel)]="showEnhancedOwnership" (click)="setEnhancedOwnershipSelected()"/>
+<div *ngIf="showEnhancedOwnership">
+  <br/>
+  <a href="javascript:void(0)" *ngIf="!showSecondLineOwnershipTable" (click)="showSecondLineOwnershipTable=true">Hide SecondLine Onwership</a>
+  <a href="javascript:void(0)" *ngIf="showSecondLineOwnershipTable" (click)="showSecondLineOwnershipTable=false">Show SecondLine Onwership</a>
+  <br/><br/>
+  <div *ngIf="!showSecondLineOwnershipTable">
+    <table>
+      <tr>
+        <th>
+          Business Unit
+        </th>
+        <th>
+          Legal Entity
+        </th>
+        <th>
+          Role
+        </th>
+        <th>
+          Primart Contact
+        </th>
+        <th>
+          Additional Contacts
+        </th>
+        <th>
+          Notes
+        </th>
+        <th>
+          Delete
+        </th>
+      </tr>
+      <tr *ngFor="let o of rule.secondLineOwnership.ownerships; let rowNum = index">
+        <td>
+          {{o.businessUnit |json}}
+        </td>
+        <td>
+          {{o.legalEntity |json}}
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="o.role"/> 
+        </td>
+        <td>
+            {{o.primaryContact |json}}
+        </td>
+        <td>{{o.additionalContacts |json}}</td>
+        <td> 
+          <input type="text" [(ngModel)]="o.notes"/> 
+        </td>
+        <td>
+          <a href="javascript:void(0)" (click)="deleteSecondLineRole(rowNum)">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <br/>
+    <input type="button" value="Add Second Line Role" (click)="addSecondLineRole()"/>
+  </div>
+</div>
+<hr/>
+<input type="button" value="Print" (click)="save()">
