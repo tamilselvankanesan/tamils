@@ -1,4 +1,4 @@
-<input type="checkbox" [(ngModel)]="showEO" (click)="setEOSelected()"/>
+<input type="checkbox" (click)="setEOSelected()"/>
 <div *ngIf="showEO">
   <br/>
   <a href="javascript:void(0)" *ngIf="!showSLOTable" (click)="showSLOTable=true">Hide SLine </a>
@@ -6,14 +6,14 @@
   <br/><br/>
   <div *ngIf="!showSLOTable">
     
-    <p-dataTable [value]="rule.secondLineOwnership.ownerships" [responsive]="true">
+    <p-dataTable [value]="rule.secondLineOwnership?.ownerships" [responsive]="true">
       <p-column>
         <ng-template pTemplate="header">
           Business Unit
         </ng-template>
         <ng-template let-row="rowData" pTemplate="body"  let-col>
             <div *ngFor="let bu of row.businessUnit">
-                {{bu.text}}
+               Business Units
             </div>
         </ng-template>
       </p-column>
@@ -23,7 +23,7 @@
             Legal Entity
         </ng-template>
         <ng-template pTemplate="body" let-row="rowData">
-          {{row.legalEntity | json}}
+          Legal Entities 
         </ng-template>
       </p-column>
 
@@ -40,8 +40,8 @@
         <ng-template pTemplate="header">
             Primary Contact
         </ng-template>
-        <ng-template pTemplate="body" let-row="rowData">
-          {{row.primaryContact |json}}
+        <ng-template pTemplate="body" let-row="rowData" let-ri="rowIndex">
+          Primary contact Information row {{ri}}
         </ng-template>
       </p-column>
 
@@ -50,7 +50,7 @@
             Additional Contacts
         </ng-template>
         <ng-template pTemplate="body" let-row="rowData">
-          {{row.additionalContacts |json}}
+          Additional contact details
         </ng-template>
       </p-column>
 
@@ -68,7 +68,7 @@
           Delete
         </ng-template>
         <ng-template pTemplate="body" let-ri="rowIndex">
-          <a href="javascript:void(0)" (click)="deleteSecondLineRole(rowIndex)">Delete</a>
+          <a href="javascript:void(0)" (click)="deleteSecondLineRole(ri)">Delete</a>
         </ng-template>
       </p-column>
     </p-dataTable>
