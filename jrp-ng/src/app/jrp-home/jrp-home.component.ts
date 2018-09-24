@@ -19,8 +19,7 @@ export class JrpHomeComponent implements OnInit {
   
   constructor(private packetService: PacketsService, private jrpService: JrpService) {
     this.jrpService.getColumnSettings().subscribe(data => this.componentConfigValue = data);
-    this.packets = this.packetService.packets;
-
+    this.packetService.packets.subscribe(packets => this.packets = packets);
   }
 
   ngOnInit() { 

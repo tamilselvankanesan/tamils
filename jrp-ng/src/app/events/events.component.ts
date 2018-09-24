@@ -3,6 +3,7 @@ import { Column } from '../util/column';
 import { ComponentConfigValue } from '../dto/component-config-value';
 import { ColumnSettings } from '../util/column-settings';
 import { JRPConstants } from '../util/jrp-constants';
+import { PacketEvent } from '../dto/packet-event';
 
 @Component({
   selector: 'jrp-events',
@@ -15,6 +16,7 @@ export class EventsComponent implements OnInit {
   selectedColumns: Column[];
   @Input('savedColumns') savedColumns: ComponentConfigValue[] = [];
   cs = new ColumnSettings();
+  @Input('events')events: PacketEvent[]
 
   constructor() {}
 

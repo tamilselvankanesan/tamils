@@ -3,8 +3,8 @@ import { PacketNote } from "./packet-note";
 import { PacketFile } from "./packet-file";
 
 export class Packet {
-  packetName: string;
-  packetId: number;
+  packetName?: string;
+  packetId?: number;
   caseMatterDescription?: string;
   routedTo?: string;
   caseNumber?: string;

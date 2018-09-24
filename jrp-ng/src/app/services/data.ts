@@ -164,7 +164,23 @@ export const columnSettingsConfig: ComponentConfigValue[] = [
 ];
 
 export const sampleData: Packet[] = [
-  {packetId: 1, packetName: '04-44444 # 1 Test packet One Twenty', caseMatterDescription: new Date().toLocaleString(), caseNumber: '04-444441 raq11ddd',
+  {packetId: 1, packetName: '04-44444 # 1 Test packet One Twenty', caseMatterDescription: new Date().toLocaleString(), 
+  caseNumber: '04-444441 raq11ddd',
+        notes: [
+          {
+            notesEntry: 'Test Note 111',
+            dateEntered: '01/01/2019',
+            userName: 'Tamilselvan B'
+          }
+        ],
+        files: [
+          {
+            fileName: 'Test.pdf',
+            fileDescription: 'Hello file',
+            fileCreatedDate: '01/01/2019',
+            fileCreator: 'Tamilselvan B'
+          }
+        ],
         events: [
           {caseNumber: '04-44444 Test Case NUmber 1',
           caseMatterDescription: 'Motion to Compel',
@@ -179,34 +195,7 @@ export const sampleData: Packet[] = [
           caseDocNum: 120
           }
         ],
-        notes: [
-          {
-            subject: 'Test Note',
-            notesEntry: 'Hello world. This is a test note mode.',
-            dateEntered: '01/01/2017'
-          },
-          {
-            subject: 'Test Note 222 ',
-            notesEntry: 'Hello world. This is a test note note ABC 1.',
-            dateEntered: '01/01/2016'
-          }
-        ],
-        files: [
-          {
-            fileName: 'Test.pdf',
-            fileCreatedDate: '01/01/2016',
-            fileDescription: 'Sample Tets PDF file'
-          },
-          {
-            fileName: 'Test2.pdf',
-            fileCreatedDate: '01/01/2018',
-            fileDescription: 'Sample Tets PDF file 2'
-          }
-        ]
-      },
-  {packetId: 2, packetName: '04-44444 # 1 Test packet Two', caseMatterDescription: new Date().toLocaleString(), caseNumber: '04-444441 raq111'},
-  {packetId: 3, packetName: '04-44444 # 1 Test packet Three', caseMatterDescription: new Date().toLocaleString(), caseNumber: '04-444441 raq'}
-];
+      }];
 
 export class Data {
   constructor(private packet: PacketsComponent) {}

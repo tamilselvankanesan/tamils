@@ -2,9 +2,8 @@ import {BreadCrumbService} from '../bread-crumb/bread-crumb.service';
 import {Packet} from '../dto/packet';
 import {PacketsService} from '../packets/packets.service';
 import {JrpMenuEnum} from '../util/jrpmenuenum';
-import {Time} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, PRIMARY_OUTLET, NavigationEnd} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import 'rxjs/add/operator/filter';
 
@@ -59,14 +58,8 @@ export class NavigationComponent implements OnInit {
     });
   }
   retrievePackets() {
-    console.log('retrieve packets');
-    const index = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-    const packetsList: Packet[] = [
-      {packetId: index + 1, packetName: '04-44444 # 1 Test packet One', caseMatterDescription: new Date().toLocaleString()
-      {packetId: index + 2, packetName: '04-44444 # 1 Test packet Two', caseMatterDescription: new Date().toLocaleString()},
-      {packetId: index + 3, packetName: '04-44444 # 1 Test packet Three', caseMatterDescription: new Date().toLocaleString()}
-    ];
-    this.packetService.setPackets(packetsList);
+    console.log('retrieve packets based on menu selection');
+    this.packetService.setPackets(this.packetService.getPackets());
     this.router.navigate(['home']);
   }
   ngOnInit() {

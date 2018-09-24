@@ -1,12 +1,13 @@
 import {Packet} from '../dto/packet';
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { sampleData } from '../services/data';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class PacketsService {
 
-  packets: Packet[] = [];
-  packetsChanged = new EventEmitter<Packet[]>();
+  packets = new BehaviorSubject<Packet[]>([]);
+  public packets$ = this.packets.asObservable();
   constructor() {
   }
   getPackets(): Packet[] {
@@ -14,8 +15,7 @@ export class PacketsService {
   }
 
   setPackets(packets: Packet[]) {
-    this.packets = packets;
-    this.packetsChanged.next(this.packets);
+    this.packets.next(packets);
     console.log("packets changed");
   }
 }
