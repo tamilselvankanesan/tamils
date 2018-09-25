@@ -1,0 +1,8 @@
+.packetsTableCaption{
+    text-align: right;
+}
+:host ::ng-deep .packetsTable .ui-table-caption{
+    padding: 0px !important;
+    background-color: white !important;
+    border: 0px !important;
+}
