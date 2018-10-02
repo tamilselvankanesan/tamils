@@ -1,4 +1,5 @@
 export class TreeData{
-    id: string;
-    text: string;
+    key: string;
+    value: string;
+    breadCrumb?: string;
 }
