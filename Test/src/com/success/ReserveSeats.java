@@ -62,10 +62,10 @@ public class ReserveSeats {
 	private void readLayout(String line) throws Exception {
 		String[] array = line.split(" +");
 		int layoutMapSize = layoutMap.size() + 1;
-		for (String partition : array) {
-			if(partition.chars().allMatch(Character::isDigit)){
-				totalSeats += Integer.parseInt(partition);
-				layoutMap.computeIfAbsent(layoutMapSize, layoutList -> new ArrayList<>()).add(Integer.parseInt(partition));	
+		for (String section : array) {
+			if(section.chars().allMatch(Character::isDigit)){
+				totalSeats += Integer.parseInt(section);
+				layoutMap.computeIfAbsent(layoutMapSize, layoutList -> new ArrayList<>()).add(Integer.parseInt(section));	
 			}else{
 				throw new Exception("Invalid Layout");
 			}

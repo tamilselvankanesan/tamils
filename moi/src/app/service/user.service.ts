@@ -1,12 +1,15 @@
-import { User } from '../model/user';
+import {User} from '../model/user';
+import {BaseService} from './base.service';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseService {
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   signup(user: User): Observable<User> {
     return Observable.of(user);

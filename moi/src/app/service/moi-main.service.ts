@@ -49,6 +49,11 @@ export class MoiMainService extends BaseService {
     return ob;
   }
   getGroups(userId: number): Observable<MoiGroup[]> {
-    return this.http.get(this.moiUrl + 'groups/' + userId, {headers: this.headers}).map(data => data as MoiGroup[], error => super.handleError(error));
+    const ob = <Observable<MoiGroup[]>>new Observable((observer) => {
+      observer.next(moiGroup);
+      observer.complete();
+    });
+    return ob;
+    //    return this.http.get(this.moiUrl + 'groups/' + userId, {headers: this.headers}).map(data => data as MoiGroup[], error => super.handleError(error));
   }
 }
