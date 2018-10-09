@@ -160,12 +160,17 @@ export const columnSettingsConfig: ComponentConfigValue[] = [
 
   {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_subject',genericStringValue: 'ASC'},
   {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_notesEntry',genericStringValue: 'ASC'},
-  {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_dateEntered',genericStringValue: 'ASC'}
+  {userInterfaceScreenFieldKey: 'panelPacketListNotesColumn_dateEntered',genericStringValue: 'ASC'},
+
+  {userInterfaceScreenFieldKey: 'panelPacketListFilesColumn_fileName',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListFilesColumn_fileDescription',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListFilesColumn_fileCreatedDate',genericStringValue: 'ASC'},
+  {userInterfaceScreenFieldKey: 'panelPacketListFilesColumn_fileCreator',genericStringValue: 'ASC'}
 ];
 
 export const sampleData: Packet[] = [
-  {packetId: 1, packetName: '04-44444 # 1 Test packet One Twenty', caseMatterDescription: new Date().toLocaleString(), 
-  caseNumber: '04-444441 raq11ddd',
+  {packetId: 2, packetName: '04-44444 # 2 Test packet One Twenty', caseMatterDescription: new Date().toLocaleString(), 
+  caseNumber: '04-55555 raq11ddd',
         notes: [
           {
             notesEntry: 'Test Note 111',
@@ -195,7 +200,40 @@ export const sampleData: Packet[] = [
           caseDocNum: 120
           }
         ],
-      }];
+      },
+      {packetId: 1, packetName: '04-44444 # 1 Test packet One Twenty', caseMatterDescription: new Date().toLocaleString(), 
+      caseNumber: '04-444441 raq11ddd',
+            notes: [
+              {
+                notesEntry: 'Test Note 111',
+                dateEntered: '01/01/2019',
+                userName: 'Tamilselvan B'
+              }
+            ],
+            files: [
+              {
+                fileName: 'Test.pdf',
+                fileDescription: 'Hello file',
+                fileCreatedDate: '01/01/2019',
+                fileCreator: 'Tamilselvan B'
+              }
+            ],
+            events: [
+              {caseNumber: '04-44444 Test Case NUmber 1',
+              caseMatterDescription: 'Motion to Compel',
+              caseMatterFiledBy: 'Tamilselvan Balasubramaniam',
+              caseMatterFiledDate: '01/01/2018',
+              caseDocNum: 1
+              },
+              {caseNumber: '04-44446 Test Case NUmber 1',
+              caseMatterDescription: 'Motion to Reconsider',
+              caseMatterFiledBy: 'Tamilselvan Balasubramaniam',
+              caseMatterFiledDate: '02/01/2018',
+              caseDocNum: 120
+              }
+            ],
+          }
+    ];
 
 export class Data {
   constructor(private packet: PacketsComponent) {}

@@ -2,18 +2,21 @@
 [(selection)]="selectedPackets" dataKey="packetId" styleClass="packetsTable"> 
 
   <ng-template pTemplate="caption">
-      <div style="float: left" styleClass="packetsTableCaption">
+      <div class="packetsTableCaption">
           <a href="javascrip::void(0)">More actions</a>
       </div>
-      <div style="float:right" styleClass="packetsTableCaption">
+      
+      <div style="left: 72%" class="packetsTableCaption">
           <p-multiSelect [options]="allColumns" [(ngModel)]="selectedColumns" displaySelectedLabel="false" filter="false"
           optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
-          <a href="javascrip::void(0)">Expand All</a>
-          <a href="javascrip::void(0)">Collapse All</a>
       </div>
-      <div style="clear: both;"></div>
+      <div style="left: 88%" class="packetsTableCaption">
+        <a href="javascrip::void(0)">Expand All</a>
+      </div>
+      <div style="left:93.5%" class="packetsTableCaption">
+        <a href="javascrip::void(0)">Collapse All</a>
+      </div>
   </ng-template>
-
 
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -50,12 +53,14 @@
         <div>
             <jrp-events [savedColumns]="savedColumns" [events]="rowData.events"></jrp-events>
         </div>
-        <div>Notes</div>
-        <div>Files</div>
+        <div>
+          <jrp-notes [savedColumns]="savedColumns" [notes]="rowData.notes"></jrp-notes>
+        </div>
+        <div>
+          <jrp-files [savedColumns]="savedColumns" [files]="rowData.files"></jrp-files>
+        </div>
       </td>
-
     </tr>
-
   </ng-template>
   
   </p-table>
