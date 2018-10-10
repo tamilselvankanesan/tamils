@@ -1,10 +1,11 @@
-import { Column } from "../util/column";
+import { Column } from '../util/column';
 
 export class EventColumns{
     columns: Column[] = [
         {
             field: 'caseNumber',
-            header: 'Case'
+            header: 'Case',
+            visible: true
         },
         {
             field: 'caseChapter',
@@ -16,11 +17,13 @@ export class EventColumns{
         },
         {
             field: 'caseDocNum',
-            header: 'Doc'
+            header: 'Doc',
+            visible: true
         },
         {
             field: 'caseMatterDescription',
-            header: 'Event'
+            header: 'Event',
+            visible: true
         },
         {
             field: 'hearings',

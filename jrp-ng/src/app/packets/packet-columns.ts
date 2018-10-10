@@ -1,94 +1,94 @@
-import { Column } from "../util/column";
+import { Column } from '../util/column';
 
-export class PacketColumns{
+export class PacketColumns {
     columns: Column[] = [
         {
-            field:'packetName',
+            field: 'packetName',
             header: 'Packet Name',
             visible: true
         },
         {
-            field:'caseMatterDescription',
+            field: 'caseMatterDescription',
             header: 'Event',
             visible: true
         },
         {
-            field:'routedTo',
+            field: 'routedTo',
             header: 'To',
             visible: false
         },
         {
-            field:'caseChapter',
+            field: 'caseChapter',
             header: 'Chapter',
             visible: false
         },
         {
-            field:'caseDocNum',
+            field: 'caseDocNum',
             header: 'Doc',
             visible: false
         },
         {
-            field:'caseType ',
+            field: 'caseType ',
             header: 'Case Type',
             visible: false
         },
         {
-            field:'eventType',
+            field: 'eventType',
             header: 'Type',
             visible: false
         },
         {
-            field:'hearings',
+            field: 'hearings',
             header: 'Hearing',
             visible: false
         },
         {
-            field:'dateCreated',
+            field: 'dateCreated',
             header: 'Created',
             visible: false
         },
         {
-            field:'createdBy',
+            field: 'createdBy',
             header: 'Created By',
             visible: false
         },
         {
-            field:'lastUpdated',
+            field: 'lastUpdated',
             header: 'Last Updated',
             visible: false
         },
         {
-            field:'routedFrom',
+            field: 'routedFrom',
             header: 'From',
             visible: false
         },
         {
-            field:'caseJudge',
+            field: 'caseJudge',
             header: 'Judge',
             visible: false
         },
         {
-            field:'priority',
+            field: 'priority',
             header: 'Priority',
             visible: false
         },
         {
-            field:'status',
+            field: 'status',
             header: 'Status',
             visible: false
         },
         {
-            field:'dueDate',
+            field: 'dueDate',
             header: 'Due',
             visible: false
         },
         {
-            field:'caseNumber',
-            header:'Case',
+            field: 'caseNumber',
+            header: 'Case',
             visible: false
-        }    
+        }
     ];
-    getColumns():Column[]{
+    getColumns(): Column[] {
         return this.columns;
     }
 }

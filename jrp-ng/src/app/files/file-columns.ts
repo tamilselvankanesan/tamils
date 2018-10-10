@@ -1,27 +1,31 @@
-import { Column } from "../util/column";
+import { Column } from '../util/column';
 
-export class FileColumns{
+export class FileColumns {
 
     columns: Column[] = [
         {
             field: 'fileName',
-            header: 'File'
+            header: 'File',
+            visible: true
         },
         {
             field: 'fileDescription',
-            header: 'Description'
+            header: 'Description',
+            visible: true
         },
         {
             field: 'fileCreatedDate',
-            header: 'Added'
+            header: 'Added',
+            visible: true
         },
         {
             field: 'fileCreator',
-            header: 'Added by'
+            header: 'Added by',
+            visible: true
         },
     ];
 
-    getColumns(){
+    getColumns() {
         return this.columns;
     }
 }

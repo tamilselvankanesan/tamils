@@ -1,35 +1,51 @@
-<p-table [value]="files" [columns]="selectedColumns" sortMode="multiple"> 
+<div>
+  <a href="javascrip::void(0)" (click)="fileColumns.toggle($event)">Display Options</a>
+</div>
+<p-table [value]="files" [columns]="selectedColumns" sortMode="multiple">
 
   <ng-template pTemplate="caption">
-      <div style="text-align:left">
-          <p-multiSelect [options]="allColumns" [(ngModel)]="selectedColumns" 
-          optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
-      </div>
+    <div style="text-align:left">
+      <p-multiSelect [options]="allColumns" [(ngModel)]="selectedColumns" optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
+    </div>
   </ng-template>
-
 
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 3em">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
         {{col.header}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
-        </th>
+      </th>
       <th></th>
     </tr>
-  </ng-template> 
-  
+  </ng-template>
+
   <ng-template pTemplate="body" let-columns="columns" let-rowData let-expanded="expanded">
     <tr>
       <td>
-            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
       </td>
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}    
-      </td> 
+        {{rowData[col.field]}}
+      </td>
     </tr>
   </ng-template>
 
 </p-table>
+<p-overlayPanel #fileColumns>
+  <div>
+    <table>
+      <tr *ngFor="let col of allColumns">
+        <td>
+          <input type="checkbox" [(ngModel)]="col.visible">
+        </td>
+        <td>
+          {{col.header}}
+        </td>
+      </tr>
+    </table>
+    <input type="button" value="Save Display Options">
+  </div>
+</p-overlayPanel>

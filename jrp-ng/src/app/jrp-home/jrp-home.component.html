@@ -1,1 +1,31 @@
-<app-packets [packets]="packets" [savedColumns]="componentConfigValue"></app-packets>
+<div>
+    <jrp-more-actions></jrp-more-actions>
+</div>
+<div style="position: relative;" class="packetsTableCaption">
+    <div style="position: absolute; left: 76%; bottom: 0">
+        <a href="javascrip::void(0)" (click)="packetColumns.toggle($event)">Display Options</a>
+    </div>
+
+    <div style="position: absolute; left: 86%; bottom: 0;">
+        <a href="javascrip::void(0)">Expand All</a>
+    </div>
+    <div style="position: absolute; left: 93%; bottom: 0">
+        <a href="javascrip::void(0)">Collapse All</a>
+    </div>
+</div>
+<app-packets [packets]="packets"></app-packets>
+<p-overlayPanel #packetColumns>
+    <div>
+        <table>
+            <tr *ngFor="let col of allColumns">
+                <td>
+                    <input type="checkbox" [(ngModel)]="col.visible">
+                </td>
+                <td>
+                    {{col.header}}
+                </td>
+            </tr>
+        </table>
+        <input type="button" value="Save Display Options" (click)="updateSelectedColumns(packetColumns)">
+    </div>
+</p-overlayPanel>

@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Column } from '../util/column';
-import { ComponentConfigValue } from '../dto/component-config-value';
-import { ColumnSettings } from '../util/column-settings';
-import { JRPConstants } from '../util/jrp-constants';
 import { PacketEvent } from '../dto/packet-event';
+import { ColumnSettingsService } from '../services/column-settings.service';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'jrp-events',
@@ -14,17 +13,18 @@ export class EventsComponent implements OnInit {
 
   allColumns: Column[];
   selectedColumns: Column[];
-  @Input('savedColumns') savedColumns: ComponentConfigValue[] = [];
-  cs = new ColumnSettings();
-  @Input('events')events: PacketEvent[]
+  @Input('events') events: PacketEvent[];
 
-  constructor() {}
+  constructor(private csService: ColumnSettingsService) { }
 
   ngOnInit() {
-    this.allColumns = this.cs.getEventColumns().columns;
-    this.selectedColumns = this.cs.getEventColumns().columns.filter(c => this.savedColumns.some(cv => 
-      cv.userInterfaceScreenFieldKey.startsWith(JRPConstants.EventsColumnPrefix.toString()) && cv.userInterfaceScreenFieldKey.endsWith(c.field)
-    ));
+    this.allColumns = this.csService.getColumnSettings().getEventColumns().columns;
+    this.csService.eventColumnsSelected$.subscribe(data => this.selectedColumns = data);
+  }
+  updateSelectedColumns(displayOptionsOverlay: OverlayPanel) {
+    // clone the selection, otherwise check/uncheck directly affects the table
+    this.csService.setEventColumnsSelected(JSON.parse(JSON.stringify(this.allColumns.filter(e => e.visible))));
+    displayOptionsOverlay.hide();
   }
 
 }

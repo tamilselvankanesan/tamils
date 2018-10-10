@@ -1,11 +1,7 @@
-<p-table [value]="packets" [columns]="selectedColumns" sortMode="multiple" 
-[(selection)]="selectedPackets" dataKey="packetId" styleClass="packetsTable"> 
+<p-table [value]="packets" [columns]="selectedColumns" sortMode="multiple" [(selection)]="selectedPackets" dataKey="packetId"
+  styleClass="packetsTable">
 
-  <ng-template pTemplate="caption">
-      <div class="packetsTableCaption">
-          <a href="javascrip::void(0)">More actions</a>
-      </div>
-      
+  <!-- <ng-template pTemplate="caption">
       <div style="left: 72%" class="packetsTableCaption">
           <p-multiSelect [options]="allColumns" [(ngModel)]="selectedColumns" displaySelectedLabel="false" filter="false"
           optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
@@ -16,29 +12,33 @@
       <div style="left:93.5%" class="packetsTableCaption">
         <a href="javascrip::void(0)">Collapse All</a>
       </div>
-  </ng-template>
+  </ng-template> -->
 
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 3em">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <ng-container *ngFor="let col of columns">
+        <th *ngIf="col.visible" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
         </th>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-        </th>
+      </ng-container>
       <th></th>
     </tr>
-  </ng-template> 
-  
+  </ng-template>
+
   <ng-template pTemplate="body" let-columns="columns" let-rowData let-expanded="expanded">
     <tr>
       <td>
-            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
       </td>
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}    
-      </td>
+      <ng-container *ngFor="let col of columns">
+        <td *ngIf="col.visible">
+          {{rowData[col.field]}}
+        </td>
+      </ng-container>
       <td>
         <a href="javascript::void()" [pRowToggler]="rowData">View All</a>
         <!-- <a href="javascript::void()">Items</a>
@@ -51,16 +51,16 @@
     <tr>
       <td [attr.colspan]="columns.length + 2">
         <div>
-            <jrp-events [savedColumns]="savedColumns" [events]="rowData.events"></jrp-events>
+          <jrp-events [events]="rowData.events"></jrp-events>
         </div>
         <div>
-          <jrp-notes [savedColumns]="savedColumns" [notes]="rowData.notes"></jrp-notes>
+          <jrp-notes [notes]="rowData.notes"></jrp-notes>
         </div>
         <div>
-          <jrp-files [savedColumns]="savedColumns" [files]="rowData.files"></jrp-files>
+          <jrp-files [files]="rowData.files"></jrp-files>
         </div>
       </td>
     </tr>
   </ng-template>
-  
-  </p-table>
+
+</p-table>

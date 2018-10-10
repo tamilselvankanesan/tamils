@@ -12,6 +12,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
 import {ListboxModule} from 'primeng/listbox';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -29,6 +30,8 @@ import { JrpHomeComponent } from './jrp-home/jrp-home.component';
 import { EventsComponent } from './events/events.component';
 import { FilesComponent } from './files/files.component';
 import { NotesComponent } from './notes/notes.component';
+import { MoreActionsComponent } from './more-actions/more-actions.component';
+import { ColumnSettingsService } from './services/column-settings.service';
 
 
 @NgModule({
@@ -43,13 +46,14 @@ import { NotesComponent } from './notes/notes.component';
     JrpHomeComponent,
     EventsComponent,
     FilesComponent,
-    NotesComponent
+    NotesComponent,
+    MoreActionsComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, 
-    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule, ListboxModule
+    BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule,
+    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule, ListboxModule, OverlayPanelModule
   ],
-  providers: [JrpService, BreadCrumbService, PacketsService],
+  providers: [JrpService, BreadCrumbService, PacketsService, ColumnSettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

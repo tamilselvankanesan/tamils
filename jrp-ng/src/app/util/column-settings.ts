@@ -1,7 +1,7 @@
-import { PacketColumns } from "../packets/packet-columns";
-import { EventColumns } from "../events/event-columns";
-import { NoteColumns } from "../notes/note-columns";
-import { FileColumns } from "../files/file-columns";
+import { PacketColumns } from '../packets/packet-columns';
+import { EventColumns } from '../events/event-columns';
+import { NoteColumns } from '../notes/note-columns';
+import { FileColumns } from '../files/file-columns';
 
 export class ColumnSettings {
 
@@ -9,25 +9,25 @@ export class ColumnSettings {
     eventColumns = new EventColumns();
     noteColumns = new NoteColumns();
     fileColumns = new FileColumns();
-    constructor(){
+    constructor() {
     }
 
-    updatePacketColumns(){}
+    updatePacketColumns() { }
 
-    updateNoteColumns(){}
+    updateNoteColumns() { }
 
-    updateFileColumns(){}
+    updateFileColumns() { }
 
-    getPacketColumns(){
+    getPacketColumns() {
         return this.packetColumns;
     }
-    getEventColumns(){
+    getEventColumns() {
         return this.eventColumns;
     }
-    getNoteColumns(){
+    getNoteColumns() {
         return this.noteColumns;
     }
-    getFileColumns(){
+    getFileColumns() {
         return this.fileColumns;
     }
 }

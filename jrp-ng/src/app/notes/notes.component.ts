@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Column } from '../util/column';
-import { ComponentConfigValue } from '../dto/component-config-value';
-import { ColumnSettings } from '../util/column-settings';
 import { PacketNote } from '../dto/packet-note';
-import { JRPConstants } from '../util/jrp-constants';
+import { ColumnSettingsService } from '../services/column-settings.service';
 
 @Component({
   selector: 'jrp-notes',
@@ -14,17 +12,13 @@ export class NotesComponent implements OnInit {
 
   allColumns: Column[];
   selectedColumns: Column[];
-  @Input('savedColumns') savedColumns: ComponentConfigValue[] = [];
-  cs = new ColumnSettings();
-  @Input('notes')notes: PacketNote[]
+  @Input('notes') notes: PacketNote[];
 
-  constructor() { }
+  constructor(private csService: ColumnSettingsService) { }
 
   ngOnInit() {
-    this.allColumns = this.cs.getNoteColumns().columns;
-    this.selectedColumns = this.cs.getNoteColumns().columns.filter(c => this.savedColumns.some(cv => 
-      cv.userInterfaceScreenFieldKey.startsWith(JRPConstants.NotesColumnPrefix.toString()) && cv.userInterfaceScreenFieldKey.endsWith(c.field)
-    ));
+    this.allColumns = this.csService.getColumnSettings().getNoteColumns().columns;
+    this.csService.noteColumnsSelected$.subscribe(data => this.selectedColumns = data);
   }
 
 }
