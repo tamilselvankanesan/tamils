@@ -1,43 +1,51 @@
 <p-table [value]="packets" [columns]="selectedColumns" sortMode="multiple" [(selection)]="selectedPackets" dataKey="packetId"
-  styleClass="packetsTable">
-
-  <!-- <ng-template pTemplate="caption">
-      <div style="left: 72%" class="packetsTableCaption">
-          <p-multiSelect [options]="allColumns" [(ngModel)]="selectedColumns" displaySelectedLabel="false" filter="false"
-          optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
-      </div>
-      <div style="left: 88%" class="packetsTableCaption">
-        <a href="javascrip::void(0)">Expand All</a>
-      </div>
-      <div style="left:93.5%" class="packetsTableCaption">
-        <a href="javascrip::void(0)">Collapse All</a>
-      </div>
-  </ng-template> -->
+  styleClass="packetsTable" [expandedRowKeys]="expandedRows">
 
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th style="width: 3em">
-        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-      </th>
-      <ng-container *ngFor="let col of columns">
-        <th *ngIf="col.visible" [pSortableColumn]="col.field">
-          {{col.header}}
-          <p-sortIcon [field]="col.field"></p-sortIcon>
+      <ng-container *ngIf="moreActions">
+        <th style="width: 3em">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
       </ng-container>
-      <th></th>
+      <ng-container *ngIf="!moreActions">
+          <th style="width: 1em"></th>
+        </ng-container>
+
+      <ng-container *ngFor="let col of columns">
+        <ng-container *ngIf="col.visible">
+          <th [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </ng-container>
+      </ng-container>
+      <th>Options</th>
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="body" let-columns="columns" let-rowData let-expanded="expanded">
-    <tr>
-      <td>
-        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-      </td>
-      <ng-container *ngFor="let col of columns">
-        <td *ngIf="col.visible">
-          {{rowData[col.field]}}
+  <ng-template pTemplate="body" let-columns="columns" let-rowData let-expanded="expanded" let-ri="rowIndex">
+    <tr class="{{ri%2===0?'odd':'even'}}">
+      <ng-container *ngIf="moreActions">
+        <td>
+          <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
+      </ng-container>
+      <ng-container *ngIf="!moreActions">
+        <td></td>
+      </ng-container>
+
+      <ng-container *ngFor="let col of columns">
+        <ng-container *ngIf="col.visible">
+          <td *ngIf="col.field ==='packetName'">
+            {{rowData[col.field]}}
+            <a href="javascript::void()" [pRowToggler]="rowData" (click)="editPacket(ri)"> Edit</a>
+          </td>
+          <td *ngIf="col.field !=='packetName'">
+            {{rowData[col.field]}}
+          </td>
+        </ng-container>
+
       </ng-container>
       <td>
         <a href="javascript::void()" [pRowToggler]="rowData">View All</a>
@@ -48,16 +56,20 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-    <tr>
+    <tr class="rowExpansion">
       <td [attr.colspan]="columns.length + 2">
-        <div>
-          <jrp-events [events]="rowData.events"></jrp-events>
-        </div>
-        <div>
-          <jrp-notes [notes]="rowData.notes"></jrp-notes>
-        </div>
-        <div>
-          <jrp-files [files]="rowData.files"></jrp-files>
+        <div style="padding-left: 20px;">
+          <div>
+            <jrp-events [events]="rowData.events"></jrp-events>
+          </div>
+          <br />
+          <div>
+            <jrp-notes [notes]="rowData.notes"></jrp-notes>
+          </div>
+          <br />
+          <div>
+            <jrp-files [files]="rowData.files"></jrp-files>
+          </div>
         </div>
       </td>
     </tr>

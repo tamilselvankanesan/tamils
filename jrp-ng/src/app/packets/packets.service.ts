@@ -8,6 +8,10 @@ export class PacketsService {
 
   packets = new BehaviorSubject<Packet[]>([]);
   public packets$ = this.packets.asObservable();
+
+  private moreActions = new BehaviorSubject<boolean>(false);
+  public moreActions$ = this.moreActions.asObservable();
+
   constructor() {
   }
   getPackets(): Packet[] {
@@ -17,5 +21,9 @@ export class PacketsService {
   setPackets(packets: Packet[]) {
     this.packets.next(packets);
     console.log("packets changed");
+  }
+
+  setMoreActions(moreActions: boolean){
+    this.moreActions.next(moreActions);
   }
 }

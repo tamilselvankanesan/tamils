@@ -30,4 +30,5 @@ export class ColumnSettings {
     getFileColumns() {
         return this.fileColumns;
     }
+    
 }

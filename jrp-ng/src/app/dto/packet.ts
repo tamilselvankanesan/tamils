@@ -4,7 +4,7 @@ import { PacketFile } from "./packet-file";
 
 export class Packet {
   packetName?: string;
-  packetId?: number;
+  packetId: number;
   caseMatterDescription?: string;
   routedTo?: string;
   caseNumber?: string;

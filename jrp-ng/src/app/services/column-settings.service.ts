@@ -35,9 +35,12 @@ export class ColumnSettingsService {
     this.setPacketColumnsSelected(this.filterSelectedColumns(JRPConstants.PacketsColumnPrefix.toString(), cs.getPacketColumns().columns));
     this.setEventColumnsSelected(this.filterSelectedColumns(JRPConstants.EventsColumnPrefix.toString(), cs.getEventColumns().columns));
     this.setNoteColumnsSelected(this.filterSelectedColumns(JRPConstants.NotesColumnPrefix.toString(), cs.getNoteColumns().columns));
-    this.setfileColumnsSelected(this.filterSelectedColumns(JRPConstants.FilesColumnPrefix.toString(), cs.getFileColumns().columns));
+    this.setFileColumnsSelected(this.filterSelectedColumns(JRPConstants.FilesColumnPrefix.toString(), cs.getFileColumns().columns));
   }
   filterSelectedColumns(type: string, columns: Column[]) {
+    columns.map(e => {
+      e.visible = true;
+    });
     return columns.filter(c => this.componentConfigValue.some(cv =>
       cv.userInterfaceScreenFieldKey.startsWith(type) && cv.userInterfaceScreenFieldKey.endsWith(c.field)
     ));
@@ -51,7 +54,7 @@ export class ColumnSettingsService {
   setNoteColumnsSelected(columns: Column[]) {
     this.noteColumnsSelected.next(columns);
   }
-  setfileColumnsSelected(columns: Column[]) {
+  setFileColumnsSelected(columns: Column[]) {
     this.fileColumnsSelected.next(columns);
   }
   getColumnSettings() {

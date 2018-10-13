@@ -1,1 +1,2 @@
-<a href="javascrip::void(0)">More actions</a>
+<a href="javascrip::void(0)" *ngIf="!moreActions" (click)="toggleMoreActions(false)">More actions</a>
+<a href="javascrip::void(0)" *ngIf="moreActions" (click)="toggleMoreActions(true)">Fewer actions</a>

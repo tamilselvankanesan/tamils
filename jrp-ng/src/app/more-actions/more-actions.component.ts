@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PacketsService } from '../packets/packets.service';
 
 @Component({
   selector: 'jrp-more-actions',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoreActionsComponent implements OnInit {
 
-  constructor() { }
+  moreActions = false;
+
+  constructor(private packetsService: PacketsService) {
+    this.packetsService.moreActions$.subscribe(data => this.moreActions = data);
+   }
 
   ngOnInit() {
   }
 
+  toggleMoreActions(){
+    this.moreActions = !this.moreActions;
+    this.packetsService.setMoreActions(this.moreActions);
+  }
 }

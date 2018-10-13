@@ -80,12 +80,12 @@ export class PacketColumns {
         {
             field: 'dueDate',
             header: 'Due',
-            visible: false
+            visible: true
         },
         {
             field: 'caseNumber',
             header: 'Case',
-            visible: false
+            visible: true
         }
     ];
     getColumns(): Column[] {

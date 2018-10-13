@@ -20,6 +20,21 @@ export class EventsComponent implements OnInit {
   ngOnInit() {
     this.allColumns = this.csService.getColumnSettings().getEventColumns().columns;
     this.csService.eventColumnsSelected$.subscribe(data => this.selectedColumns = data);
+
+    if(Array.isArray(this.selectedColumns) && this.selectedColumns.length >0){
+
+      let allColumnsLocal = [];
+
+      this.allColumns.forEach(e => {e.visible=false; allColumnsLocal.push(e)});
+      this.allColumns = allColumnsLocal;
+
+      this.selectedColumns.forEach(e => {
+        let col = this.allColumns.find(a => e.header === a.header);
+        let index = this.allColumns.indexOf(col);
+        col.visible = true;
+        this.allColumns[index] = col;
+      });
+    }
   }
   updateSelectedColumns(displayOptionsOverlay: OverlayPanel) {
     // clone the selection, otherwise check/uncheck directly affects the table

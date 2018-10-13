@@ -1,21 +1,26 @@
+<div style="text-align: right;">
+  <a href="javascrip::void(0)" (click)="eventColumns.toggle($event)">Display Options</a>
+</div>
+
 <p-table [value]="events" [columns]="selectedColumns" sortMode="multiple">
 
-  <ng-template pTemplate="caption">
+  <!-- <ng-template pTemplate="caption">
     <div style="text-align:left">
       <p-multiSelect [options]="allColumns" [(ngModel)]="selectedColumns" optionLabel="header" defaultLabel="Choose Columns"></p-multiSelect>
     </div>
-  </ng-template>
+  </ng-template> -->
 
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 3em">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-      </th>
-      <th></th>
+      <ng-container *ngFor="let col of columns">
+        <th *ngIf="col.visible" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </ng-container>
     </tr>
   </ng-template>
 
@@ -24,10 +29,28 @@
       <td>
         <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
       </td>
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
-      </td>
+      <ng-container *ngFor="let col of columns">
+        <td *ngIf="col.visible">
+          {{rowData[col.field]}}
+        </td>
+      </ng-container>
     </tr>
   </ng-template>
 
 </p-table>
+
+<p-overlayPanel #eventColumns appendTo="body">
+  <div>
+    <table>
+      <tr *ngFor="let col of allColumns">
+        <td>
+          <input type="checkbox" [(ngModel)]="col.visible">
+        </td>
+        <td>
+          {{col.header}}
+        </td>
+      </tr>
+    </table>
+    <input type="button" value="Apply" (click)="updateSelectedColumns(eventColumns)">
+  </div>
+</p-overlayPanel>

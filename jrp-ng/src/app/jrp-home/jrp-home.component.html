@@ -13,19 +13,22 @@
         <a href="javascrip::void(0)">Collapse All</a>
     </div>
 </div>
-<app-packets [packets]="packets"></app-packets>
+<app-packets [packets]="packets" [expandAll]="expandAll"></app-packets>
 <p-overlayPanel #packetColumns>
     <div>
         <table>
             <tr *ngFor="let col of allColumns">
-                <td>
-                    <input type="checkbox" [(ngModel)]="col.visible">
-                </td>
-                <td>
-                    {{col.header}}
-                </td>
+                <ng-container *ngIf="col.header !== 'Options'">
+                    <td>
+                        <input type="checkbox" [(ngModel)]="col.visible">
+                    </td>
+                    <td>
+                        {{col.header}}
+                    </td>
+                </ng-container>
+
             </tr>
         </table>
-        <input type="button" value="Save Display Options" (click)="updateSelectedColumns(packetColumns)">
+        <input type="button" value="Apply" (click)="updateSelectedColumns(packetColumns)">
     </div>
 </p-overlayPanel>

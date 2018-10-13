@@ -7,7 +7,6 @@
     border: 0px;
     font-weight: normal;
     position: relative;
-
 }
 :host ::ng-deep .packetsTableCaption{
     position: absolute;
@@ -26,3 +25,12 @@
 :host ::ng-deep .ui-table .ui-sortable-column a{
     color: #ffffff;
 }
+:host ::ng-deep .rowexpansion table thead tr th {
+    background-color: #c4bfbf !important;
+}
+:host ::ng-deep .even{
+    background-color: red !important;
+}
+/* :host ::ng-deep .packetsTable .ui-table-tbody > tr:nth-child(even){
+    background-color: red !important;
+} */
