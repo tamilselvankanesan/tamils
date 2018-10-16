@@ -13,6 +13,7 @@ import {ButtonModule} from 'primeng/button';
 import {PanelModule} from 'primeng/panel';
 import {ListboxModule} from 'primeng/listbox';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {DropdownModule} from 'primeng/dropdown';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -32,6 +33,7 @@ import { FilesComponent } from './files/files.component';
 import { NotesComponent } from './notes/notes.component';
 import { MoreActionsComponent } from './more-actions/more-actions.component';
 import { ColumnSettingsService } from './services/column-settings.service';
+import { AutoPacketsConfigurationComponent } from './auto-packets-configuration/auto-packets-configuration.component';
 
 
 @NgModule({
@@ -47,10 +49,11 @@ import { ColumnSettingsService } from './services/column-settings.service';
     EventsComponent,
     FilesComponent,
     NotesComponent,
-    MoreActionsComponent
+    MoreActionsComponent,
+    AutoPacketsConfigurationComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule,
+    BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, DropdownModule,
     TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule, ListboxModule, OverlayPanelModule
   ],
   providers: [JrpService, BreadCrumbService, PacketsService, ColumnSettingsService],

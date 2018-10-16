@@ -1,10 +1,9 @@
-import {BreadCrumbService} from '../bread-crumb/bread-crumb.service';
-import {Packet} from '../dto/packet';
-import {PacketsService} from '../packets/packets.service';
-import {JrpMenuEnum} from '../util/jrpmenuenum';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MenuItem} from 'primeng/api';
+import { BreadCrumbService } from '../bread-crumb/bread-crumb.service';
+import { PacketsService } from '../packets/packets.service';
+import { JrpMenuEnum } from '../util/jrpmenuenum';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -26,6 +25,8 @@ export class NavigationComponent implements OnInit {
 
     if (urlString.indexOf(JrpMenuEnum.AdvancedSearch) !== -1) {
       this.router.navigate(['AdvancedSearch']);
+    } else if (urlString.indexOf(JrpMenuEnum.AutoPacketsConfiguration) !== -1) {
+      this.router.navigate(['AutoPacketsConfiguration']);
     } else {
       this.retrievePackets();
     }
@@ -45,14 +46,18 @@ export class NavigationComponent implements OnInit {
       const urlString = '' + this.activatedRoute.snapshot['_routerState'].url;
       console.log('url is ' + urlString);
 
-      this.breadcrumbs = [{label: 'Home'}];
+      this.breadcrumbs = [{ label: 'Home' }];
       if (urlString.indexOf(JrpMenuEnum.AdvancedSearch) !== -1) {
         console.log('advanced search');
-        this.breadcrumbs.push({label: 'Packet Searching'});
-        this.breadcrumbs.push({label: 'Search'});
-        this.breadcrumbs.push({label: 'Advanced Search'});
+        this.breadcrumbs.push({ label: 'Packet Searching' });
+        this.breadcrumbs.push({ label: 'Search' });
+        this.breadcrumbs.push({ label: 'Advanced Search' });
+      } else if (urlString.indexOf(JrpMenuEnum.AutoPacketsConfiguration) !== -1) {
+        console.log('Automatic Packets configuration');
+        this.breadcrumbs.push({ label: 'Configuration' });
+        this.breadcrumbs.push({ label: 'Auto Packets configuration' });
       } else {
-        this.breadcrumbs.push({label: this.text});
+        this.breadcrumbs.push({ label: this.text });
       }
       this.breadcrumbService.setBreadcrumb(this.breadcrumbs);
     });

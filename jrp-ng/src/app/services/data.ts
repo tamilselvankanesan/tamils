@@ -4,6 +4,7 @@ import {MenuItem} from 'primeng/api';
 import {RouterModule} from '@angular/router';
 import { ComponentConfigValue } from '../dto/component-config-value';
 import { Packet } from '../dto/packet';
+import { Person } from '../dto/person';
 
 export const menuIems: MenuItem[] = [
   {
@@ -131,7 +132,8 @@ export const menuIems: MenuItem[] = [
     label: 'Configuration',
     items: [
       {label: 'My Configuration', routerLink: 'configuration/41'},
-      {label: 'NextGen Configuration', routerLink: 'configuration/42'}
+      {label: 'NextGen Configuration', routerLink: 'configuration/42'},
+      {label: 'Auto Packets Configuration', routerLink: 'configuration/43'}
     ]
   },
   {
@@ -147,6 +149,11 @@ export const menuIems: MenuItem[] = [
 export const judges: SimplePerson[] = [
   {id: 1, name: 'Aguila, Ricky Middle, II'},
   {id: 2, name: 'AJTA, JudgeTwoB'}
+];
+
+export const judgesList: Person[] = [
+  {prid: 1, fullName: 'Aguila, Ricky Middle, II'},
+  {prid: 2, fullName: 'AJTA, JudgeTwoB'}
 ];
 
 export const columnSettingsConfig: ComponentConfigValue[] = [

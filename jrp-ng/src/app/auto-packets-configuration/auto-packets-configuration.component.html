@@ -1,0 +1,7 @@
+<p-fieldset legend="Automatic Packets">
+    <p-dropdown [options]="judges" [(ngModel)]="selectedJudgeId" placeholder="Select a Judge" [showClear]="true"></p-dropdown>
+    <div *ngIf="selectedJudgeId">
+        selected judge is {{selectedJudgeId}}
+
+    </div>
+</p-fieldset>
