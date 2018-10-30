@@ -9,18 +9,23 @@ import { REMentComponent } from './r-e-ment/r-e-ment.component';
 
 import {DataTableModule,SharedModule,DropdownModule,DialogModule} from 'primeng/primeng';
 import { REService } from './r-e-ment/r-e.service';
+import { HelloWorldComponent } from './hello-world/hello-world.component';
 
 const routes : Route[] = [
 
   {
     path: 'rules', component: REMentComponent
+  },
+  {
+    path: 'hello1', component: HelloWorldComponent
   }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    REMentComponent
+    REMentComponent,
+    HelloWorldComponent
   ],
   imports: [
     BrowserModule, FormsModule, DataTableModule, SharedModule, DropdownModule,DialogModule,

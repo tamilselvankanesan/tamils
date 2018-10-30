@@ -34,7 +34,14 @@ public class Test {
   private static void strPattern(){
     
     Pattern p = Pattern.compile(".*[^0-9]");
-    System.out.println(p.matcher("1224g").matches());
+//    System.out.println(p.matcher("1224g").matches());
+    
+    String ip = "//data/docs1////mowd_dochome_app02//20181016/9///mowd_test.4.12.cr.379.4353324.0";
+    System.out.println(ip.replaceAll("[/]+", "/"));
+    String [] arr = ip.split("[/]+");
+    for(String s : arr){
+//      System.out.println(s);
+    }
   }
   
   private static void substring(){
@@ -611,6 +618,9 @@ public class Test {
 	 */
 	public static void main(String[] args)  {
 	  strPattern();
+	  if(true){
+      return;
+    }
 	  substring();
 	  queryString();
 	  compareList();

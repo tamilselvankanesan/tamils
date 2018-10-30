@@ -1,7 +1,39 @@
 <p-fieldset legend="Automatic Packets">
-    <p-dropdown [options]="judges" [(ngModel)]="selectedJudgeId" placeholder="Select a Judge" [showClear]="true"></p-dropdown>
+    <p-dropdown [options]="judges" [(ngModel)]="selectedJudgeId" placeholder="Select a Judge" [showClear]="true" (onChange)="onJudgeSelect()"></p-dropdown>
     <div *ngIf="selectedJudgeId">
-        selected judge is {{selectedJudgeId}}
-
+        <br/>
+        <a href="javascript::void" (click)="add = true">Add</a>
+        <p-table [value]="rules" [(selection)]="selectedRules">
+            <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3%">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th style="width: 25%">Event</th>
+                        <th style="width: 62%">Description</th>
+                        <th style="width: 10%"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rule let-rowData>
+                    <tr [pSelectableRow]="rowData">
+                        <td>
+                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <div [innerHTML]="rowData['eventName']"></div>                            
+                        </td>
+                        <td>
+                            <div [innerHTML]="rowData['eventDescription']"></div>
+                        </td>
+                        <td>
+                            Links
+                        </td>
+                    </tr>
+            </ng-template>
+        </p-table>
+        <p-fieldset legend="Add" *ngIf="add">
+            Add a new Rule
+        </p-fieldset>
+        
     </div>
 </p-fieldset>

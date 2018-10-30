@@ -3,6 +3,7 @@ import { Rule } from '../shared/r-model';
 import { OShip } from '../shared/o-ship.model';
 import { REService } from './r-e.service';
 import { EOShip } from '../shared/e-o-ship.model';
+import {SelectItem} from 'primeng/primeng';
 
 @Component({
   selector: 'app-r-e-ment',
@@ -17,9 +18,17 @@ export class REMentComponent implements OnInit {
   secondBus: any[];
   showDialog = false;
   selectedBus: any[] = [];
+  types: SelectItem[];
   
   constructor(private reService: REService) {
-    
+    this.types = [
+      {label:'Select City', value:null},
+      {label:'New York', value:{id:1, name: 'New York', code: 'NY'}},
+      {label:'Rome', value:{id:2, name: 'Rome', code: 'RM'}},
+      {label:'London', value:{id:3, name: 'London', code: 'LDN'}},
+      {label:'Istanbul', value:{id:4, name: 'Istanbul', code: 'IST'}},
+      {label:'Paris', value:{id:5, name: 'Paris', code: 'PRS'}}
+  ];
    }
 
   ngOnInit() {
