@@ -14,6 +14,8 @@ import {PanelModule} from 'primeng/panel';
 import {ListboxModule} from 'primeng/listbox';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {DropdownModule} from 'primeng/dropdown';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {CheckboxModule} from 'primeng/checkbox';
 
 import {AppComponent} from './app.component';
 import {PacketsComponent} from './packets/packets.component';
@@ -54,7 +56,7 @@ import { AutoPacketsConfigurationComponent } from './auto-packets-configuration/
   ],
   imports: [
     BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, CommonModule, MenubarModule, BreadcrumbModule, DropdownModule,
-    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule, ListboxModule, OverlayPanelModule
+    TableModule, FieldsetModule, MultiSelectModule, InputTextModule, ButtonModule, PanelModule, ListboxModule, OverlayPanelModule, RadioButtonModule, CheckboxModule
   ],
   providers: [JrpService, BreadCrumbService, PacketsService, ColumnSettingsService],
   bootstrap: [AppComponent]

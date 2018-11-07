@@ -32,7 +32,51 @@
             </ng-template>
         </p-table>
         <p-fieldset legend="Add" *ngIf="add">
-            Add a new Rule
+            <table>
+                <tr>
+                    <td style="width: 75%;" valign="top">
+                        <p-fieldset legend="Event to Trigger Creation of the Packet">
+                        </p-fieldset>
+                    </td>
+                    <td style="width: 25%" valign="top">
+                        <p-fieldset legend="Case Type">
+                        </p-fieldset>
+                        <p-fieldset legend="Chapter">
+                            </p-fieldset>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                Construct packet based on:
+                <div class="ui-g-12"><p-radioButton name="group1" value="Y" label="The event selected will trigger the creation of a packet and will be the packet's primary event."></p-radioButton></div>
+                <div class="ui-g-12"><p-radioButton name="group1" value="N" label="The earliest filed event that the triggering event is directly or indirectly linked to will be the packet's primary event."></p-radioButton></div>
+            </div>
+            <div>
+                <b>Packet contents and settings at the time of creation:</b>
+                <div style="padding-left: 10px;">
+                    <b>Additional unlinked events:</b>
+                    <br/>
+                    <p-checkbox label="Add the following specific filings that are not linked to either the primary event or the triggering event." [(ngModel)]="additionalUnlinkedEvents"  (onChange)="additionalUnlinkedEvents=!additionalUnlinkedEvents"></p-checkbox>
+                </div>
+                <div style="padding-left: 10px;">
+                    <b>Routing, Status, Priority and Due Date:</b>
+                    <br/>
+                    <div style="float: left;">
+                        <div class="ui-g-12"><p-radioButton name="settings" value="Y" label="Configuration Default Settings" [(ngModel)]="settings"></p-radioButton></div>
+                        <div class="ui-g-12"><p-radioButton name="settings" value="N" label="Custom Settings" [(ngModel)]="settings"></p-radioButton></div>
+                    </div>
+                    <div style="float: left; padding-top: 10px;">
+                        <a href="javascript::void()">View</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="javascript::void()">Permissions</a>
+                    </div>
+                    <div style="clear: both;">
+                        <p-fieldset legend="Custom Settings" *ngIf="settings === 'N'">
+                            
+                        </p-fieldset>
+                    </div>
+                </div>
+            </div>
         </p-fieldset>
         
     </div>

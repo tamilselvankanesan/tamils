@@ -15,6 +15,8 @@ export class AutoPacketsConfigurationComponent implements OnInit {
   rules = apcModels;
   selectedRules: any = [];
   add = false;
+  additionalUnlinkedEvents = false;
+  settings = 'Y';
   constructor(private jrpService: JrpService) { }
 
   ngOnInit() {
