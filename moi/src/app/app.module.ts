@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 
-import {SocialLoginModule, FacebookLoginProvider, AuthServiceConfig} from 'angular5-social-login'; // social step 1
+import {SocialLoginModule, AuthServiceConfig} from 'angularx-social-login'; // social step 1
 import {getAuthServiceConfigs} from './socialloginConfig';
 
 import {AppComponent} from './app.component';
@@ -26,13 +26,13 @@ const routes: Routes = [
     path: 'Login', component: LoginComponent
   },
   {
-    path: 'Moi-Home', component: MoiHomeComponent, canActivate: [AuthGuradService]
+    path: 'Moi-Home', component: MoiHomeComponent
   },
   {
     path: '', component: LoginComponent
   },
   {
-    path: 'Moi-Main', component: MoiMainComponent, canActivate: [AuthGuradService]
+    path: 'Moi-Main', component: MoiMainComponent
   }
   //  ,
   //  {

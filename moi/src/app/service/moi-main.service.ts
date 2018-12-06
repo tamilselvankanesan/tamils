@@ -3,9 +3,9 @@ import {MoiData} from '../model/moidata';
 import {BaseService} from './base.service';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs';
+
+
 
 const moiGroup: MoiGroup[] = [
   {groupId: 1, groupName: 'Marurpatti Group 1', groupCreatedDate: Date.now.toString(), groupOwnerId: 12},

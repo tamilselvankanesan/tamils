@@ -1,7 +1,8 @@
 import {User} from '../model/user';
 import {Injectable, EventEmitter} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import 'rxjs/add/observable/of';
+
 
 @Injectable()
 export class AuthService {

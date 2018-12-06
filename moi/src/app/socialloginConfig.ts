@@ -1,4 +1,4 @@
-import {AuthServiceConfig, FacebookLoginProvider} from 'angular5-social-login';
+import {AuthServiceConfig, FacebookLoginProvider} from 'angularx-social-login';
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig([
     {
