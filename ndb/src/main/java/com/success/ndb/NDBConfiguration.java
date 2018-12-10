@@ -2,6 +2,7 @@ package com.success.ndb;
 
 import java.util.Properties;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -33,14 +35,15 @@ public class NDBConfiguration {
 	private String jdbcPassword;*/
 	
 	@Bean
-	DataSource dataSource(){
-		BasicDataSource dataSource = new BasicDataSource();
+	DataSource dataSource() throws NamingException{
+		/*BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(environment.getProperty("datasource.driver-class-name"));
 		dataSource.setUrl(environment.getProperty("datasource.url"));
 		System.out.println("ndburl:: "+environment.getProperty("datasource.url"));
 		dataSource.setUsername(environment.getProperty("datasource.username"));
 		dataSource.setPassword(environment.getProperty("datasource.password"));
-		return dataSource;
+		return dataSource;*/
+		return (DataSource)new JndiTemplate().lookup(environment.getProperty("jdbc.jndi.name"));
 	}
 
 	@Bean(name="entityManagerFactory")

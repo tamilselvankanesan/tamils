@@ -19,7 +19,7 @@ public class CountryAssembler {
 		if(assembleState && country.getStates()!=null){
 			dto.setStates(StateAssembler.assemble(country.getStates(), false));
 		}
-		dto.setCreatedDate(new Date());
+//		dto.setCreatedDate(new Date());
 		return dto;
 	}
 	public static List<CountryDTO> assemble(List<Country> countries, boolean assembleState){
