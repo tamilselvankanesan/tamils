@@ -22,9 +22,12 @@ import com.itextpdf.kernel.pdf.PdfStream;
 import com.itextpdf.kernel.pdf.PdfVersion;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.WriterProperties;
+import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.filespec.PdfFileSpec;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Link;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
@@ -340,7 +343,12 @@ public class PDFHeaders extends PDFModify {
       System.out.println(headers.getOutputFile());
 //    File file = new File(doc);
 //    file.getParentFile().mkdirs();
-    headers.manipulatePdf("C:\\Tamil\\WinSCP_Docs\\cmjb\\cmjb_live.pdf", "C:\\Tamil\\WinSCP_Docs\\cmjb\\stream%s");
+//    headers.manipulatePdf("C:\\Tamil\\WinSCP_Docs\\cmjb\\cmjb_live.pdf", "C:\\Tamil\\WinSCP_Docs\\cmjb\\stream%s");
+    
+//    File file = new File("C:\\Tamil\\WinSCP_Docs\\cmjb");
+//    file.getParentFile().mkdirs();
+    headers.javascript("C:\\Tamil\\WinSCP_Docs\\cmjb\\cmjb_liv2e.pdf");
+//    headers.gotoAction("C:\\Tamil\\WinSCP_Docs\\cmjb\\cmjb_liv2e.pdf");
   }
   
   public void add() throws FileNotFoundException, java.io.IOException{
@@ -388,4 +396,24 @@ public class PDFHeaders extends PDFModify {
     }
     pdfDoc.close();
 }
+  
+  
+  public void javascript(String dest) throws IOException, FileNotFoundException {
+    PdfDocument pdf = new PdfDocument(new PdfWriter(dest));
+    pdf.getCatalog().setOpenAction(PdfAction.createJavaScript("this.print(true);"));
+    Document document = new Document(pdf);
+    Link link = new Link("here", PdfAction.createJavaScript("app.alert('Boo!');"));
+    Paragraph p = new Paragraph().add("Click ").add(link.setFontColor(Color.BLUE)).add(" if you want to be scared.");
+    document.add(p);
+    document.close();
+}
+  private void gotoAction(String dest) throws IOException, FileNotFoundException {
+    PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
+    Document doc = new Document(pdfDoc);
+    PdfFileSpec spec = PdfFileSpec.createExternalFileSpec(pdfDoc, "C:\\Tamil\\WinSCP_Docs\\cmjb\\cmjb_liv11e.txt", true);
+    PdfAction action = PdfAction.createLaunch(spec);
+    Paragraph p = new Paragraph(new Link("Click to open test.txt", action));
+    doc.add(p);
+    doc.close();
+  }
 }

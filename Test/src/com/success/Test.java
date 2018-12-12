@@ -30,6 +30,12 @@ import org.json.simple.JSONObject;*/
 
 public class Test {
 
+  
+  private static void getClassName(){
+    System.out.println(BufferedOutputStream.class.getSimpleName());
+    System.out.println(BufferedOutputStream.class.getName());
+    System.out.println(BufferedOutputStream.class.getCanonicalName());
+  }
 
   private static void strPattern(){
     
@@ -617,6 +623,7 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args)  {
+	  getClassName();
 	  strPattern();
 	  if(true){
       return;

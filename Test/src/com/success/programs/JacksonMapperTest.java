@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.success.programs.dto.Country;
 import com.success.programs.dto.State;
@@ -21,6 +22,7 @@ public class JacksonMapperTest {
 
   public static void main(String[] args) {
     try {
+      serializeJRP();
       deseralize();
       System.out.println("Before calling rest");
       deseralize(callRest());
@@ -50,7 +52,19 @@ public class JacksonMapperTest {
     System.out.println(cc.getName());
     
   }
-  
+  static void serializeJRP() throws JsonProcessingException{
+    JRPRuleCopyDTO dto = new JRPRuleCopyDTO();
+    JRPRuleCopySetDTO set = new JRPRuleCopySetDTO();
+    
+    dto.setRfstId(11);
+    dto.setRfstId(12);
+    set.getData().add(dto);
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+//    ObjectWriter prettyPrinter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+//    System.out.println(prettyPrinter.writeValueAsString(dto));
+    System.out.println(mapper.writeValueAsString(set));
+  }
   static void deseralizeState(String data) throws IOException{
     if(data==null || data.length()==0){
       return;
