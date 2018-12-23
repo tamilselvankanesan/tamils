@@ -3,9 +3,9 @@ import {MoiData} from '../model/moidata';
 import {BaseService} from './base.service';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs';
+
+
 
 const moiGroup: MoiGroup[] = [
   {groupId: 1, groupName: 'Marurpatti Group 1', groupCreatedDate: Date.now.toString(), groupOwnerId: 12},
@@ -49,6 +49,11 @@ export class MoiMainService extends BaseService {
     return ob;
   }
   getGroups(userId: number): Observable<MoiGroup[]> {
-    return this.http.get(this.moiUrl + 'groups/' + userId, {headers: this.headers}).map(data => data as MoiGroup[], error => super.handleError(error));
+    const ob = <Observable<MoiGroup[]>>new Observable((observer) => {
+      observer.next(moiGroup);
+      observer.complete();
+    });
+    return ob;
+    //    return this.http.get(this.moiUrl + 'groups/' + userId, {headers: this.headers}).map(data => data as MoiGroup[], error => super.handleError(error));
   }
 }

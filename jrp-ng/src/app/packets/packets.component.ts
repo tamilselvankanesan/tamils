@@ -1,11 +1,9 @@
-import {BreadCrumbService} from '../bread-crumb/bread-crumb.service';
-import {Packet} from '../dto/packet';
-import {PacketsService} from './packets.service';
-import {Time} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, PRIMARY_OUTLET, NavigationEnd} from '@angular/router';
-import {MenuItem} from 'primeng/api';
+import { Packet } from '../dto/packet';
+import { Component, OnInit, Input } from '@angular/core';
 import 'rxjs/add/operator/filter';
+import { Column } from '../util/column';
+import { ColumnSettingsService } from '../services/column-settings.service';
+import { PacketsService } from './packets.service';
 
 @Component({
   selector: 'app-packets',
@@ -14,21 +12,28 @@ import 'rxjs/add/operator/filter';
 })
 export class PacketsComponent implements OnInit {
 
-  text = 'hello';
-  packets: Packet[] = [];
+  @Input('packets') packets: Packet[] = [];
+  @Input() expandAll: boolean = false;
+  selectedColumns: Column[];
+  selectedPackets: Packet[] = [];
+  expandedRows: {} = {};
+  moreActions = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private breadcrumbService: BreadCrumbService, private router: Router,
-    private packetService: PacketsService) {
-    this.text = new Date().toLocaleString();
-    this.packets = this.packetService.packets;
+  constructor(private csSerive: ColumnSettingsService, private packetsService: PacketsService) {
   }
 
   ngOnInit() {
-
+    this.csSerive.packetColumnsSelected$.subscribe(data => this.selectedColumns = data);
+    this.packetsService.moreActions$.subscribe(data => this.moreActions = data);
+    if (this.expandAll) {
+      this.packets.forEach(e => { this.expandedRows[e.packetId] = 1 });
+    }
   }
 
+  editPacket(index: number) {
+
+  }
   handleNavigation() {
 
   }
-
 }

@@ -1,27 +1,29 @@
 import {Packet} from '../dto/packet';
-import {Injectable, EventEmitter} from '@angular/core';
-
-const sampleData: Packet[] = [
-  {packetId: 1, packetName: '04-44444 # 1 Test packet One', docketText: new Date().toLocaleString()},
-  {packetId: 2, packetName: '04-44444 # 1 Test packet Two', docketText: new Date().toLocaleString()},
-  {packetId: 3, packetName: '04-44444 # 1 Test packet Three', docketText: new Date().toLocaleString()}
-];
+import {Injectable} from '@angular/core';
+import { sampleData } from '../services/data';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class PacketsService {
 
-  packets: Packet[] = [];
-  packetsChanged = new EventEmitter<Packet[]>();
+  packets = new BehaviorSubject<Packet[]>([]);
+  public packets$ = this.packets.asObservable();
+
+  private moreActions = new BehaviorSubject<boolean>(false);
+  public moreActions$ = this.moreActions.asObservable();
+
   constructor() {
-    this.packets = sampleData;
   }
   getPackets(): Packet[] {
     return sampleData;
   }
 
   setPackets(packets: Packet[]) {
-    this.packets = packets;
-    this.packetsChanged.next(this.packets);
+    this.packets.next(packets);
     console.log("packets changed");
+  }
+
+  setMoreActions(moreActions: boolean){
+    this.moreActions.next(moreActions);
   }
 }

@@ -1,9 +1,42 @@
-<p-fieldset legend="Case"> 
+<p-fieldset legend="Case">
 
-	<p-card [style]="{width: '360px'}">
-		<div>
-			
-
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-5">
+					<p-panel>
+						<div>Case Search goes here!!!</div>
+					</p-panel>
+				</div>
+				<div class="col-4">
+					<p-panel header="Judge" styleClass="judgeListPanel">
+						<p-listbox [options]="jduges" [(ngModel)]="criteria.selectedJudges" multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="name">
+						</p-listbox>
+					</p-panel>
+				</div>
+				<div class="col-3">
+					<p-panel header="Documents">
+						<input type="text" pInputText [(ngModel)]="criteria.documentNumberFrom" size="5"/>
+						To
+						<input type="text" pInputText [(ngModel)]="criteria.documentNumberTo" size="5"/>
+					</p-panel>
+					<div style="height: 10px"></div>
+					<p-panel [style]="{width: '360px'}" header="Documents Filed By">
+						<input type="text" pInputText [(ngModel)]="criteria.documentFiledBy" pInputText placeholder="LastName, FirstName"/>
+						<p-button label="Search"></p-button>
+						<a href="javascript:void(0)">Clear</a>
+					</p-panel>
+				</div>
+			</div>
 		</div>
-	</p-card> 
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<p-panel header="Terminal Digits">
+						<input type="text" pInputText [(ngModel)]="criteria.terminalDigits" pInputText size="10"/>
+						<a href="javascript:void(0)">Clear</a>
+					</p-panel>
+				</div>
+			</div>
+		</div>
+	
 </p-fieldset>

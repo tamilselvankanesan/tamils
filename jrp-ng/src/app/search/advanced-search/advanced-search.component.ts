@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {SearchCriteria} from '../../dto/search-criteria';
+import {SimplePerson} from '../../dto/simple-person';
+import {JrpService} from '../../services/jrp.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-advanced-search',
@@ -7,7 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdvancedSearchComponent implements OnInit {
 
-  constructor() { }
+  criteria = new SearchCriteria();
+  jduges: SimplePerson[] = [];
+
+  constructor(private jrpService: JrpService) {
+    this.jrpService.getJudges().subscribe(data => this.jduges = data);
+  }
 
   ngOnInit() {
   }

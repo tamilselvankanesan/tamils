@@ -1,19 +1,20 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class BreadCrumbService {
-  items: MenuItem[] = [];
-  public breadcrumbChanged: EventEmitter<MenuItem[]> = new EventEmitter<MenuItem[]>();
+
+  default: MenuItem[] = [{
+    label: 'Home'
+  }];
+  breadCrumbs = new BehaviorSubject<MenuItem[]>(this.default);
+  public breadCrumbs$ = this.breadCrumbs.asObservable();
+
   constructor() {}
 
-  getBreadcrumb(): MenuItem[] {
-    return this.items;
-  }
-
   setBreadcrumb(breadcrumb: MenuItem[]): void {
-    this.items = breadcrumb;
-    this.breadcrumbChanged.next(this.items);
+    this.breadCrumbs.next(breadcrumb);
   }
 
 }

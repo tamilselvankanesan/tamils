@@ -1,0 +1,36 @@
+:host ::ng-deep table{
+    font-size: 14px;
+}
+:host ::ng-deep .packetsTable .ui-table-caption{
+    padding: 20px 0px 0px 0px;
+    background-color: white;
+    border: 0px;
+    font-weight: normal;
+    position: relative;
+}
+:host ::ng-deep .packetsTableCaption{
+    position: absolute;
+    bottom: 0;
+}
+:host ::ng-deep .ui-table .ui-table-thead  tr  th{
+    background-color:#007ad9;
+    color: #ffffff;
+    padding: 4px 4px 4px 4px;
+    font-weight: normal;
+}
+
+:host ::ng-deep .ui-table-caption .ui-table-summary{
+    font-weight: normal;
+}
+:host ::ng-deep .ui-table .ui-sortable-column a{
+    color: #ffffff;
+}
+:host ::ng-deep .rowexpansion table thead tr th {
+    background-color: #c4bfbf !important;
+}
+:host ::ng-deep .even{
+    background-color: red !important;
+}
+/* :host ::ng-deep .packetsTable .ui-table-tbody > tr:nth-child(even){
+    background-color: red !important;
+} */

@@ -30,11 +30,24 @@ import org.json.simple.JSONObject;*/
 
 public class Test {
 
+  
+  private static void getClassName(){
+    System.out.println(BufferedOutputStream.class.getSimpleName());
+    System.out.println(BufferedOutputStream.class.getName());
+    System.out.println(BufferedOutputStream.class.getCanonicalName());
+  }
 
   private static void strPattern(){
     
     Pattern p = Pattern.compile(".*[^0-9]");
-    System.out.println(p.matcher("1224g").matches());
+//    System.out.println(p.matcher("1224g").matches());
+    
+    String ip = "//data/docs1////mowd_dochome_app02//20181016/9///mowd_test.4.12.cr.379.4353324.0";
+    System.out.println(ip.replaceAll("[/]+", "/"));
+    String [] arr = ip.split("[/]+");
+    for(String s : arr){
+//      System.out.println(s);
+    }
   }
   
   private static void substring(){
@@ -610,7 +623,11 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args)  {
+	  getClassName();
 	  strPattern();
+	  if(true){
+      return;
+    }
 	  substring();
 	  queryString();
 	  compareList();

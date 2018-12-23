@@ -37,10 +37,12 @@ public class NDBSecurityConfig extends WebSecurityConfigurerAdapter {
 		//.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 		//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
-		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-		.authorizeRequests().antMatchers("/**/user/**").permitAll().anyRequest().authenticated().and()
-		.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().authorizeRequests().antMatchers("/**").permitAll();
+		
+		//http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+		//.authorizeRequests().antMatchers("/**/user/**").permitAll().anyRequest().authenticated().and()
+		//.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
+		//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Bean

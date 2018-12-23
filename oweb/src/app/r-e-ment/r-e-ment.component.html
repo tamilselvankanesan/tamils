@@ -1,0 +1,109 @@
+<p-dropdown [options]="types"></p-dropdown>
+
+<br/><br/>
+<input type="checkbox" (click)="setEOSelected()"/>
+<p-dialog [(visible)]="showDialog">
+    <p-header>
+        Header content here
+    </p-header>
+    
+    <p-footer>
+        //buttons
+    </p-footer>
+</p-dialog>
+<br/><br/>
+<p-dataTable [value]="secondBus" [(selection)]="selectedBus" dataKey="label">
+    <p-header>Checkbox Selection</p-header>
+    <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+    <p-column field="value.text" header="BUs"></p-column>
+    <p-footer>
+        <ul>
+            <li>Hello</li>
+            <li *ngFor="let c of selectedBus" style="text-align: left">{{c.value.text }}</li>
+        </ul>
+    </p-footer>
+</p-dataTable>
+<br/><br/>
+<!-- <button type="button" (click)="openDialog()" pButton label="Show" value="SHow"></button> -->
+<button type="button"(click)="openDialog()" >Click Me!</button>
+<div *ngIf="showEO">
+  <br/>
+  <a href="javascript:void(0)" *ngIf="!showSLOTable" (click)="showSLOTable=true">Hide SLine </a>
+  <a href="javascript:void(0)" *ngIf="showSLOTable" (click)="showSLOTable=false">Show SLine </a>
+  <br/><br/>
+  <p-dropdown [options]="secondBus" [appendTo]="body"></p-dropdown>
+  <br/><br/>
+  <div *ngIf="!showSLOTable">
+    
+    <p-dataTable [value]="rule.ownershipdata.secondLineOwnership?.ownerships?.ownership">
+      <p-column>
+        <ng-template pTemplate="header">
+          Business Unit
+        </ng-template>
+        <ng-template let-row="rowData" pTemplate="body"  let-col>
+            <p-dropdown [options]="secondBus" [(ngModel)]="row.businessUnit" appendTo="body"></p-dropdown>
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Legal Entity
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          Legal Entities 
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+          Role
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          <input type="text" [(ngModel)]="row.role"/> 
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Primary Contact
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData" let-ri="rowIndex">
+          Primary contact Information row {{ri}}
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Additional Contacts
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          Additional contact details
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+            Notes
+        </ng-template>
+        <ng-template pTemplate="body" let-row="rowData">
+          <input type="text" [(ngModel)]="row.notes"/> 
+        </ng-template>
+      </p-column>
+
+      <p-column>
+        <ng-template pTemplate="header">
+          Delete
+        </ng-template>
+        <ng-template pTemplate="body" let-ri="rowIndex">
+          <a href="javascript:void(0)" (click)="deleteSecondLineRole(ri)">Delete</a>
+        </ng-template>
+      </p-column>
+    </p-dataTable>
+
+    <br/>
+    <input type="button" value="Add Second Line" (click)="addSecondLineRole()"/>
+  </div>
+</div>
+<hr/>
+<input type="button" value="Print" (click)="save()">
+<br/><br/>

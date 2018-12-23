@@ -1,21 +1,78 @@
-<p-table [value]="packets"> 
+<p-table [value]="packets" [columns]="selectedColumns" sortMode="multiple" [(selection)]="selectedPackets" dataKey="packetId"
+  styleClass="packetsTable" [expandedRowKeys]="expandedRows">
 
-<ng-template pTemplate="header">
-<tr>
-	<th>Packet ID</th>
-	<th>Packet Name</th>
-	<th>Docket Text</th>
-	<th></th>
-</tr>
-</ng-template> 
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <ng-container *ngIf="moreActions">
+        <th style="width: 3em">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+      </ng-container>
+      <ng-container *ngIf="!moreActions">
+          <th style="width: 1em"></th>
+        </ng-container>
 
-<ng-template pTemplate="body" let-packet>
-<tr>
-	<td>{{packet.packetId}}</td>
-	<td>{{packet.packetName}}</td>
-	<td>{{packet.docketText}}</td>
-	<td></td>
-</tr>
-</ng-template> 
+      <ng-container *ngFor="let col of columns">
+        <ng-container *ngIf="col.visible">
+          <th [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </ng-container>
+      </ng-container>
+      <th>Options</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-columns="columns" let-rowData let-expanded="expanded" let-ri="rowIndex">
+    <tr class="{{ri%2===0?'odd':'even'}}">
+      <ng-container *ngIf="moreActions">
+        <td>
+          <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="!moreActions">
+        <td></td>
+      </ng-container>
+
+      <ng-container *ngFor="let col of columns">
+        <ng-container *ngIf="col.visible">
+          <td *ngIf="col.field ==='packetName'">
+            {{rowData[col.field]}}
+            <a href="javascript::void()" [pRowToggler]="rowData" (click)="editPacket(ri)"> Edit</a>
+          </td>
+          <td *ngIf="col.field !=='packetName'">
+            {{rowData[col.field]}}
+          </td>
+        </ng-container>
+
+      </ng-container>
+      <td>
+        <a href="javascript::void()" [pRowToggler]="rowData">View All</a>
+        <!-- <a href="javascript::void()">Items</a>
+        <a href="javascript::void()">Notes</a>
+        <a href="javascript::void()">Files</a> -->
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+    <tr class="rowExpansion">
+      <td [attr.colspan]="columns.length + 2">
+        <div style="padding-left: 20px;">
+          <div>
+            <jrp-events [events]="rowData.events"></jrp-events>
+          </div>
+          <br />
+          <div>
+            <jrp-notes [notes]="rowData.notes"></jrp-notes>
+          </div>
+          <br />
+          <div>
+            <jrp-files [files]="rowData.files"></jrp-files>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
 
 </p-table>

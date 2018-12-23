@@ -3,7 +3,7 @@ import {AuthService} from '../service/auth.service';
 import {UserService} from '../service/user.service';
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService as SocialAuthService, FacebookLoginProvider} from 'angular5-social-login';
+import {AuthService as SocialAuthService, FacebookLoginProvider} from 'angularx-social-login';
 import * as $ from 'jquery';
 
 @Component({
