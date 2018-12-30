@@ -1,0 +1,247 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "My NDB AWS Infrastructure",
+    "Metadata": { },
+	"Parameters": {
+		"InstanceTypes": {
+			"Type": "String",
+			"Description": "Select a free tier instance type",
+			"Default": "t2.micro",
+			"AllowedValues": ["t2.micro", "m1.small"]
+		},
+		"Images": {
+			"Type": "String",
+			"Description": "Select a free tier image",
+			"Default": "ami-0080e4c5bc078760e",
+			"AllowedValues": ["ami-0080e4c5bc078760e", "ami-011b3ccf1bd6db744"]
+		},
+		"VPCGatewayID": {
+			"Type": "String",
+			"Description": "Enter the Gateway ID for VPC"
+		},
+		"Key": {
+			"Type": "String",
+			"Default": "MyFirstECKey",
+			"Description": "Select a EC2 key.",
+			"AllowedValues": ["MyFirstECKey", "MyCftKey"]
+		}
+    },
+    "Resources": {
+		"MyVPC2": {
+			"Type": "AWS::EC2::VPC",
+			"Properties": {
+				"CidrBlock": "10.20.0.0/16",
+				"EnableDnsHostnames": "true",
+				"Tags": [{"Key":"Name", "Value": "MyVPC2"}, {"Key": "CreatedUsing", "Value": "CFT"}]
+			}
+		},
+		"MyPublicSubnet1": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"Tags": [{"Key":"Name", "Value": "CftPublicSubnet1"}],
+				"VpcId": {"Ref": "MyVPC2"},
+				"CidrBlock": "10.20.10.0/24",
+				"MapPublicIpOnLaunch": "true"
+			}
+		},
+		"MyPrivateSubnet1": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"Tags": [{"Key":"Name", "Value": "CftPrivateSubnet1"}],
+				"VpcId": {"Ref": "MyVPC2"},
+				"CidrBlock": "10.20.20.0/24"
+			}
+		},
+		"ElasticIPForNAT": {
+			"Type": "AWS::EC2::EIP",
+			"Properties": {
+				"Domain": "vpc"
+			}
+		},
+		"NewNatGateway": {
+			"Type": "AWS::EC2::NatGateway",
+			"Properties": {
+				"Tags": [{"Key": "Name", "Value": "CftNatGateway"}],
+				"SubnetId": {"Ref": "MyPublicSubnet1"},
+				"AllocationId": {"Fn::GetAtt" : ["ElasticIPForNAT", "AllocationId"]}
+			}
+		},
+		"NewInternetGateway": {
+			"Type": "AWS::EC2::InternetGateway",
+			"Properties": {
+				"Tags": [{"Key": "Name", "Value": "IgCftVPC"}]
+			}
+		},
+		"AttachInternetGateway": {
+			"Type": "AWS::EC2::VPCGatewayAttachment",
+			"Properties": {
+				"InternetGatewayId": {"Ref": "NewInternetGateway"},
+				"VpcId": {"Ref": "MyVPC2"}
+			}
+		},
+		"NewPublicRouteTable": {
+			"Type": "AWS::EC2::RouteTable",
+			"Properties": {
+				"VpcId": {"Ref": "MyVPC2"},
+				"Tags": [{"Key": "Name", "Value": "CftTable"}]
+			}
+		},
+		"NewPublicRoute": {
+			"Type": "AWS::EC2::Route",
+			"DependsOn": "AttachInternetGateway",
+			"Properties": {
+				"GatewayId": {"Ref": "NewInternetGateway"},
+				"RouteTableId": {"Ref": "NewPublicRouteTable"},
+				"DestinationCidrBlock": "0.0.0.0/0"
+			}
+		},
+		"PublicSubnetRouteAssociation": {
+			"Type": "AWS::EC2::SubnetRouteTableAssociation",
+			"Properties": {
+				"RouteTableId": {"Ref": "NewPublicRouteTable"},
+				"SubnetId": {"Ref": "MyPublicSubnet1"}
+			}
+		},
+		"NewPirvateRouteTable": {
+			"Type": "AWS::EC2::RouteTable",
+			"Properties": {
+				"VpcId": {"Ref": "MyVPC2"},
+				"Tags": [{"Key": "Name", "Value": "CftPrivateTable"}]
+			}
+		},
+		"NewPrivateRoute": {
+			"Type": "AWS::EC2::Route",
+			"DependsOn": "NewNatGateway",
+			"Properties": {
+				"NatGatewayId": {"Ref": "NewNatGateway"},
+				"RouteTableId": {"Ref": "NewPirvateRouteTable"},
+				"DestinationCidrBlock": "0.0.0.0/0"
+			}
+		},
+		"PrivateSubnetRouteAssociation": {
+			"Type": "AWS::EC2::SubnetRouteTableAssociation",
+			"Properties": {
+				"RouteTableId": {"Ref": "NewPirvateRouteTable"},
+				"SubnetId": {"Ref": "MyPrivateSubnet1"}
+			}
+		},
+		"PublicEC2Instance": {
+			"Type": "AWS::EC2::Instance",
+			"DependsOn" : ["AttachInternetGateway", "PublicSecurityGroup"],
+			"Properties": {
+				"InstanceType": {"Ref" : "InstanceTypes" },
+				"ImageId": {"Ref" : "Images"},
+				"NetworkInterfaces": [{
+					"SubnetId": {"Ref": "MyPublicSubnet1"},
+					"AssociatePublicIpAddress": "true",
+					"DeviceIndex" : "0",
+					"GroupSet": [{"Ref": "PublicSecurityGroup"}]
+					}],
+				"KeyName": {"Ref": "Key"},
+				"Tags": [{"Key": "Name", "Value": "CftPublicInstance"}]
+			}
+		},
+		"PrivateEC2Instance": {
+			"Type": "AWS::EC2::Instance",
+			"DependsOn" : ["AttachInternetGateway", "PrivateSecurityGroup"],
+			"Properties": {
+				"InstanceType": {"Ref" : "InstanceTypes" },
+				"ImageId": {"Ref" : "Images"},
+				"NetworkInterfaces": [{
+					"SubnetId": {"Ref": "MyPrivateSubnet1"},
+					"AssociatePublicIpAddress": "false",
+					"DeviceIndex" : "0",
+					"GroupSet": [{"Ref": "PrivateSecurityGroup"}]
+					}],
+				"KeyName": {"Ref": "Key"},
+				"Tags": [{"Key": "Name", "Value": "CftPrivateInstance"}]
+			}
+		},
+		"PublicSecurityGroup": {
+			"Type": "AWS::EC2::SecurityGroup",
+			"Properties": {
+				"GroupName": "MyPublicSG",
+				"VpcId": {"Ref": "MyVPC2"},
+				"GroupDescription": "Puplic HTTP and SSH access",
+				"SecurityGroupIngress": [
+					{
+						"IpProtocol": "tcp",
+						"FromPort": "22",
+						"ToPort": "22",
+						"CidrIp" : "0.0.0.0/0"
+					},
+					{
+						"IpProtocol": "tcp",
+						"FromPort": "80",
+						"ToPort": "80",
+						"CidrIp" : "68.98.128.159/32"
+					}
+				],
+				"Tags": [{"Key": "Name", "Value": "CftPublicSG"}]
+			}
+		},
+		"PrivateSecurityGroup": {
+			"Type": "AWS::EC2::SecurityGroup",
+			"DependsOn": "PublicSecurityGroup",
+			"Properties": {
+				"GroupName": "MyPrivateSG",
+				"VpcId": {"Ref": "MyVPC2"},
+				"GroupDescription": "Private HTTP and SSH access",
+				"SecurityGroupIngress": [
+					{
+						"IpProtocol": "tcp",
+						"FromPort": "22",
+						"ToPort": "22",
+						"SourceSecurityGroupId" : {"Ref": "PublicSecurityGroup"}
+					},
+					{
+						"IpProtocol": "tcp",
+						"FromPort": "8080",
+						"ToPort": "8080",
+						"SourceSecurityGroupId" : {"Ref": "PublicSecurityGroup"}
+					}
+				],
+				"Tags": [{"Key": "Name", "Value": "CftPrivateSG"}]
+			}
+		}
+	},
+	"Outputs": {
+		"VPC": {
+			"Description": "A new VPC has been created.",
+			"Value": {"Ref": "MyVPC2"}
+		},
+		"Subnets": {
+			"Description": "The following subnets have been created.",
+			"Value": {"Fn::Join": [",", [
+				{"Ref": "MyPublicSubnet1"}, 
+				{"Ref": "MyPrivateSubnet1"}
+			]]}
+		},
+		"InternetGateway": {
+			"Description": "A new internet gateway has been created.",
+			"Value": {"Ref": "NewInternetGateway"}
+		},
+		"NATGateway": {
+			"Description": "A NAT gateway has been created.",
+			"Value": {"Ref": "NewNatGateway"}
+		},
+		"EIP": {
+			"Description": "A new EIP has been assigned.",
+			"Value": {"Fn::GetAtt" : ["ElasticIPForNAT", "AllocationId"]}
+		},
+		"Subnets": {
+			"Description": "The following security groups have been created.",
+			"Value": {"Fn::Join": [",", [
+				{"Ref": "PublicSecurityGroup"},
+				{"Ref": "PrivateSecurityGroup"}
+			]]}
+		},
+		"EC2Instances": {
+			"Description": "The following EC2 instances have been created.",
+			"Value": {"Fn::Join": [",", [
+				{"Ref": "PublicEC2Instance"}, 
+				{"Ref": "PrivateEC2Instance"}
+			]]}
+		}
+	}
+}
