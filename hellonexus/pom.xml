@@ -3,13 +3,13 @@
 	<groupId>com.github.btamilselvan</groupId>
 	<artifactId>hellonexus</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>hellonexus Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<scm>
 		<url>https://github.com/btamilselvan/tamils</url>
 		<connection>scm:git:git://github.com/btamilselvan/tamils.git</connection>
-		<tag>simpletag</tag>
+		<tag>v1</tag>
 	</scm>
 	<dependencies>
 		<dependency>
