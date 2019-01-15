@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
@@ -19,6 +19,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
+
+import software.amazon.awssdk.services.s3.S3Client;
 
 /**
  * A simple test harness for locally invoking your Lambda function handler.
@@ -30,7 +32,7 @@ public class S3FunctionTest {
     private S3Event event;
 
     @Mock
-    private AmazonS3 s3Client;
+    private S3Client s3Client;
     @Mock
     private S3Object s3Object;
 
@@ -45,16 +47,17 @@ public class S3FunctionTest {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(CONTENT_TYPE);
         when(s3Object.getObjectMetadata()).thenReturn(objectMetadata);
-        when(s3Client.getObject(getObjectRequest.capture())).thenReturn(s3Object);
+//        when(s3Client.getObject(getObjectRequest.capture())).thenReturn(s3Object);
     }
 
     private Context createContext() {
-        TestContext ctx = new TestContext();
+        /*TestContext ctx = new TestContext();
 
         // TODO: customize your context here if needed.
         ctx.setFunctionName("Your Function Name");
 
-        return ctx;
+        return ctx;*/
+    	return null;
     }
 
     @Test

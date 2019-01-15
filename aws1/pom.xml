@@ -16,16 +16,11 @@
 		<lamda.java.core.version>1.2.0</lamda.java.core.version>
 		<mockito.all>1.10.19</mockito.all>
 		<json.simple.version>1.1.1</json.simple.version>
-		<!-- <aws.sdk>2.3.0</aws.sdk>
-		<s3.version>2.1.0</s3.version>
-		<sts.version>2.1.0</sts.version>
-		<aws.sdk.core>1.11.482</aws.sdk.core>
-		<sdk.dynamodb.version>1.11.482</sdk.dynamodb.version>
-		<lamda.java.core.version>1.2.0</lamda.java.core.version>
-		<lamda.java.events.version>2.2.5</lamda.java.events.version>
-		<jackson-jr-objects>2.9.6</jackson-jr-objects>
-		<junit.version>4.12</junit.version>
-		<mockito.core>2.23.4</mockito.core> -->
+		<!-- <aws.sdk>2.3.0</aws.sdk> <s3.version>2.1.0</s3.version> <sts.version>2.1.0</sts.version> 
+			<aws.sdk.core>1.11.482</aws.sdk.core> <sdk.dynamodb.version>1.11.482</sdk.dynamodb.version> 
+			<lamda.java.core.version>1.2.0</lamda.java.core.version> <lamda.java.events.version>2.2.5</lamda.java.events.version> 
+			<jackson-jr-objects>2.9.6</jackson-jr-objects> <junit.version>4.12</junit.version> 
+			<mockito.core>2.23.4</mockito.core> -->
 	</properties>
 
 	<modules>
@@ -44,17 +39,23 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-bom</artifactId>
+				<version>1.11.482</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/software.amazon.awssdk/sdk-core -->
-		<dependency>
-			<groupId>software.amazon.awssdk</groupId>
-			<artifactId>sdk-core</artifactId>
-			<version>2.3.0</version>
-		</dependency>
+		<!-- <dependency> <groupId>software.amazon.awssdk</groupId> <artifactId>sdk-core</artifactId> 
+			<version>2.3.0</version> </dependency> -->
 
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
@@ -77,7 +78,7 @@
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>lambda</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-lambda-java-core</artifactId>
@@ -89,6 +90,12 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-lambda-java-events</artifactId>
 			<version>${lamda.java.events.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->

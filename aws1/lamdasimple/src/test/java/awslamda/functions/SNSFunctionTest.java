@@ -23,12 +23,13 @@ public class SNSFunctionTest {
     }
 
     private Context createContext() {
-        TestContext ctx = new TestContext();
+     /*   TestContext ctx = new TestContext();
 
         // TODO: customize your context here if needed.
         ctx.setFunctionName("Your Function Name");
 
-        return ctx;
+        return ctx;*/
+    	return null;
     }
 
     @Test

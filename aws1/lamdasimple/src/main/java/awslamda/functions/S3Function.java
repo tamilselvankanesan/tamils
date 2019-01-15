@@ -29,8 +29,6 @@ public class S3Function implements RequestHandler<S3Event, String> {
         String bucket = event.getRecords().get(0).getS3().getBucket().getName();
         String key = event.getRecords().get(0).getS3().getObject().getKey();
         try {
-        	
-        	
             GetObjectResponse response= s3.getObject(GetObjectRequest.builder().bucket(bucket).key(key).build()).response();
             context.getLogger().log("Meta data: " + response.metadata());
             return response.metadata().toString();

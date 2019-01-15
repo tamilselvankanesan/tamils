@@ -20,7 +20,7 @@ public class S3Function implements RequestHandler<S3Event, String> {
     }
 
     public String handleRequest(S3Event event, Context context) {
-        context.getLogger().log("Received event: " + event);
+        context.getLogger().log("Received event is: " + event);
 
         // Get the object from the event and show its content type
         String bucket = event.getRecords().get(0).getS3().getBucket().getName();
