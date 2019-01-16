@@ -28,6 +28,7 @@
 		<module>lamdasqs</module>
 		<module>lamdasimple</module>
 		<module>awssimple</module>
+		<module>awsserverless</module>
 	</modules>
 
 	<dependencyManagement>
