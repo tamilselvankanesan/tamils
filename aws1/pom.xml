@@ -29,8 +29,9 @@
 		<module>lamdasimple</module>
 		<module>awssimple</module>
 		<module>awsserverless</module>
+		<module>awsndb</module>
 	</modules>
-
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
