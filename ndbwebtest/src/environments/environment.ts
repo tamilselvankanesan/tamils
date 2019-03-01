@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:8080/ndb/rest/'
+  API_URL: 'http://www.tamils.rocks/t/ndb/rest/'
 };

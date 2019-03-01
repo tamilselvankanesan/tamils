@@ -29,7 +29,7 @@ import {SharedModule} from './shared.module';
 import {StateService} from './state/state.service';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, SocialLoginModule} from 'angular4-social-login';
+import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, SocialLoginModule} from 'angularx-social-login';
 import {SocialAuthComponent} from './auth/social-auth/social-auth.component';
 import { SocialAuthService } from './auth/social-auth/social-auth.service';
 

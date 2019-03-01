@@ -3,7 +3,7 @@ import {ApplicationUser} from '../../user/application-user';
 import {SocialAuthService} from './social-auth.service';
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider} from 'angular4-social-login';
+import {AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider} from 'angularx-social-login';
 
 @Component({
   selector: 'app-social-auth',
