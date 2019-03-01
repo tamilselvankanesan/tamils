@@ -1,6 +1,6 @@
 import { ApplicationUser } from '../../user/application-user';
 import {Injectable} from '@angular/core';
-import { SocialUser } from 'angular4-social-login';
+import { SocialUser } from 'angularx-social-login';
 
 @Injectable()
 export class SocialAuthService {

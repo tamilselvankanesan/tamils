@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  tasks:
+  - name : apache restart
+    become: yes
+    service:
+     name: httpd
+     state: restarted
+  - name : create new directory
+    become: yes
+    file:
+     path: /opt/git_repo1/tamils
+     state: directory
+     mode: 0777
+  - name : git checkout
+    git:
+     repo: git@github.com:btamilselvan/tamils.git
+     dest: /opt/git_repo1/tamils
+     clone: yes
+     update: yes
+  - name : maven clean install
+    shell:
+     cmd: mvn clean install -DskipTests
+     chdir: /opt/git_repo1/tamils/ndb
+...
+
