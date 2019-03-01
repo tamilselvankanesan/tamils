@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.success</groupId>
@@ -16,6 +16,7 @@
 		<lamda.java.core.version>1.2.0</lamda.java.core.version>
 		<mockito.all>1.10.19</mockito.all>
 		<json.simple.version>1.1.1</json.simple.version>
+		<kinesis.version>2.4.11</kinesis.version>
 		<!-- <aws.sdk>2.3.0</aws.sdk> <s3.version>2.1.0</s3.version> <sts.version>2.1.0</sts.version> 
 			<aws.sdk.core>1.11.482</aws.sdk.core> <sdk.dynamodb.version>1.11.482</sdk.dynamodb.version> 
 			<lamda.java.core.version>1.2.0</lamda.java.core.version> <lamda.java.events.version>2.2.5</lamda.java.events.version> 
@@ -30,7 +31,8 @@
 		<module>awssimple</module>
 		<module>awsserverless</module>
 		<module>awsndb</module>
-	</modules>
+    	<module>kinesis</module>
+  </modules>
 	
 	<dependencyManagement>
 		<dependencies>
@@ -79,6 +81,12 @@
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>lambda</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/software.amazon.awssdk/kinesis -->
+		<dependency>
+		    <groupId>software.amazon.awssdk</groupId>
+		    <artifactId>kinesis</artifactId>
 		</dependency>
 
 		<dependency>
