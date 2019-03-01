@@ -1,14 +1,14 @@
-Springboot ->	use the correct JDK (spring boot 1.x works in jdk 7,  boot 2 min requirement is jdk 8)
+Springboot ->	use the correct JDK (boot 2 min requirement is jdk 8)
 Tomcat deployment ->	Make sure to extend SpringBootServletInitializer
 pom.xml	-> make sure to exclude tomcat server dependency
-make sure to add a dependency for servelt-api and provided scope
+make sure to add a dependency for servlet-api and provided scope
 final version is a war
 
 for Jboss	-> make sure to specify the context-root in application.properties
-			also, some modules needs to be enabled in the jboss module.xml.. Depends on the error.. May not be applicable as well"
+			-> also, some modules needs to be enabled in the jboss module.xml.. Depends on the error.. May not be applicable as well"
 			in the sun/jdk/module.xml for spring jdbc ->
-			<path name="com/sun/rowset"/>
-			<path name="com/sun/rowset/providers"/>
+					<path name="com/sun/rowset"/>
+					<path name="com/sun/rowset/providers"/>
 for datasource	-> Configure the datasource in the server and use the data source in the spring configuration
 1. create a module.xml (modules\com\mysql\main\) and place the jar here
 	<module xmlns="urn:jboss:module:1.0" name="com.mysql">
