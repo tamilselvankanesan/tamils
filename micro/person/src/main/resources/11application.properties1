@@ -1,0 +1,8 @@
+#If config service is not used, enable the below 3 lines and disable cloud.config.uri
+#spring.application.name=person-service
+#server.port=8082
+#eureka.clientserviceUrl.defaultZone=http://localhost:8061/eureka/
+
+cloud.config.uri=http://localhost:9090
+spring.application.name=person-service
+
