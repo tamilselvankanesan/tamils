@@ -1,0 +1,61 @@
+version: '2.0'
+services:
+    config-server:
+        container_name: config-server
+        build:
+            context: ./config
+            dockerfile: Dockerfile
+        image: myconfigimage
+        expose:
+            - 9090
+        ports:
+            - "9090:9090"
+        networks:
+            - my-micro-network
+        volumes:
+            - config-repo:/var/lib/config-repo
+    
+    eureka-server:
+        container_name: eureka-server
+        build:
+            context: ./discovery
+            dockerfile: Dockerfile
+        image: mydiscoveryimage:latest
+        expose:
+            - 8761
+        ports:
+            - "8761:8761"
+        networks:
+            - my-micro-network
+        entrypoint: /opt/bin/d-entry.sh
+        depends_on:
+            - config-server
+    
+    address-service:
+        container_name: address-service
+        build:
+            context: ./address
+            dockerfile: Dockerfile
+        image: myaddressimage:latest
+        expose:
+            - 8084
+        ports:
+            - "8084:8084"
+        networks:
+            - my-micro-network
+        entrypoint: /opt/bin/a-entry.sh
+        links:
+            - config-server:config-server
+            - eureka-server:eureka-server
+        depends_on:
+            - config-server
+            - eureka-server
+
+networks:
+    my-micro-network:
+        driver: bridge
+volumes:
+    config-repo:
+        external: true            
+
+     
