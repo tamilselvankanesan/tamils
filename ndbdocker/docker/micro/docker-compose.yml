@@ -8,8 +8,6 @@ services:
         image: myconfigimage
         expose:
             - 9090
-        ports:
-            - "9090:9090"
         networks:
             - my-micro-network
         volumes:
@@ -23,13 +21,31 @@ services:
         image: mydiscoveryimage:latest
         expose:
             - 8761
-        ports:
-            - "8761:8761"
         networks:
             - my-micro-network
         entrypoint: /opt/bin/d-entry.sh
         depends_on:
             - config-server
+    
+    gateway-service:
+        container_name: gateway-service
+        build:
+            context: ./gateway
+            dockerfile: Dockerfile
+        image: mygatewayimage:latest
+        expose:
+            - 8083
+        ports:
+            - "8083:8083"
+        networks:
+            - my-micro-network
+        entrypoint: /opt/bin/gateway-entry.sh
+        links:
+            - config-server:config-server
+            - eureka-server:eureka-server
+        depends_on:
+            - config-server
+            - eureka-server
     
     address-service:
         container_name: address-service
@@ -39,8 +55,6 @@ services:
         image: myaddressimage:latest
         expose:
             - 8084
-        ports:
-            - "8084:8084"
         networks:
             - my-micro-network
         entrypoint: /opt/bin/a-entry.sh
@@ -50,7 +64,7 @@ services:
         depends_on:
             - config-server
             - eureka-server
-
+    
 networks:
     my-micro-network:
         driver: bridge

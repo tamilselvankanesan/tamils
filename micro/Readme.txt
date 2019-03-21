@@ -40,3 +40,13 @@ mvn package spring-boot:repackage
 
 java -jar -Dserver.port=80823 abc.jar
 
+Docker notes:
+Using localhost to lookup config and eureka servers doesn't work. have to use container-id in the url. for e.g  
+
+Links:
+https://dzone.com/articles/buiding-microservice-using-springboot-and-docker
+
+
+1. connect containers using container-name (using links)
+2. Also, network needs to be included and all services should be linked to the same n/w to allow inter communications
+3. config and eurkea server needs to be up before other services are available. can be achieved using custom sh script.
