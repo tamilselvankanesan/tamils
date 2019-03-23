@@ -8,7 +8,7 @@ Gateway service:
 	Make sure *not* to extend SpringBootServletInitializer and make sure spring-web dependency is not there in pom.xml.
 	
 Person and address services:
-	Are the actual services and register with discovery service.
+	Are the actual services and register with discovery service. Use ${PORT:0} to assign dynamic port
 	
 Config service:
 	To maintain the configuration in one place.
@@ -17,6 +17,10 @@ Config service:
 	
 Communication b/w services:
 	Use Feign clients. Make sure to enable Feign clients in the application class.
+	
+Proxy service: 
+	To load balance. make sure to add an entry to fetch service registry from eureka (fetchRegistry: true)
+	
 	
 Include maven build plugin and package code using mvn package command. (this will create an executable jar)
 Start spring boot using java command. port can be dynamically changed using vm arguments.
@@ -50,3 +54,4 @@ https://dzone.com/articles/buiding-microservice-using-springboot-and-docker
 1. connect containers using container-name (using links)
 2. Also, network needs to be included and all services should be linked to the same n/w to allow inter communications
 3. config and eurkea server needs to be up before other services are available. can be achieved using custom sh script.
+
