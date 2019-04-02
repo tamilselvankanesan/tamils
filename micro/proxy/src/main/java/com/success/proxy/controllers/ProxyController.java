@@ -9,6 +9,6 @@ public class ProxyController {
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String sayHello() {
-		return "Hello!, I am a proxy to my ndb micro services";
+		return "Hello!, I am a proxy to my ndb micro services. My instance ID is "+this.toString();
 	}
 }

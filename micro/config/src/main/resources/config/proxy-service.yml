@@ -12,3 +12,6 @@ zuul:
     address:
       path: /address/**
       serviceId: address-service
+    person:
+      path: /person/**
+      serviceId: person-service
