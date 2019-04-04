@@ -17,5 +17,5 @@ ADD ${JAR_FILE} discovery.jar
 #RUN chmod 755 /opt/bin/d-entry.sh
 
 # Run the jar file 
-ENTRYPOINT ["java", "-jar", "/discovery.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=aws", "/discovery.jar"]
 
