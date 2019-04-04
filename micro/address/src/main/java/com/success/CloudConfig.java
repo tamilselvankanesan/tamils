@@ -41,10 +41,12 @@ public class CloudConfig {
 
 		EurekaInstanceConfigBean config = new EurekaInstanceConfigBean(inetUtils);
 		AmazonInfo info = AmazonInfo.Builder.newBuilder().autoBuild("eureka");
+		System.out.println("amazon info ->"+info.toString());
 		config.setDataCenterInfo(info);
 
 		try {
 			String json = readEcsMetadata();
+			System.out.println("ECS meta-data is "+json);
 			EcsTaskMetadata metadata = Converter.fromJsonString(json);
 			String ipAddress = findContainerPrivateIP(metadata);
 			config.setIpAddress(ipAddress);
@@ -72,7 +74,7 @@ public class CloudConfig {
 		return "";
 	}
 	private String readEcsMetadata() throws Exception {
-		String url = Constants.AWS_METADATA_URL;
+		String url = Constants.AWS_METADATA_URL+"/"+containerName;
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		StringBuilder response = new StringBuilder();
