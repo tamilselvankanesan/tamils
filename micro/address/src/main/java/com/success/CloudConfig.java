@@ -1,10 +1,17 @@
 package com.success;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
@@ -16,7 +23,6 @@ import org.springframework.core.env.Environment;
 import com.netflix.appinfo.AmazonInfo;
 import com.success.util.aws.Constants;
 import com.success.util.aws.Container;
-import com.success.util.aws.Converter;
 import com.success.util.aws.EcsTaskMetadata;
 import com.success.util.aws.Network;
 
@@ -47,9 +53,9 @@ public class CloudConfig {
 		try {
 			String json = readEcsMetadata();
 			System.out.println("ECS meta-data is "+json);
-			EcsTaskMetadata metadata = Converter.fromJsonString(json);
-			String ipAddress = findContainerPrivateIP(metadata);
-			config.setIpAddress(ipAddress);
+//			EcsTaskMetadata metadata = Converter.fromJsonString(json);
+//			String ipAddress = findContainerPrivateIP(metadata);
+			config.setIpAddress(getPrivateIpV4Address(json));
 			config.setNonSecurePort(getPortNumber());
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -74,7 +80,7 @@ public class CloudConfig {
 		return "";
 	}
 	private String readEcsMetadata() throws Exception {
-		String url = Constants.AWS_METADATA_URL+"/"+containerName;
+		String url = Constants.AWS_METADATA_URL;
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		StringBuilder response = new StringBuilder();
@@ -90,5 +96,58 @@ public class CloudConfig {
 			con.disconnect();
 		}
 		return response.toString();
+	}
+	
+	private String getPrivateIpV4Address(String data) {
+		try {
+			JSONParser jsonParser = new JSONParser();
+			JSONObject obj = (JSONObject)jsonParser.parse(data);
+            JSONArray containers = (JSONArray)obj.get("Containers");
+            for(Object containerObj : containers) {
+            	JSONObject container = (JSONObject)containerObj;
+            	if(!container.get("Name").toString().equals("address-service")) {
+            		continue;
+            	}
+            	 JSONArray networks = (JSONArray)container.get("Networks");
+            	 JSONObject nw = (JSONObject)networks.get(0);
+            	 JSONArray ipv4Addresses = (JSONArray)nw.get("IPv4Addresses");
+            	 System.out.println("ip address is "+ipv4Addresses.get(0));
+            	 return (String)ipv4Addresses.get(0);
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static void main(String[] args) {
+		JSONParser jsonParser = new JSONParser();
+		try (FileReader reader = new FileReader("C:\\Users\\btamilselvan\\Google Drive\\Documents\\study_material\\AWS\\aws_meta.json"))
+        {
+            //Read JSON file
+            JSONObject obj = (JSONObject)jsonParser.parse(reader);
+            JSONArray containers = (JSONArray)obj.get("Containers");
+            for(Object containerObj : containers) {
+            	JSONObject container = (JSONObject)containerObj;
+            	if(!container.get("Name").toString().equals("address-service")) {
+            		continue;
+            	}
+            	 JSONArray networks = (JSONArray)container.get("Networks");
+            	 JSONObject nw = (JSONObject)networks.get(0);
+            	 JSONArray ipv4Addresses = (JSONArray)nw.get("IPv4Addresses");
+            	 System.out.println("dasdasdsa "+ipv4Addresses.get(0)); 	 
+            }
+            System.out.println("dasdasdsa");
+ 
+//            JSONArray employeeList = (JSONArray) obj;
+ 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		
 	}
 }
