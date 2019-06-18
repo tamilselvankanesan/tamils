@@ -32,6 +32,8 @@ public class Test {
 
   
   private static void getClassName(){
+	  System.err.println(new Date()+" Exception occurred in addHeader() method in PDFHeaders.java. Input file name: ");
+
     System.out.println(BufferedOutputStream.class.getSimpleName());
     System.out.println(BufferedOutputStream.class.getName());
     System.out.println(BufferedOutputStream.class.getCanonicalName());
@@ -625,6 +627,8 @@ public class Test {
 	public static void main(String[] args)  {
 		
 	  getClassName();
+	  String originalFileName = "C:\\Users\\btamilselvan\\Desktop\\MyCMECF-CaseSnapshot.PNG";
+	  System.out.println(originalFileName.substring(originalFileName.lastIndexOf(".")));
 	  strPattern();
 	  if(true){
       return;

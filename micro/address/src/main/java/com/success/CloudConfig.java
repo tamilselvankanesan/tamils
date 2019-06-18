@@ -30,7 +30,7 @@ public class CloudConfig {
 	// Used as string.contains to search correct container
 	// Make sure that your Docker container in AWS Task definition has this as part
 	// of its name
-	@Value("${aws.containerName}")
+	@Value("${aws.containerName: adddress-service}")
 	private String containerName;
 
 	public CloudConfig(Environment env) {

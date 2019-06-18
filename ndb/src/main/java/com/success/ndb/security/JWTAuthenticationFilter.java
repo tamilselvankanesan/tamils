@@ -41,7 +41,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 		
 		String requestHeader = request.getHeader(tokenHeader);
 		
-		if(requestHeader!=null && requestHeader.startsWith("Bearer ")){
+		if(requestHeader!=null && requestHeader.startsWith("Bearer ") && requestHeader.substring(7)!=null && !"null".equals(requestHeader.substring(7))){
 			logger.info("token found...");
 			String token = requestHeader.substring(7);
 			//validate the token

@@ -55,7 +55,7 @@ public class PersonServiceImpl implements PersonService {
 	public PersonDTO getPersonById(String id) {
 		PersonDTO dto;
 		if (StringUtils.hasText(id)) {
-			dto = PersonAssembler.assemble(dao.findOne(Integer.parseInt(id)), false);
+			dto = PersonAssembler.assemble(dao.findById(Integer.parseInt(id)).get(), false);
 		} else {
 			dto = new PersonDTO();
 			dto.setMessage("No records found.");
