@@ -1,0 +1,53 @@
+{
+        "TableName": "User",
+        "AttributeDefinitions": [
+                {
+                        "AttributeName": "userId", "AttributeType": "S"
+                },
+                {
+                        "AttributeName": "loginName", "AttributeType": "S"
+                },
+                {
+                        "AttributeName": "email", "AttributeType": "S"
+                }
+        ],
+        "KeySchema": [
+                {
+                        "AttributeName": "userId", "KeyType": "HASH"
+                }
+        ],
+        "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+        },
+        "GlobalSecondaryIndexes": [
+        {
+                "IndexName": "LoginNameIndex",
+                "KeySchema": [
+                { "AttributeName": "loginName", "KeyType": "HASH" }
+                ],
+                "Projection": {
+                         "ProjectionType": "ALL"
+                },
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+                }
+      },
+        {
+                "IndexName": "EmailIndex",
+                "KeySchema": [
+                { "AttributeName": "email", "KeyType": "HASH" }
+                ],
+                "Projection": {
+                         "ProjectionType": "ALL"
+                },
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+                }
+      }
+    ]
+
+}
+
