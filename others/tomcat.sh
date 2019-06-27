@@ -21,8 +21,8 @@ export JAVA_OPTS="\
   -Dcatalina.home=$CATALINA_HOME \
   -Djava.io.tmpdir=$CATALINA_TMPDIR \
   -Daj.logdir=$LOG_DIR \
-  -Damazon.dynamodb.accesskey=AKIARM3D3C7PWORCOSFP \
-  -Damazon.dynamodb.secretkey=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 \
+  -Damazon.dynamodb.accesskey= \
+  -Damazon.dynamodb.secretkey= \
   -Dspring.profiles.active=dev \
   -Djava.awt.headless=true \
 "
