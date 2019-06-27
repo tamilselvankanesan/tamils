@@ -1,0 +1,37 @@
+{
+        "TableName": "verification_token",
+        "AttributeDefinitions": [
+                {
+                        "AttributeName": "userId", "AttributeType": "S"
+                },
+		{
+                        "AttributeName": "token", "AttributeType": "S"
+                }
+        ],
+        "KeySchema": [
+                {
+                        "AttributeName": "userId", "KeyType": "HASH"
+                }
+        ],
+	"GlobalSecondaryIndexes": [
+        {
+               	"IndexName": "TokenIndex",
+	         "KeySchema": [
+        	        { "AttributeName": "token", "KeyType": "HASH" }
+               	],
+	        "Projection": {
+                	"ProjectionType": "ALL"
+               	},
+	        "ProvisionedThroughput": {
+        		"ReadCapacityUnits": 1,
+                	"WriteCapacityUnits": 1
+                }
+      	}
+    	],
+        "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+        }
+
+}
+

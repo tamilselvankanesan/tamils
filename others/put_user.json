@@ -1,0 +1,12 @@
+{
+        "userId": {
+                "S": "XYZ-ABC-POI"
+        },
+        "loginName": {
+                "S": "Tamil"
+        },
+	"email": {
+                "S": "Tamil@tamils.rocks"
+        }
+}
+
