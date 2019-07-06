@@ -32,6 +32,15 @@ public class Test {
 
   
   private static void getClassName(){
+	  
+	  
+	  Date expiration  = new Date();
+		 long expTimeMillis = expiration.getTime();
+      expTimeMillis += 1000 * 60 * 60;
+      expiration.setTime(expTimeMillis);
+	  System.out.println("ee "+expiration);
+	  System.out.println(new Date(new Date().getTime()+3600000));
+	  
 	  System.err.println(new Date()+" Exception occurred in addHeader() method in PDFHeaders.java. Input file name: ");
 
     System.out.println(BufferedOutputStream.class.getSimpleName());

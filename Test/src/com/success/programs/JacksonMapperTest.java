@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,6 +23,7 @@ public class JacksonMapperTest {
 
   public static void main(String[] args) {
     try {
+    	searlizePerson();
       serializeJRP();
       deseralize();
       System.out.println("Before calling rest");
@@ -40,6 +42,55 @@ public class JacksonMapperTest {
     catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  
+  static void searlizePerson() throws JsonProcessingException {
+	  Result r = new Result();
+	  Person p = new Person();
+	  p.setFirstName("Amy");
+	  p.setLastName("Jackson");
+	  p.setPersonId("AAA-BBBB-CCCCC");
+	  Education e = new Education();
+	  e.setDegree("B.Tech");
+	  e.setFieldOfStudy("IT");
+	  e.setFromYear((short)2005);
+	  List<Education> eList = new java.util.ArrayList<Education>();
+	  p.setEducation(eList);
+	  
+	  p.setUserId(1);
+	  r.setData(p);
+	  
+	  Message m = new Message();
+	  m.setInfo("Data successfully saved.");
+	  
+	  r.setMessage(m);
+	  ObjectMapper mapper = new ObjectMapper();
+//	  mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+	  System.out.println(mapper.writeValueAsString(r));
+	  
+	  UserDTO u = new UserDTO();
+	  u.setEmail("tamil@tamils.rocks");
+	  u.setFirstName("Trish");
+	  u.setLastName("Brown");
+	  u.setLoginPassword("April@34");
+	  
+	  mapper = new ObjectMapper();
+//	  mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+	  System.out.println(mapper.writeValueAsString(u));
+	  
+	  
+	  u.setEmail(null);
+	  u.setFirstName(null);
+	  u.setLastName(null);
+	  u.setLoginName("pebbles@tamils.rocks");
+	  u.setLoginPassword("June@35");
+	  
+	  mapper = new ObjectMapper();
+//	  mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+	  System.out.println(mapper.writeValueAsString(u));
+	  
+	  
+	  
   }
   
   static void deseralize() throws IOException{
