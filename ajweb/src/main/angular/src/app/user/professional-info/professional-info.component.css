@@ -1,0 +1,23 @@
+.p-tab{
+    cursor: pointer;
+    height: 40px !important;
+    text-align: left;
+    padding: 20px;
+}
+.p-tab label{
+    font-size: 12px;
+    line-height: 1.25;
+    color: #313131;
+    cursor: pointer;
+}
+.professional-info-tab-data{
+    padding: 10px;
+    padding-top: 20px;
+}
+.tab-selected {
+    border-bottom: 8px solid var(--link);
+}
+
+.tab-deselected {
+    text-decoration: none;
+}

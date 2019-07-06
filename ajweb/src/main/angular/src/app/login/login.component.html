@@ -1,0 +1,100 @@
+<div class="login-main-div">
+	<div>
+		<!-- png -->
+		<img src="assets/img/logo.png" class="Logo" />
+		<p>
+			<span class="Organizing-your-future">Organizing your future.</span>
+		</p>
+	</div>
+	<div>
+		<div class="register-now-div">
+			<a class="Register-now" href="javascript::void">Register now</a>
+		</div>
+		<div>
+			<form (ngSubmit)="login()" #loginForm="ngForm">
+				<div class="form-control-div">
+					<div class="input-image-div">
+						<img src="assets/img/user-name-icon.png" class="user-Name-Icon">
+					</div>
+					<div class="input-field-div">
+						<input type="text" name="uName" id="uName" #uName="ngModel" [(ngModel)]="userName" required
+							placeholder="Username or email" />
+					</div>
+				</div>
+				<br />
+				<div class="form-control-div">
+					<div class="input-image-div">
+						<img src="assets/img/password-secure-icon.png" class="user-Name-Icon">
+					</div>
+					<div class="input-field-div">
+						<input type="password" name="password" id="password" #pass="ngModel" [(ngModel)]="password" required
+							placeholder="Password"/>
+					</div>
+				</div>
+				<div>
+					<a class="Register-now" href="javascript::void">Forgot Password?</a>
+				</div>
+				<div>
+					<div class="remember-me-div" style="float: left;">
+						<input type="checkbox" class="remember-me-chk" id="rm" [(ngModel)]="rememberMe" name="rm"/>
+						<label class="remember-me-txt" for="rm">Remember me</label>
+					</div>
+					<div class="login-button-div" style="float: right;">
+						<button class="login-button" type="submit">
+							LOGIN
+						</button>
+					</div>
+				</div>
+			</form>
+			<div style="clear: both; padding-top: 5%"></div>
+			<div style="position: relative; ">
+				<div class="left-line" style="float: left">
+					<hr class="line">
+				</div>
+				<div class="right-line" style="float: right">
+						<hr class="line">
+					</div>
+				<div class="middle-line" style="float: left">
+					<label>or</label>
+				</div>
+				
+			</div>
+			<div style="clear: both"></div>
+			<div class="social-div">
+				<div class="social-button-div" style="float: left;">
+					<button class="social-button social-button-in">
+						in
+					</button>
+					<button class="social-button social-button-linkedin" (click)="signInWithLinkedIn()">
+						Login with LinkedIn
+					</button>
+				</div>
+				<div class="social-button-div" style="float: right;">
+					<button class="social-button social-button-g">
+						<!-- <img src="assets/img/google-icon-white.png" class="Google-Icon-White"> -->
+						<label>G</label>
+					</button>
+					<button class="social-button social-button-google" (click)="signInWithGoogle()">
+						Login with Google
+					</button>
+				</div>
+			</div>
+			<div style="clear: both; padding-top: 5%"></div>
+			<div class="footer-text">
+				<div class="line1">
+					<label>Applied Jobs™ is the #1 Jobs Relationship (JRM™) platform in the world.</label>
+				</div>
+				<div class="line1 line2">
+					And it’s FREE.
+				</div>
+			</div>
+			<div style="padding-top: 5%"></div>
+			<div class="tell-a-friend-div">
+				<a href="javascript::void">TELL A FRIEND</a>
+			</div>
+		</div>
+
+	</div>
+
+
+</div>

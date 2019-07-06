@@ -1,0 +1,81 @@
+html * {
+  font-family: Roboto;
+}
+
+body{
+  margin: 0px;
+}
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --link: #12c0c0;
+    --very-light-pink: #eaeaea;
+    --pale-grey: #f7f8fa;
+    --white: #ffffff;
+    --div-special-height: 40px;
+  }
+  
+
+
+  @font-face {
+    font-family: roboto-bold;
+    /* src: url(assets/fonts/roboto.bold.ttf) format("truetype"); */
+  }
+
+
+  .caption{
+    font-family: 'roboto-bold';
+    font-weight: 0 !important;
+    font-weight: normal !important;
+  }
+
+
+  /* Text styles */
+  
+  /* .Big-Numbers {
+    font-family: Roboto;
+    font-size: 100px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;  
+    line-height: 1.32;
+    letter-spacing: normal;
+    text-align: center;
+    color: #313131;
+  }
+  
+  link {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--link);
+  }
+  
+  .Paragraph-Style {
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;  
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: left;
+    color: #313131;
+  }
+  
+  .Category {
+    font-family: Roboto;  
+    font-size: 10px;  
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;  
+    line-height: 1.1;
+    letter-spacing: normal;
+    text-align: left;
+    color: #313131;
+  } */

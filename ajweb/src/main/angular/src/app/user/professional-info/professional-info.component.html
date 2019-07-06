@@ -1,0 +1,38 @@
+<div class="p-grid">
+
+    <div class="p-tab p-col-2" (click)="selectedTabName=tabNames.PERSONAL_INFO">
+        <label [ngClass]="selectedTabName==tabNames.PERSONAL_INFO ? 'tab-selected' : 'tab-deselected'">
+          {{tabNames.PERSONAL_INFO}}
+        </label>
+      </div>
+      <div class="p-tab p-col-2" (click)="selectedTabName=tabNames.EXPERIENCE">
+        <label [ngClass]="selectedTabName==tabNames.EXPERIENCE ? 'tab-selected' : 'tab-deselected'">
+          {{tabNames.EXPERIENCE}}
+        </label>
+      </div>
+      <div class="p-tab p-col-3" (click)="selectedTabName=tabNames.DEMOGRAPHICS_CONFIRMATION">
+        <label [ngClass]="selectedTabName==tabNames.DEMOGRAPHICS_CONFIRMATION ? 'tab-selected' : 'tab-deselected'">
+          {{tabNames.DEMOGRAPHICS_CONFIRMATION}}
+        </label>
+      </div>
+      <div class="p-tab p-col-5" (click)="selectedTabName=tabNames.VERIFIED_INFO">
+        <label [ngClass]="selectedTabName==tabNames.VERIFIED_INFO ? 'tab-selected' : 'tab-deselected'">
+          {{tabNames.VERIFIED_INFO}}
+        </label>
+      </div>
+</div>
+
+<div class="professional-info-tab-data">
+  <div *ngIf="selectedTabName===tabNames.PERSONAL_INFO">
+    <app-personal-info></app-personal-info>
+  </div>
+  <div *ngIf="selectedTabName===tabNames.EXPERIENCE">
+    <app-experience> </app-experience>
+  </div>
+  <div *ngIf="selectedTabName===tabNames.DEMOGRAPHICS_CONFIRMATION">
+    <app-demographics></app-demographics>
+  </div>
+  <div *ngIf="selectedTabName===tabNames.VERIFIED_INFO">
+    <app-verified-info></app-verified-info>
+  </div>
+</div>

@@ -1,0 +1,180 @@
+.login-main-div{
+  width: 450px;
+  margin: 0 auto; 
+  margin-top: 3%;
+}
+.Logo {
+    object-fit: contain;
+  }
+  .Organizing-your-future {
+    opacity: 1;
+    font-size: 86px;
+    font-weight: bold;
+    font-stretch: normal;
+    line-height: 0.92;
+    letter-spacing: -2.2px;
+    text-align: left;
+    color: #afafaf;
+  }
+  .register-now-div{
+      padding-top: 1%;
+  }
+  .Register-now {
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: left;
+    color: #12c0c0;
+    
+  }
+  .form-control-div{
+    height: 40px;
+    border: solid 0.5px #afafaf;
+    display: flex;
+  }
+  .form-control-div .input-image-div {
+    width: 10%;
+    text-align: center;
+    position: relative;
+    border-right: solid 0.5px #afafaf;
+  }
+  .user-Name-Icon {
+    top: 30%;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    position: relative;
+  }
+  .mask {
+    width: 15px;
+    height: 10.2px;
+    background-color: #cecece;
+  }
+  .form-control-div .input-field-div {
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+.input-field-div input{
+    width: 100%;
+    outline: none;
+    border: none;
+}
+.remember-me-div{
+    position: relative;
+    top: 15px;
+}  
+  .remember-me-chk {
+    width: 20px;
+    height: 20px;
+    border: solid 0.5px #afafaf;
+    background-color: #ffffff;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .remember-me-txt {
+    font-size: 12px;
+    line-height: 1.33;
+    color: #313131;
+    position: relative;
+  }
+  .login-button-div{
+    position: relative;
+    border: none;
+  }
+
+ .login-button {
+    width: 86px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #12c0c0;
+    outline-style: none;
+    padding: 0;
+    border: none;
+    position: relative;
+  }
+  .left-line{
+    width: 40%;
+    position: relative;
+  }
+  .middle-line{
+    position: relative;
+    font-size: 14px;
+    color: #afafaf;
+    width: 20%;
+    text-align: center;
+  }
+  .right-line{
+    width: 40%;
+    position: relative;
+  }
+  .line{
+    opacity: 0.8;
+    background-color: #ffffff;
+  }
+  .social-div{
+      position: relative;
+      padding-top: 5%;
+      left: 0;
+  }
+  .social-button{
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    height: 40px;
+    outline-style: none;
+    padding: 0;
+    border: none;
+  }
+  .social-button-in{
+    width: 40px;
+    background-color: #09689f;
+  }
+  .social-button-linkedin{
+    width: 170px;
+    background-color: #0976b4;
+  }
+  .social-button-g{
+    background-color: #d3392e;
+    width: 40px;
+    font-weight: bold;
+  }
+  .social-button-google{
+    background-color: #f44336;
+    width: 170px;
+  }
+  .footer-text{
+      position: relative;
+  }
+  .footer-text .line1{
+    font-size: 16px;
+    opacity: 1;
+    font-family: Roboto;
+    color: #afafaf;
+    letter-spacing: -0.4px;
+  }
+  .footer-text .line2{
+    font-weight: bold;
+  }
+  .tell-a-friend-div{
+    position: relative;
+    text-align: center;
+    height: 40px;
+    background-color: #12c0c0;    
+}
+.tell-a-friend-div a{
+    margin-top: 5px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.33;
+    letter-spacing: normal;
+    position: absolute;
+    left: 35%;
+    padding-top: 5px;
+}

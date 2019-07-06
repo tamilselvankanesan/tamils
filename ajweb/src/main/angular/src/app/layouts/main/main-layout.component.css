@@ -1,0 +1,19 @@
+.left{
+    background-color: #464646;
+    margin: 0% !important;
+    padding: 0% !important;
+    /* height: 100vh; */
+    min-width: 230px;
+}
+.center{
+    height: 100vh;
+    min-width: 650px;
+
+}
+.right{
+    width: 20%;
+}
+.p-grid{
+    margin: 0px;
+    flex-wrap: nowrap;
+}
