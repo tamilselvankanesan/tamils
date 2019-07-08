@@ -1,0 +1,68 @@
+{
+        "TableName": "applied_job",
+        "AttributeDefinitions": [
+                {
+                        "AttributeName": "personId", "AttributeType": "S"
+                },
+		{
+                        "AttributeName": "jobId", "AttributeType": "S"
+                },
+		{
+                        "AttributeName": "appliedOn", "AttributeType": "S"
+                }
+        ],
+        "KeySchema": [
+                {
+                        "AttributeName": "personId", "KeyType": "HASH"
+                },
+		{
+                        "AttributeName": "jobId", "KeyType": "RANGE"
+                }
+        ],
+        "ProvisionedThroughput": {
+                "ReadCapacityUnits": 4,
+                "WriteCapacityUnits": 2
+        },
+	"GlobalSecondaryIndexes": [
+        {
+                "IndexName": "AppliedOnIndex",
+                "KeySchema": [
+                { "AttributeName": "appliedOn", "KeyType": "HASH" }
+                ],
+                "Projection": {
+                         "ProjectionType": "ALL"
+                },
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 4,
+                "WriteCapacityUnits": 1
+                }
+      },
+	{
+                "IndexName": "JobIdIndex",
+                "KeySchema": [
+                { "AttributeName": "jobId", "KeyType": "HASH" }
+                ],
+                "Projection": {
+                         "ProjectionType": "ALL"
+                },
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 4,
+                "WriteCapacityUnits": 1
+                }
+      }
+    ],
+	"LocalSecondaryIndexes": [
+		{
+			"IndexName": "JobIdIndexLocal",
+			"KeySchema": [
+                		{ "AttributeName": "personId", "KeyType": "HASH" },
+				{ "AttributeName": "jobId", "KeyType": "RANGE" }
+                	],
+                	"Projection": {
+                         	"ProjectionType": "ALL"
+                	}
+		}
+	]
+
+}
+

@@ -5,5 +5,6 @@ aws dynamodb create-table --cli-input-json file://person-table.json --endpoint-u
 aws dynamodb create-table --cli-input-json file://user-table.json --profile tamil
 aws dynamodb create-table --cli-input-json file://verification_token.json --profile tamil
 aws dynamodb create-table --cli-input-json file://person-table.json --profile tamil
-
-
+aws dynamodb create-table --cli-input-json file://job-table.json --profile tamil
+aws dynamodb create-table --cli-input-json file://applied-job-table.json --profile tamil
+aws dynamodb delete-table --table-name job  --profile tamil

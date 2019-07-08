@@ -1,6 +1,9 @@
 {
         "TableName": "verification_token",
         "AttributeDefinitions": [
+		{
+                        "AttributeName": "tokenId", "AttributeType": "S"
+                },
                 {
                         "AttributeName": "userId", "AttributeType": "S"
                 },
@@ -10,10 +13,23 @@
         ],
         "KeySchema": [
                 {
-                        "AttributeName": "userId", "KeyType": "HASH"
+                        "AttributeName": "tokenId", "KeyType": "HASH"
                 }
         ],
 	"GlobalSecondaryIndexes": [
+	{
+                "IndexName": "UserIdIndex",
+                 "KeySchema": [
+                        { "AttributeName": "userId", "KeyType": "HASH" }
+                ],
+                "Projection": {
+                        "ProjectionType": "ALL"
+                },
+                "ProvisionedThroughput": {
+                        "ReadCapacityUnits": 1,
+                        "WriteCapacityUnits": 1
+                }
+        },
         {
                	"IndexName": "TokenIndex",
 	         "KeySchema": [
