@@ -16,14 +16,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 import com.netflix.appinfo.AmazonInfo;
 import com.success.util.aws.Constants;
 
-@Configuration
+//@Configuration
 public class CloudConfig {
 
 	private final Environment env;
