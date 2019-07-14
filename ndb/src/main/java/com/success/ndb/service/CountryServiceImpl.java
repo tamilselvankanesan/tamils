@@ -44,7 +44,7 @@ public class CountryServiceImpl implements CountryService {
 		long existingCount = countryDao.count();
 		if (importedCountries.size() > existingCount) {
 			for (Country c : importedCountries) {
-				if (!countryDao.exists(c.getCode())) {
+				if (!countryDao.existsById(c.getCode())) {
 					countryDao.save(c);
 				}
 			}
@@ -58,6 +58,6 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public Country findOne(String code) {
-		return countryDao.findOne(code);
+		return countryDao.findById(code).orElse(null);
 	}
 }

@@ -1,0 +1,4 @@
+<VirtualHost *>
+	RewriteEngine on
+	RewriteRule ^/ndb/(.*)$ http://10.10.20.61:8080/ndb/$1 [P]
+</VirtualHost>

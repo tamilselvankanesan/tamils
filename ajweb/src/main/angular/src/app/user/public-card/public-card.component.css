@@ -1,0 +1,38 @@
+.Your-Public-Card {
+    font-size: 16px;
+    font-weight: bold;
+    color: #313131;
+  }
+  .title {
+    height: 28px;
+    background-color: var(--link);
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+
+  .pic{
+      background-image: url("https://s3.amazonaws.com/applied-jobs/dev/82968186-f564-485d-90c8-f8ffc09e2aa7/82968186-f564-485d-90c8-f8ffc09e2aa7.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20190429T203524Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIARM3D3C7PWORCOSFP%2F20190429%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=1f34cac30cacea4c520612f2f74336ca51a722958a6754f73e4e70a85caabd1a");
+      /* -webkit-filter: blur(19.7px); */
+      /* filter: blur(19.7px); */
+  }
+  .box{
+    height: var(--div-special-height); 
+    opacity: 0.3;
+    background-color: #272727;
+    /* display: flex; */
+    /* align-items: left; */
+  }
+
+  label{
+    color: var(--white);
+    font-size: 12px;
+  }
+  .text-left{
+    float: left;
+    padding-top: 5px;
+  }
+  .text-right{
+    float: right;
+    padding-top: 5px;
+  }

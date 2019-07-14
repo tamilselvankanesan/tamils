@@ -1,0 +1,37 @@
+{
+        "TableName": "job",
+        "AttributeDefinitions": [
+                {
+                        "AttributeName": "jobId", "AttributeType": "S"
+                },
+		 {
+                        "AttributeName": "postedOn", "AttributeType": "S"
+                }
+        ],
+        "KeySchema": [
+                {
+                        "AttributeName": "jobId", "KeyType": "HASH"
+                }
+        ],
+        "ProvisionedThroughput": {
+                "ReadCapacityUnits": 4,
+                "WriteCapacityUnits": 2
+        },
+	"GlobalSecondaryIndexes": [
+        {
+                "IndexName": "PostedOnIndex",
+                "KeySchema": [
+                { "AttributeName": "postedOn", "KeyType": "HASH" }
+                ],
+                "Projection": {
+                         "ProjectionType": "ALL"
+                },
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 4,
+                "WriteCapacityUnits": 1
+                }
+      }
+    ]
+
+}
+

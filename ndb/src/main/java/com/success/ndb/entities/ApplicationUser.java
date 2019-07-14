@@ -6,8 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity(name="applicationuser")
 @Table(name = "application_user")
 public class ApplicationUser {
@@ -19,11 +17,9 @@ public class ApplicationUser {
 	private String lastName;
 	
 	@Column(name = "application_login")
-	@NotBlank
 	private String applicationLogin;
 	
 	@Column(name = "application_password")
-	@NotBlank
 	private String applicationPassword;
 	
 	@Column(name="user_id")

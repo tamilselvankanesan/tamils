@@ -1,0 +1,166 @@
+<div class="p-grid" style="padding: 10px;">
+  <div class="p-col-3 picDiv">
+    <img src="assets/img/user-name-icon.png" alt="">
+  </div>
+  <div class="p-col-6 username-div">
+    <div><label class="username-label">Hi {{person.firstName}} {{person.lastName}}!</label></div>
+    <div>
+        <a [routerLink]="['/user/accounts']" class="my-account">My Account </a>
+        <label>&nbsp;|&nbsp;</label>
+        <a href="javascript::void" class="logout"> Logout</a>
+    </div>
+    
+  </div>
+  <div class="p-col-3 notifications">
+    <div class="ellipse-round ellipse-blue">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+  <div class="p-col-12 dashboard" (click)="gotoDashboard()">
+    <a href="javascript::void" (click)="gotoDashboard()">Dashboard</a>
+  </div>
+</div>
+
+<div class="p-grid nav-div" style="padding: 10px;">
+  <div class="p-col-12">
+    <label class="jobs">Jobs</label>
+  </div>
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Jobs Feed</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer" style="padding-left: 0px">
+    <div class="ellipse-rectangle">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Potential Hire</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Applied Jobs</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">By Email/Referral</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Shared</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Saved / Bookmarks</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+
+  <div class="p-col-12 top-menu">
+    <label class="contacts">CONTACTS</label>
+  </div>
+
+  <div class="p-col-2"></div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Interactive Contacts</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer" style="padding-left: 0px">
+    <div class="ellipse-rectangle">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+
+  <div class="p-col-12 top-menu">
+    <label class="contacts">CATEGORIES</label>
+  </div>
+
+  <div class="p-col-2 sub-menu sub-menu-image">
+    <img src="assets/img/is-an-option.png" class="user-Name-Icon">
+  </div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Is an Option</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2 sub-menu sub-menu-image">
+    <img src="assets/img/good-oportunity.png" class="user-Name-Icon">
+  </div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">Good Opportunities</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+
+  <div class="p-col-12 hr">
+    <hr />
+  </div>
+
+  <div class="p-col-2 sub-menu sub-menu-image">
+    <img src="assets/img/my-dream-job.png" class="user-Name-Icon">
+  </div>
+  <div class="p-col-7 sub-menu">
+    <a href="javascript::void">My Dream Jobs</a>
+  </div>
+  <div class="p-col-3 sub-menu ellipse-outer">
+    <div class="ellipse-round">
+      <a href="javascript::void">10</a>
+    </div>
+  </div>
+
+</div>

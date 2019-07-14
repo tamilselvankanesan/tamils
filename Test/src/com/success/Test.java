@@ -32,6 +32,19 @@ public class Test {
 
   
   private static void getClassName(){
+	  
+	  Date dd = new Date(1490055764727l);
+	  System.out.println("dd is "+dd);
+	  
+	  Date expiration  = new Date();
+	  long expTimeMillis = expiration.getTime();
+      expTimeMillis += 1000 * 60 * 60;
+      expiration.setTime(expTimeMillis);
+	  System.out.println("ee "+expiration);
+	  System.out.println(new Date(new Date().getTime()+3600000));
+	  
+	  System.err.println(new Date()+" Exception occurred in addHeader() method in PDFHeaders.java. Input file name: ");
+
     System.out.println(BufferedOutputStream.class.getSimpleName());
     System.out.println(BufferedOutputStream.class.getName());
     System.out.println(BufferedOutputStream.class.getCanonicalName());
@@ -625,6 +638,8 @@ public class Test {
 	public static void main(String[] args)  {
 		
 	  getClassName();
+	  String originalFileName = "C:\\Users\\btamilselvan\\Desktop\\MyCMECF-CaseSnapshot.PNG";
+	  System.out.println(originalFileName.substring(originalFileName.lastIndexOf(".")));
 	  strPattern();
 	  if(true){
       return;

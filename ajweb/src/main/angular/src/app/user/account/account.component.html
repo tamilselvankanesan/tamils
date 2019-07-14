@@ -1,0 +1,29 @@
+<div class="accounts-tab">
+
+  <div class="tab left-tab" (click)="selectedTabName=tabNames.PROFESSIONAL_INFO" style="border-left: 0px;" [ngClass]="selectedTabName==tabNames.PROFESSIONAL_INFO ? 'tab-selected' : 'tab-deselected'">
+    <label>{{tabNames.PROFESSIONAL_INFO}}</label>
+  </div>
+  <div class="tab left-tab" (click)="selectedTabName=tabNames.MY_RESUME" [ngClass]="selectedTabName==tabNames.MY_RESUME ? 'tab-selected' : 'tab-deselected'">
+    <label>{{tabNames.MY_RESUME}}</label>
+  </div>
+  <div class="tab right-tab" (click)="selectedTabName=tabNames.SETTINGS" [ngClass]="selectedTabName==tabNames.SETTINGS ? 'tab-selected' : 'tab-deselected'">
+    <label>{{tabNames.SETTINGS}}</label>
+  </div>
+</div>
+<div class="accounts-tab-data-container">
+  <div class="accounts-tab-data">
+    <div *ngIf="selectedTabName===tabNames.PROFESSIONAL_INFO">
+      <app-professional-info></app-professional-info>
+    </div>
+    <div *ngIf="selectedTabName===tabNames.MY_RESUME">
+      <app-resume> </app-resume>
+    </div>
+    <div *ngIf="selectedTabName===tabNames.SETTINGS">
+      <app-settings></app-settings>
+    </div>
+  </div>
+  <div class="public-card">
+    <app-public-card></app-public-card>
+  </div>
+
+</div>

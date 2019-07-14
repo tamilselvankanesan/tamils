@@ -1,0 +1,36 @@
+/* html * {
+    font-family: Roboto;
+} */
+.main{
+    background-color: rgb(180, 180, 174);
+    background-image: url('../../../assets/img/leone-venter-559377-unsplash.png');
+    height: 100vh;
+    margin: 0;
+    width: 100vw;
+  }
+  
+.leftNav{
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 10vw;
+    text-align: left;
+}
+.content{
+    left: 10vw;
+    top: 0;
+    position: absolute;
+    width: 550px;
+    text-align: left;
+    background-color: #ffffff;
+    opacity: 0.8;
+    margin: 0 auto;
+    height: 100%;    
+}
+.rightNav{
+    left: 60vw;
+    top: 0;
+    position: absolute;
+    width: 40vw;
+    height: 100%;
+}

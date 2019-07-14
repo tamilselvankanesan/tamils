@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: address-service
+  cloud:
+    config:
+      uri: http://config-service.local:8080
+aws:
+ containerName: address-service

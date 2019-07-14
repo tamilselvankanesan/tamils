@@ -1,0 +1,9 @@
+{
+        "PersonId": {
+                "S": "XYZ-ABC-POI"
+        },
+        "firstName": {
+                "S": "Tamil"
+        }
+}
+
