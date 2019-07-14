@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.appliedjobs</groupId>
+	<artifactId>ajweb</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<properties>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+	<build>
+		<finalName>ajweb</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.basedir}/src/main/angular/dist/</directory>
+							<includes>**/*</includes>
+						</fileset>
+						<fileset>
+							<directory>${project.basedir}/src/main/webapp/</directory>
+							<includes>**/*</includes>
+						</fileset>
+						<!-- may need to clean up this as well -->
+						<!-- <fileset>
+							<directory>${project.basedir}/src/main/angular/node_modules/</directory>
+							<includes>**/*</includes>
+						</fileset> -->
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<!-- Use the latest released version: https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+				<version>1.6</version>
+				<configuration>
+					<nodeVersion>v10.15.1</nodeVersion>
+					<workingDirectory>src/main/angular/</workingDirectory>
+					<installDirectory>src/main/angular/temp</installDirectory>
+					<!-- optional: with node version greater than 4.0.0 will use npm provided 
+						by node distribution -->
+					<!-- <npmVersion>2.15.9</npmVersion> -->
+					<!-- optional: where to download node and npm from. Defaults to https://nodejs.org/dist/ -->
+					<!-- <downloadRoot>http://myproxy.example.org/nodejs/</downloadRoot> -->
+				</configuration>
+				<executions>
+					<execution>
+						<!-- optional: you don't really need execution ids, but it looks nice 
+							in your build log. -->
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<!-- optional: default phase is "generate-resources" -->
+						<phase>generate-resources</phase>
+					</execution>
+
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+
+						<!-- optional: default phase is "generate-resources" -->
+						<phase>generate-resources</phase>
+
+						<configuration>
+							<!-- optional: The default argument is actually "install", so unless 
+								you need to run some other npm command, you can remove this whole <configuration> 
+								section. -->
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<!-- build prod version .. see package.json -->
+					<execution>
+						<id>prod</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run-script prod</arguments>
+						</configuration>
+						<phase>generate-resources</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.2</version>
+				<executions>
+					<execution>
+						<id>copy-resources-webapp</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<overwrite>true</overwrite>
+							<outputDirectory>${project.basedir}/src/main/webapp/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/main/angular/dist/angular/</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
