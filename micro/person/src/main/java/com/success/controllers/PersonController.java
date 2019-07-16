@@ -14,6 +14,12 @@ public class PersonController {
 	@Autowired
 	private AddressClient aClient;
 
+	@GetMapping(path = "/ping")
+	public String ping() {
+		System.out.println("Inside person controller.........Instanc ID is " + this.toString());
+		return "I am a person controller and my instance ID is " + this.toString();
+	}
+	
 	@GetMapping(path = "/")
 	public String getPersonDefault() {
 		System.out.println("Inside person controller.........Instanc ID is " + this.toString());
@@ -23,6 +29,6 @@ public class PersonController {
 	@GetMapping(path = "/person")
 	public String getPerson() {
 		System.out.println("Inside person controller.........Instanc ID is " + this.toString());
-		return aClient.getAddress("some person ID");
+		return aClient.getAddress("some person ID"+" and my ID is "+this.toString());
 	}
 }
