@@ -3,8 +3,8 @@ package com.success.ndb.controller;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailController {
 
 	@PostMapping
-	public String receive(@RequestHeader Map<String, String> headers) {
+	public String receive(@RequestParam Map<String,String> allParams) {
 		
 		StringBuilder mail = new StringBuilder();
-		headers.forEach((key, value) -> {
+		allParams.forEach((key, value) -> {
 			
 			mail.append("Key: ");
 			mail.append(key);
