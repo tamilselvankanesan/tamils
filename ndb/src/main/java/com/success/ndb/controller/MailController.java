@@ -23,6 +23,7 @@ public class MailController {
 		mail.append(request.getHeader("HTML"));
 		
 		logger.info("mail content is "+mail.toString());
+		System.out.println("mail content is "+mail.toString());
 		
 		return mail.toString();
 	}
