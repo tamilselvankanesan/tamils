@@ -10,6 +10,9 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,6 +33,23 @@ import org.json.simple.JSONObject;*/
 
 public class Test {
 
+	
+	private static void zonedDateTime() {
+		Instant utc = Instant.now();
+		ZoneId zone = ZoneId.of("Asia/Kolkata");
+		ZonedDateTime dt = ZonedDateTime.ofInstant(utc, zone);
+		try {
+            Date ans = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dt.toString().substring(0, 19).replace("T", " "));
+            System.out.println("ans="+ans);
+            
+            Date wrongAns = Date.from(java.time.ZonedDateTime.ofInstant(utc, zone).toInstant());
+            System.out.println("wrongAns="+wrongAns);
+        } catch (ParseException e) {
+        }
+		
+		Date date = Date.from(ZonedDateTime.now(zone).toInstant());
+		System.out.println("date is "+date);
+	}
   
   private static void getClassName(){
 	  
@@ -636,7 +656,7 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args)  {
-		
+		zonedDateTime();	
 	  getClassName();
 	  String originalFileName = "C:\\Users\\btamilselvan\\Desktop\\MyCMECF-CaseSnapshot.PNG";
 	  System.out.println(originalFileName.substring(originalFileName.lastIndexOf(".")));
