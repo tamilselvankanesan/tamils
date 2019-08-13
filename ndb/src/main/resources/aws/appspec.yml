@@ -5,7 +5,7 @@ files:
     destination: /opt/tomcat/webapps
 permissions:
   - object: /opt/tomcat/webapps
-    pattern: "*ndb.war"
+    pattern: "ndb.war"
     owner: tomcat
     group: root
     mode: 644  
