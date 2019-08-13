@@ -1,0 +1,13 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/tomcat/webapps
+permissions:
+  - object: /opt/tomcat/webapps
+    pattern: "*ndb.war"
+    owner: tomcat
+    group: root
+    mode: 644  
+    type:
+      - file
