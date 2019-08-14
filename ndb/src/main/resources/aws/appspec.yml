@@ -11,3 +11,12 @@ permissions:
     mode: 644  
     type:
       - file
+hooks:
+  BeforeInstall:
+    - location: code_deploy_stop.sh
+      timeout: 30
+      runas: root
+  ApplicationStart:
+    - location: code_deploy_start.sh
+      timeout: 60
+      runas: root
