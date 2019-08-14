@@ -16,7 +16,7 @@
 			<outputDirectory>.</outputDirectory><!-- used to copy the war file either directly in the bundle or in a sub-directory in the bundle -->
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources/aws</directory>
+			<directory>src/main/resources/aws/deploy</directory>
 			<outputDirectory>.</outputDirectory>
 		</fileSet>
 	</fileSets>
