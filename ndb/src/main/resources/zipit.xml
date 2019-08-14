@@ -6,18 +6,18 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
+	<includeBaseDirectory>false</includeBaseDirectory> <!-- setting true will place the war file inside ndb (cos ndb is base directory) sub-directory in the bundle -->
 	<fileSets>
 		<fileSet>
 			<directory>target</directory>
 			<includes>
 				<include>*.war</include>
 			</includes>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory>.</outputDirectory><!-- used to copy the war file either directly in the bundle or in a sub-directory in the bundle -->
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/aws</directory>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory>.</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly>
