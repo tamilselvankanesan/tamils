@@ -16,7 +16,7 @@ phases:
             - mvn clean install assembly:single -DskipTests
 artifacts:
     files:
-        - target/ndb.zip
+        - target/ndb/ndb/*
     base-directory: ndb
     discard-paths: yes
 cache:

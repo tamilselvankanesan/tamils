@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 	<id>bundle</id>
 	<formats>
-		<format>zip</format>
+		<format>dir</format>
 	</formats>
 	<includeBaseDirectory>false</includeBaseDirectory> <!-- setting true will place the war file inside ndb (cos ndb is base directory) sub-directory in the bundle -->
 	<fileSets>
@@ -13,11 +13,11 @@
 			<includes>
 				<include>*.war</include>
 			</includes>
-			<outputDirectory>.</outputDirectory><!-- used to copy the war file either directly in the bundle or in a sub-directory in the bundle -->
+			<outputDirectory>./ndb</outputDirectory><!-- used to copy the war file either directly in the bundle or in a sub-directory in the bundle -->
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/aws/deploy</directory>
-			<outputDirectory>.</outputDirectory>
+			<outputDirectory>./ndb</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly>
