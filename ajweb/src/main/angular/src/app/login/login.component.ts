@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit {
   }
   signInWithGoogle(): void {
     console.log('inside sigin');
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID); 
+    this.loginService.loginUsingGoogle();
+    // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID); 
   }
 
   signInWithLinkedIn(): void {

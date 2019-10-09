@@ -11,6 +11,7 @@ export class GoogleCallbackComponent implements OnInit {
 
   ngOnInit() {
     const code = this.route.snapshot.queryParamMap.get("code");
+    console.log('googel code is '+code);
   }
 
 }

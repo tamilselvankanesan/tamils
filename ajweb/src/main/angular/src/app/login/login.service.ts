@@ -33,6 +33,20 @@ export class LoginService extends BaseService{
     window.location.href = environment.LINKED_IN_URL+'?'+params.toString();
   }
 
+  loginUsingGoogle(){
+    const state = Math.random().toString(36).substr(2,20).toString(); 
+    sessionStorage.setItem('google_state', state);
+    const  params = new  HttpParams().set('access_type', "online").
+    set('client_id', environment.GOOGLE_CLIENT_ID).
+    set('redirect_uri', location.origin+'/login/google/callback').
+    set('state', state).
+    set('response_type', 'code').
+    set('scope', environment.GOOGLE_SCOPE);
+    params.toString()
+    console.log('before calling google in lllll.. '+params.toString());
+    window.location.href = environment.GOOGLE_URL+'?'+params.toString();
+  }
+
   validateLinkedInToken(code): Observable<User>{
     console.log('validate linkedin token...');
     let body: HttpParams = new HttpParams();
