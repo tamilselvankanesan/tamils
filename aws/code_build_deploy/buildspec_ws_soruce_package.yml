@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+       java: openjdk8
+    commands:
+        - echo before install
+        - apt-get update -y
+        - apt-get install -y maven
+    finally:
+       - echo after install
+  build:
+    commands:
+        - cd services
+        - mvn -Pupload clean assembly:single -DskipTests
+artifacts:
+  files:
+    - target/services.zip
+  discard-paths: yes
+  base-directory: services
+cache:
+  paths:
+     - '/root/.m2/**/*'

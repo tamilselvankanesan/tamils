@@ -1,0 +1,35 @@
+version: 0.2
+#using runtime: btamilselvan/appjobs
+phases:
+  install:
+    commands:
+        - cd $CODEBUILD_SRC_DIR/web
+        - npm install
+  build:
+    commands:
+       - echo $CODEBUILD_SRC_DIR
+       - echo $CODEBUILD_SRC_DIR_webservices
+       - cd $CODEBUILD_SRC_DIR/web
+       - echo "build UI code... "
+       - npm run build:dev
+       - echo "UI code is built ... "
+       - npm run package
+       - echo "UI code is packaged ... "
+       - cd $CODEBUILD_SRC_DIR_webservices/services
+       - echo "bundle webservices source code ..."
+       - mvn -Pupload clean assembly:single -DskipTests
+
+artifacts:
+    base-directory: $CODEBUILD_SRC_DIR
+    discard-paths: yes
+    files:
+     - web/AppliedJobsWeb.zip
+    secondary-artifacts:
+        webservices:
+            base-directory: $CODEBUILD_SRC_DIR_webservices
+            discard-paths: yes
+            files:
+                - services/target/services.zip
+cache:
+  paths:
+     - '/root/.m2/**/*'

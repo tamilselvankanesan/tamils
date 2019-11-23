@@ -1,0 +1,16 @@
+version: 0.2
+#run time: btamilselvan/appjobs
+phases:
+  build:
+    commands:
+       - cd services
+       - mvn clean install assembly:single -DskipTests
+artifacts:
+  files:
+     - target/services_pack/*
+  discard-paths: yes
+  #the base_directory is restapi. the actual code is under restapi/services directory. 
+  base-directory: services
+cache:
+  paths:
+     - '/root/.m2/**/*'
