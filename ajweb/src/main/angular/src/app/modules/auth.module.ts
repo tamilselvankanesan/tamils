@@ -9,6 +9,7 @@ import { LoginService } from '../login/login.service';
 import { GoogleLoginProvider, AuthServiceConfig, SocialLoginModule } from "angularx-social-login";
 import { SharedModule } from '../shared/shared.module';
 import { LinkedInCallBack } from '../auth/linkedin-callback.component';
+import { GoogleCallbackComponent } from '../auth/google-callback.component';
 
 export const AuthRoutes: Routes = [{
   path: '',
@@ -19,6 +20,10 @@ export const AuthRoutes: Routes = [{
   {
     path: 'callback',
     component: LinkedInCallBack
+  },
+  {
+    path: 'google/callback',
+    component: GoogleCallbackComponent
   }
 ]
 }];
@@ -35,7 +40,7 @@ export function provideConfig() {
 }
 
 @NgModule({
-  declarations: [LoginComponent, LinkedInCallBack],
+  declarations: [LoginComponent, LinkedInCallBack, GoogleCallbackComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(AuthRoutes),

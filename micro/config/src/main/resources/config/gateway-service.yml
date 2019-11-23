@@ -3,13 +3,13 @@ spring:
   gateway:
    routes:
    - id: person-service
-     uri: lb://person-service
+     uri: ${person-service.url}
      predicates:
       - Path=/person/**
      filters:
       - RewritePath=/person/(?<path>.*), /$\{path}
    - id: address-service
-     uri: lb://address-service
+     uri: ${address-service.url}
      predicates:
       - Path=/address/**
      filters:

@@ -50,7 +50,7 @@ public class CountryController {
 	@RequestMapping(method = RequestMethod.POST, path = "/import")
 	public void importCountriesToNDB() {
 		countryService.importCountries();
-		System.out.println("Testing");
+		System.out.println("Testing 1 2 3");
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "{filter}")

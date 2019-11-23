@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the state database table.
@@ -32,9 +31,6 @@ public class State implements Serializable {
 	// bi-directional many-to-one association to Country
 	@ManyToOne
 	private Country country;
-
-	public State() {
-	}
 
 	public int getId() {
 		return this.id;

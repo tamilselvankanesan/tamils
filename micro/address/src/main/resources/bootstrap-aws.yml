@@ -3,6 +3,6 @@ spring:
     name: address-service
   cloud:
     config:
-      uri: http://config-service.local:8080
+      uri: ${config-service.url}
 aws:
  containerName: address-service

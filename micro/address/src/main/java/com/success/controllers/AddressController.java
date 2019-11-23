@@ -23,6 +23,11 @@ public class AddressController {
 	
 	@RequestMapping
 	public String getAddress1(){
-		return "from Address controller. Given person ID is Current date is "+new Date()+" My instance ID is "+this.toString();
+		return "I am Address controller default destination. Current date is "+new Date()+" My instance ID is "+this.toString();
+	}
+	
+	@GetMapping("/ping")
+	public String ping(){
+		return "I am Address controller. Current date is "+new Date()+" My instance ID is "+this.toString();
 	}
 }

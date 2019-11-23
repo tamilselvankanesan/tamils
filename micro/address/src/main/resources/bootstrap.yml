@@ -3,6 +3,6 @@ spring:
     name: address-service
   cloud:
     config:
-      uri: http://localhost:9090
+      uri: ${config-service.url}
       username: tamil
       password: somepassword
