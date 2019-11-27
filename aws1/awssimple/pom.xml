@@ -8,14 +8,21 @@
 	</parent>
 	<artifactId>awssimple</artifactId>
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>s3</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/software.amazon.awssdk/sts -->
+		https://mvnrepository.com/artifact/software.amazon.awssdk/sts
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>sts</artifactId>
+		</dependency> -->
+		
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.11.651</version>
 		</dependency>
+		
 	</dependencies>
 </project>
