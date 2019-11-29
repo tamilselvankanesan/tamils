@@ -19,25 +19,25 @@ source ~/.bash_profile
 pip3 install awscli --upgrade --user
 
 ################ download artifacts from s3 start #####################################
-mkdir /opt/appdata
+mkdir -p /opt/appdata
 cd /opt/appdata
 #get log4j.properties
-aws s3api get-object --bucket=ndb-artifacts --key=log4j.properties log4j.properties
+aws s3api get-object --bucket=$1 --key=log4j.properties log4j.properties
 
 #get war file
-aws s3api get-object --bucket=ndb-artifacts --key=services.war services.war
+aws s3api get-object --bucket=$1 --key=services.war services.war
 
 #get UI code
-aws s3api get-object --bucket=ndb-artifacts --key=AppliedJobsWeb.zip AppliedJobsWeb.zip
+aws s3api get-object --bucket=$1 --key=AppliedJobsWeb.zip AppliedJobsWeb.zip
 
 #get appjob webservice configuration
-aws s3api get-object --bucket=ndb-artifacts --key=applied_jobs_config.sh applied_jobs_config.sh
+aws s3api get-object --bucket=$1 --key=applied_jobs_config.sh applied_jobs_config.sh
 
 #get APPJOBS_TOMCAT
-aws s3api get-object --bucket=ndb-artifacts --key=APPJOBS_TOMCAT APPJOBS_TOMCAT
+aws s3api get-object --bucket=$1 --key=APPJOBS_TOMCAT APPJOBS_TOMCAT
 
 #get nginx.conf
-aws s3api get-object --bucket=ndb-artifacts --key=nginx.conf nginx.conf
+aws s3api get-object --bucket=$1 --key=nginx.conf nginx.conf
 
 ################ download from s3 end #####################################
 
@@ -91,7 +91,7 @@ chkconfig APPJOBS_TOMCAT on
 ################ configure nginx start #####################################
 
 #copy nginx.conf
-cp /opt/appdata/nginx.conf /etc/nginx/nginx.conf
+mv -f /opt/appdata/nginx.conf /etc/nginx/nginx.conf
 chmod 644 /etc/nginx/nginx.conf
 cd /opt/appdata
 unzip AppliedJobsWeb.zip -d AppliedJobsWeb
