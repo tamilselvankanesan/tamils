@@ -1,0 +1,81 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "10a33c55-019f-4883-859f-a219c8bb2736": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 120.49999824911356,
+                    "y": 589.7500073574483
+                },
+                "z": 0
+            }
+        }
+    },
+    "Resources": {
+        "PersonTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "PersonId",
+                        "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "UserId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "GlobalSecondaryIndexes": [
+                    {
+                        "IndexName": "UserIdIndex",
+                        "KeySchema": [
+                            {
+                                "AttributeName": "UserId",
+                                "KeyType": "HASH"
+                            }
+                        ],
+                        "Projection": {
+                            "ProjectionType": "ALL"
+                        },
+                        "ProvisionedThroughput": {
+                            "ReadCapacityUnits": "4",
+                            "WriteCapacityUnits": "1"
+                        }
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "PersonId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": "4",
+                    "WriteCapacityUnits": "1"
+                },
+                "SSESpecification": {
+                    "SSEEnabled": "true"
+                },
+                "TableName": "Person",
+                "Tags": [
+                    {"Key": "att", "Value": "att"}
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "10a33c55-019f-4883-859f-a219c8bb2736"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "PersonTable": {
+            "Description": "Person Table",
+            "Value": {"Ref": "PersonTable"}
+        }
+    }
+}
