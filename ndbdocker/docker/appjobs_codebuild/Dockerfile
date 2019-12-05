@@ -4,7 +4,7 @@ RUN yum -y update
 
 RUN curl -sL https://rpm.nodesource.com/setup_13.x | bash -
 
-RUN yum -y install java-1.8.0-openjdk wget zip nodejs
+RUN yum -y install java-1.8.0-openjdk-devel wget zip nodejs
 
 RUN  wget http://apache.spinellicreations.com/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz
 RUN tar xzvf apache-maven-3.6.2-bin.tar.gz
