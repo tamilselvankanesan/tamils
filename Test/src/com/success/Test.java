@@ -11,6 +11,8 @@ import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -28,12 +30,25 @@ import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 /*import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;*/
 
 public class Test {
 
-	
+	private static void dateConvert() {
+		String date = "2020-01-20T18:56:26";
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+		System.out.println(dtf.parseDateTime(date));
+		DateTime dt = dtf.parseDateTime(date);
+		System.out.println(LocalDateTime.parse(date).format(java.time.format.DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+		
+		Instant parsedDate = Instant.parse(date);
+		System.out.println(parsedDate);
+	}
 	private static void zonedDateTime() {
 		Instant utc = Instant.now();
 		ZoneId zone = ZoneId.of("Asia/Kolkata");
@@ -661,6 +676,7 @@ public class Test {
 	  String originalFileName = "C:\\Users\\btamilselvan\\Desktop\\MyCMECF-CaseSnapshot.PNG";
 	  System.out.println(originalFileName.substring(originalFileName.lastIndexOf(".")));
 	  strPattern();
+	  dateConvert();
 	  if(true){
       return;
     }
