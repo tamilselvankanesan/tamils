@@ -1,0 +1,188 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "Environment": {
+            "Type": "String",
+            "Description": "Environment",
+            "Default": "dev",
+            "AllowedValues": [
+                "dev",
+                "prod"
+            ]
+        },
+        "AcmArn": {
+            "Type": "String",
+            "Description": "Enter ACM Arn",
+            "Default": ""
+        }
+    },
+    "Conditions": {
+        "Production": {
+            "Fn::Equals": [
+                {
+                    "Ref": "Environment"
+                },
+                "prod"
+            ]
+        }
+    },
+    "Mappings": {
+        "buckets": {
+            "dev": {
+                "mainbucket": "dev.tamilss.rocks"
+            },
+            "prod": {
+                "mainbucket": "www.tamils.rocks",
+                "redirectbucket": "tamils.rocks"
+            }
+        }
+    },
+    "Resources": {
+        "MainBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": {
+                    "Fn::FindInMap": [
+                        "buckets",
+                        {
+                            "Ref": "Environment"
+                        },
+                        "mainbucket"
+                    ]
+                },
+                "AccessControl": "PublicRead",
+                "WebsiteConfiguration": {
+                    "IndexDocument": "index.html"
+                }
+            }
+        },
+        "RedirectBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Condition": "Production",
+            "Properties": {
+                "BucketName": {
+                    "Fn::FindInMap": [
+                        "buckets",
+                        {
+                            "Ref": "Environment"
+                        },
+                        "redirectbucket"
+                    ]
+                },
+                "AccessControl": "PublicRead",
+                "WebsiteConfiguration": {
+                    "RedirectAllRequestsTo": {
+                        "HostName": {
+                            "Fn::FindInMap": [
+                                "buckets",
+                                {
+                                    "Ref": "Environment"
+                                },
+                                "mainbucket"
+                            ]
+                        },
+                        "Protocol": "https"
+                    }
+                }
+            }
+        },
+        "BucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "MainBucket"
+                },
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Effect": "Allow",
+                            "Resource": {
+                                "Fn::Join": [
+                                    "",
+                                    [
+                                        "arn:aws:s3:::",
+                                        {
+                                            "Ref": "MainBucket"
+                                        },
+                                        "/*"
+                                    ]
+                                ]
+                            },
+                            "Principal": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "CloudFront": {
+            "Type": "AWS::CloudFront::Distribution",
+            "Properties": {
+                "Tags": [
+                    {"Key": "att", "Value": "att"}
+                ],
+                "DistributionConfig": {
+                   "Aliases": [
+                       {
+                            "Ref": "MainBucket"   
+                       },
+                       {
+                           "Fn::If": ["Production", {"Ref": "RedirectBucket"}, ""]
+                       }
+                    ],
+                    "DefaultRootObject": "index.html",
+                    "Enabled": "true",
+                    "Origins": [{
+                        "DomainName": {
+                            "Fn::GetAtt": ["MainBucket", "DomainName"]
+                        },
+                        "Id": {"Ref": "MainBucket"},
+                        "S3OriginConfig": {}
+                    }],
+                    "DefaultCacheBehavior": {
+                        "Compress": "true",
+                        "AllowedMethods": ["GET", "HEAD"],
+                        "TargetOriginId": {"Ref": "MainBucket"},
+                        "ViewerProtocolPolicy": "redirect-to-https",
+                        "ForwardedValues": {
+                            "QueryString": "false"
+                        }
+                    },
+                    "PriceClass": "PriceClass_100",
+                    "ViewerCertificate": {
+                        "AcmCertificateArn": {"Ref": "AcmArn"},
+                        "MinimumProtocolVersion": "TLSv1.2_2018",
+                        "SslSupportMethod": "sni-only"
+                    }
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "MainBucket": {
+            "Description": "Name of the Artifacts Bucket",
+            "Value": {
+                "Ref": "MainBucket"
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Sub": "${AWS::StackName}-MainBucket"
+                }
+            }
+        },
+        "RedirectBucket": {
+            "Condition": "Production",
+            "Description": "Name of the Main Bucket",
+            "Value": {
+                "Ref": "RedirectBucket"
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Sub": "${AWS::StackName}-RedirectBucket"
+                }
+            }
+        }
+    }
+}

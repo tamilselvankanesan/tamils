@@ -1,0 +1,227 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "RecipeVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.10.0.0/16",
+                "EnableDnsHostnames": "true",
+                "EnableDnsSupport": "true",
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "RecipeVPC"
+                    }
+                ]
+            }
+        },
+        "RecipesPublicSubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1a",
+                "CidrBlock": "10.10.10.0/24",
+                "MapPublicIpOnLaunch": "true",
+                "VpcId": {
+                    "Ref": "RecipeVPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "RecipesPublicSubnet1"
+                    }
+                ]
+            }
+        },
+        "RecipesPublicSubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-1e",
+                "CidrBlock": "10.10.30.0/24",
+                "MapPublicIpOnLaunch": "true",
+                "VpcId": {
+                    "Ref": "RecipeVPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "RecipesPublicSubnet2"
+                    }
+                ]
+            }
+        },
+        "RecipesInternetGateway": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "RecipeIG"
+                    }
+                ]
+            }
+        },
+        "AttachGateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "RecipeVPC"
+                },
+                "InternetGatewayId": {
+                    "Ref": "RecipesInternetGateway"
+                }
+            }
+        },
+        "RecipesPublicRouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "RecipeVPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "att", 
+                        "Value": "att"
+                    },                    
+                    {
+                        "Key": "Name",
+                        "Value": "RecipePublicRT"
+                    }
+                ]
+            }
+        },
+        "PublicRoute1": {
+            "Type": "AWS::EC2::Route",
+            "DependsOn": "RecipesInternetGateway",
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "RecipesInternetGateway"
+                },
+                "RouteTableId": {
+                    "Ref": "RecipesPublicRouteTable"
+                }
+            }
+        },
+        "PublicSubnetRouteTableAssociation1" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+              "SubnetId" : { "Ref" : "RecipesPublicSubnet1" },
+              "RouteTableId" : { "Ref" : "RecipesPublicRouteTable" }
+           }
+        },
+        "PublicSubnetRouteTableAssociation2" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+              "SubnetId" : { "Ref" : "RecipesPublicSubnet2" },
+              "RouteTableId" : { "Ref" : "RecipesPublicRouteTable" }
+           }
+        },
+        "ECSSG": {
+            "Type": "AWS::EC2::SecurityGroup",
+			"DependsOn": "ALBSG",
+            "Properties": {
+                "GroupName": "ECSPublicSG",
+                "GroupDescription": " SG For ECS",
+                "VpcId": {
+                    "Ref": "RecipeVPC"
+                },
+                "SecurityGroupIngress": [{
+                    "IpProtocol": "tcp",
+					"FromPort": "8080",
+                    "ToPort": "8080",
+                    "SourceSecurityGroupId": {"Ref": "ALBSG"}
+                }],
+				"Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "ECS SG"
+                    },
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    }
+                ]
+            }
+        },
+        "ALBSG": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupName": "ALBSG",
+                "GroupDescription": "SG for ALB",
+                "VpcId": {
+                    "Ref": "RecipeVPC"
+                },
+                "SecurityGroupIngress": [{
+                    "CidrIp": "0.0.0.0/0",
+                    "IpProtocol": "tcp",
+                    "FromPort": "80",
+                    "ToPort": "80"
+                },
+                {
+                    "CidrIp": "0.0.0.0/0",
+                    "IpProtocol": "tcp",
+                    "FromPort": "443",
+                    "ToPort": "443"
+                }],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "ALB SG"
+                    },
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "PublicSubnet1Id": {
+            "Description": "Public Subent1 ID",
+            "Value": {"Ref": "RecipesPublicSubnet1"},
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-PublicSubnet1Id" }}
+        },
+        "PublicSubnet2Id": {
+            "Description": "Public Subent2 ID",
+            "Value": {"Ref": "RecipesPublicSubnet2"},
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-PublicSubnet2Id" }}
+        },
+        "PublicSubnet1AZ": {
+            "Description": "Public Subent1 AZ",
+            "Value": {"Fn::GetAtt": ["RecipesPublicSubnet1", "AvailabilityZone"] },
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-PublicSubnet1AZ" }}
+        },
+        "VPC": {
+            "Description": "RecipeVPC",
+            "Value": {"Ref": "RecipeVPC"},
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-VPC" }}
+        },
+        "ALBSG": {
+            "Description": "ALBSG",
+            "Value": {"Ref": "ALBSG"},
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-ALBSG" }}
+        },
+        "ECSSG": {
+            "Description": "ECSSG",
+            "Value": {"Ref": "ECSSG"},
+            "Export": { "Name": {"Fn::Sub": "${AWS::StackName}-ECSSG" }}
+        }
+    }
+}

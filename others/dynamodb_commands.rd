@@ -8,3 +8,4 @@ aws dynamodb create-table --cli-input-json file://person-table.json --profile ta
 aws dynamodb create-table --cli-input-json file://job-table.json --profile tamil
 aws dynamodb create-table --cli-input-json file://applied-job-table.json --profile tamil
 aws dynamodb delete-table --table-name job  --profile tamil
+aws dynamodb create-table --cli-input-json file://recipe.json
