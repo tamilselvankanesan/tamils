@@ -146,6 +146,7 @@
                         "AllowedMethods": ["GET", "HEAD"],
                         "TargetOriginId": {"Ref": "MainBucket"},
                         "ViewerProtocolPolicy": "redirect-to-https",
+						"DefaultTTL": "60",
                         "ForwardedValues": {
                             "QueryString": "false"
                         }
