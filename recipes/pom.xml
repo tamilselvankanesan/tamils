@@ -18,7 +18,8 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<docker.image.prefix>btamilselvan</docker.image.prefix>
+		<!-- <docker.image.prefix>btamilselvan</docker.image.prefix> -->
+		<docker.image.prefix>${dockerImagePrefix}</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -98,6 +99,7 @@
 					</execution>
 				</executions> -->
 				<configuration> 
+					<!-- <repository>${docker.image.prefix}/${project.artifactId}</repository> -->
 					<repository>${docker.image.prefix}/${project.artifactId}</repository>
 					<!-- <tag>${project.version}</tag> -->
 					<tag>latest</tag>
