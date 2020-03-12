@@ -47,14 +47,21 @@ def listfun():
     print(mList)
 
 def strfun():
-    mystr = ["{:03d}".format(i) for i in range(10)]
+    aList = ['hello world', 'whatiss']
+#     mystr = ["{:>2d}".format(i) for i in range(10)]
+    mystr = ["{:>020}".format(i) for i in aList]
     print(mystr)
     resStr = '';
     for i in mystr:
         resStr +=i
-    print(resStr)
+#     print(resStr)
     resStr.join(mystr)
-    print(resStr)
+#     print(resStr)
+
+
+def strFormat(start, end):
+    for i in range(start, end):
+        print("{0:^4d} {2:<4d} {1:>4d} {3:<4d}".format(i**1, i**2, i**3, i**4))
 
 def countAllUrl(aName):
     result_set=set()
@@ -129,20 +136,32 @@ def extractUnique(aName):
             if aMatch:
                 unique.add(aMatch.group(2))
     return unique
-    
+
+def dictTest():
+    pass
+
+def tupleTest():
+    aTuple = (1,2,3)
+    print(*aTuple)
+    print(aTuple)
+    print(aTuple[1])
+    aTuple.__getitem__(2)
 # count = countAllUrl('C:\\Tamil\\temp\\09MarLiveAccess.log')
 # print('others count %d' %count)
 # count = countUrl('server.php', 'C:\\Tamil\\temp\\09MarLiveAccess.log')
 # print('server.php count %d' %count)
-bFile = 'C:\\Tamil\\temp\\09Mar15And16LiveAccess.log'
-extract(bFile)
-count = countUrl('server.php', bFile)
-print('server.php count %d' %count)
-
-count = countAllUrl(bFile)
-print('others count %d' %count)
-
-aUnique = extractUnique(bFile)
+# bFile = 'C:\\Tamil\\temp\\09Mar15And16LiveAccess.log'
+# extract(bFile)
+# count = countUrl('server.php', bFile)
+# print('server.php count %d' %count)
+# 
+# count = countAllUrl(bFile)
+# print('others count %d' %count)
+# 
+# aUnique = extractUnique(bFile)
+# strfun()
+# strFormat(3, 7)
+tupleTest()
 # print(aUnique)
 # for i in aUnique:
 #     print(i)
