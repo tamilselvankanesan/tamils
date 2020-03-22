@@ -1,0 +1,89 @@
+{
+    "Resources": {
+        "RecipeTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "TableName": "recipe",
+                "Tags": [
+                    {
+                        "Key": "att", "Value": "att"
+                    }
+                ],
+                "AttributeDefinitions":[
+                    {
+                        "AttributeName": "recipeId", "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "userId", "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "recipeGroup", "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "recipeId", "KeyType": "HASH"
+                    }    
+                ],
+                "ProvisionedThroughput": {"ReadCapacityUnits": 4, "WriteCapacityUnits": 1},
+                "GlobalSecondaryIndexes": [
+                    {
+                        "IndexName": "UserIdIndex",
+                        "KeySchema": [
+                            {"AttributeName": "userId", "KeyType": "HASH"}
+                        ],
+                        "Projection": {"ProjectionType": "ALL"},
+                        "ProvisionedThroughput": {"ReadCapacityUnits": 4, "WriteCapacityUnits": 1}
+                    },
+                    {
+                        "IndexName": "UserRecipeGroupIndex",
+                        "KeySchema": [
+                            {"AttributeName": "userId", "KeyType": "HASH"},
+                            {"AttributeName": "recipeGroup", "KeyType": "RANGE"}
+                        ],
+                        "Projection": {"ProjectionType": "ALL"},
+                        "ProvisionedThroughput": {"ReadCapacityUnits": 4, "WriteCapacityUnits": 1}
+                    }
+                ]
+            }
+        },
+		"UserTable": {
+			"Type": "AWS::DynamoDB::Table",
+			"Properties": {
+				"TableName": "user",
+				"Tags": [
+					{
+						"Key": "att",
+						"Value": "att"
+					}
+				],
+				"AttributeDefinitions": [
+					{
+						"AttributeName": "userId",
+						"AttributeType": "S"
+					}
+				],
+				"ProvisionedThroughput": {
+					"ReadCapacityUnits": 4,
+					"WriteCapacityUnits": 1
+				},
+				"KeySchema": [
+					{
+						"AttributeName": "userId",
+						"KeyType": "HASH"
+					}
+				]
+			}
+		}
+    },
+    "Outputs": {
+        "RecipeTable": {
+            "Description": "RecipeTable_Name",
+            "Value": {"Ref": "RecipeTable"}
+        },
+		"UserTable": {
+            "Description": "UserTable_Name",
+            "Value": {"Ref": "UserTable"}
+        }
+    }
+}
