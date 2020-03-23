@@ -15,7 +15,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.oster.recipes.utils.Constants;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @DynamoDBTable(tableName = "data")
@@ -84,6 +86,8 @@ public class Data {
 	}
 
 	@DynamoDBDocument
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class Settings{
 		private String title;
 		private String description;
@@ -101,7 +105,10 @@ public class Data {
 			this.description = description;
 		}
 	}
+	
 	@DynamoDBDocument
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class PublicationSettings{
 		private String country;
 		private List<String> socialMedia; 

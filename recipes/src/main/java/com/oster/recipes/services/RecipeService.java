@@ -1,6 +1,5 @@
 package com.oster.recipes.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +20,13 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.oster.recipes.dtos.CollectionDto;
+import com.oster.recipes.dtos.RecipeDto;
 import com.oster.recipes.dtos.UserDto;
 import com.oster.recipes.entities.dynamodb.Data;
-import com.oster.recipes.entities.dynamodb.Data3;
 import com.oster.recipes.repositories.dynamodb.DataRepository;
 import com.oster.recipes.utils.Constants;
 import com.oster.recipes.utils.DataMapper;
+import com.oster.recipes.utils.DateUtils;
 import com.oster.recipes.utils.JwtUtil;
 import com.oster.recipes.utils.Messages;
 import com.oster.recipes.utils.Result;
@@ -65,7 +65,7 @@ public class RecipeService {
 		if(entity != null) {
 			response = new Result<UserDto>(Messages.USER_EXISTS);
 		}else {
-			entity = mapper.toData(dto);
+			entity = mapper.fromUserDto(dto);
 			entity.setCategory(dto.getUserName().toLowerCase().trim());
 			entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 			repo.save(entity);
@@ -87,7 +87,7 @@ public class RecipeService {
 			return new Result<UserDto>(Messages.INVALID_CREDENTIALS);
 		}
 		if(passwordEncoder.matches(dto.getPassword(), entity.getPassword())) {
-			dto = mapper.toDto(entity);
+			dto = mapper.toUserDto(entity);
 			jwtUtil.setTokenHeader(jwtUtil.generateAccessToken(dto), response);
 			return new Result<UserDto>(true, Messages.LOGIN_SUCCESS, dto);
 		}else {
@@ -150,65 +150,17 @@ public class RecipeService {
 		return result;
 	}
 
-	public UserDto getUser(String userName) {
-		repo.findAll().forEach(c -> log.info(c.getPk()));
-		Data3 entity = repo.findByCategory(userName);
-		if (entity != null) {
-			log.info(entity.getPk());
-//			
-			DynamoDBQueryExpression<Data3> exp = new DynamoDBQueryExpression<>();
-//			exp = exp.withKeyConditionExpression("begins_with(category, :cat)");
-
-//			Map<String, Condition> cMap = new HashMap<>();
-//			exp.withQueryFilter(cMap);
-
-			Condition pc = new Condition();
-			pc.setComparisonOperator(ComparisonOperator.EQ);
-			List<AttributeValue> aList = new ArrayList<>();
-			aList.add(new AttributeValue("a639b63d-455d-4919-b1a7-522066c786fb"));
-			pc.setAttributeValueList(aList);
-//			cMap.put("pk", pc);
-
-			Condition rc = new Condition();
-			rc.setComparisonOperator(ComparisonOperator.CONTAINS);
-			aList = new ArrayList<>();
-			aList.add(new AttributeValue("tam"));
-			pc.setAttributeValueList(aList);
-//			cMap.put("pk", rc);
-
-//			exp = exp.withKeyConditionExpression("pk =:pk and begins_with(category, :cat)");
-			exp = exp.withKeyConditionExpression("category =:cat ");
-
-			Condition c = new Condition();
-			c.setComparisonOperator(ComparisonOperator.BEGINS_WITH);
-			aList = new ArrayList<>();
-			aList.add(new AttributeValue("u-"));
-			c.setAttributeValueList(aList);
-//			exp = exp.withRangeKeyCondition("category", c);
-//					.withRangeKeyCondition("category", "begins_with(category, :cat)");
-			Map<String, AttributeValue> valuesMap = new HashMap<>();
-//			valuesMap.put(":pk", new AttributeValue("a639b63d-455d-4919-b1a7-522066c786fb"));
-			valuesMap.put(":cat", new AttributeValue("tamil"));
-			exp = exp.withExpressionAttributeValues(valuesMap);
-
-//			List<Data> d = dynamoDbMmapper.query(Data.class, exp);
-//			log.info("size "+d.size());
-
-			Data3 input = new Data3();
-			input.setPk("a639b63d-455d-4919-b1a7-522066c786fb");
-
-			Condition rk = new Condition();
-			
-			rk.withComparisonOperator(ComparisonOperator.BEGINS_WITH)
-					.withAttributeValueList(new AttributeValue().withS("tami"));
-			
-			DynamoDBQueryExpression<Data3> ex = new DynamoDBQueryExpression<Data3>().withHashKeyValues(input)
-					.withRangeKeyCondition("category", rk);
-
-			List<Data3> d = dynamoDbMmapper.query(Data3.class, ex);
-			log.info("size " + d.size());
+	public Result<RecipeDto> createRecipe(RecipeDto dto, HttpServletRequest request){
+		if(StringUtils.isAnyBlank(dto.getTitle(), dto.getIngredients(), dto.getPreparation())) {
+			return new Result<RecipeDto>(Messages.RECIPE_MANDATORY_FIELDS);
 		}
-
-		return null;
+		Data entity = mapper.fromRecipeDto(dto);
+		entity.setPk(jwtUtil.getClaimFromToken(request, Constants.USER_ID_PARAM));
+		entity.setRecipeId(UUID.randomUUID().toString());
+		entity.setCreatedOn(DateUtils.getCurrentDateString());
+		repo.save(entity);
+		dto.setRecipeId(entity.getRecipeId());
+		dto.setPk(entity.getPk());
+		return new Result<RecipeDto>(true, Messages.RECIPE_CREATE_SUCCESS, dto);
 	}
 }

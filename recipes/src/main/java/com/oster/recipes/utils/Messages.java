@@ -11,4 +11,7 @@ public final class Messages {
 	public static final String USER_CREATE_SUCCESS = "user created successfully";
 	public static final String LOGIN_SUCCESS = "login successful";
 	public static final String INVALID_CREDENTIALS = "username or password incorrect";
+	
+	public static final String RECIPE_MANDATORY_FIELDS = "title, ingredients and preparation fields required";
+	public static final String RECIPE_CREATE_SUCCESS = "recipe created successfully";
 }
