@@ -4,7 +4,7 @@ import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 
 import com.oster.recipes.entities.dynamodb.Data;
-import com.oster.recipes.entities.dynamodb.Data3.DataKey;
+import com.oster.recipes.entities.dynamodb.Data.DataKey;
 
 @EnableScan
 public interface DataRepository extends CrudRepository<Data, DataKey>{
