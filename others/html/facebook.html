@@ -1,0 +1,19 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  
+  <title>jQuery Example</title>
+  <script>
+    $(document).ready(function() {
+	
+		$("button").click(function(){
+			window.location.href ='https://www.facebook.com/v6.0/dialog/oauth?client_id=244&response_type=token,code&scope=manage_pages&redirect_uri=http://localhost:5000/response.html';
+		});
+	});
+	
+  </script>
+  <html>
+	<h1>facebook login test</h1>
+	<button>Login Using Facebook</button>
+  </html>
+</head>
