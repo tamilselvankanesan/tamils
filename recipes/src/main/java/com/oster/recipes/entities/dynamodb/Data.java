@@ -32,6 +32,8 @@ public class Data {
 	private String preparation;
 	private List<String> tags;
 	private List<String> collections;
+	private String countryGsiPk;
+	private List<String> countries;
 	private Float rating;
 	private List<PublicationSettings> publications;
 	private String createdOn;
@@ -47,7 +49,16 @@ public class Data {
 	@Getter @Setter
 	private String password;
 
+	public Data() {}
+	
+	public Data(String pk, String category) {
+		this.setPk(pk);
+		this.setCategory(category);
+	}
+	
 	@DynamoDBDocument
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public class DataKey implements Serializable{
 		private static final long serialVersionUID = 1L;
 		/**
@@ -307,5 +318,21 @@ public class Data {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public List<String> getCountries() {
+		return countries;
+	}
+
+	public void setCountries(List<String> countries) {
+		this.countries = countries;
+	}
+
+	public String getCountryGsiPk() {
+		return countryGsiPk;
+	}
+
+	public void setCountryGsiPk(String countryGsiPk) {
+		this.countryGsiPk = countryGsiPk;
 	}
 }

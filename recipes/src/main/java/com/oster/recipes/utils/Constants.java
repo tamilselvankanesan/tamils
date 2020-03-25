@@ -15,6 +15,8 @@ public final class Constants {
 	public static final List<String> ALLOWED_URLS_LIST = Collections
 			.unmodifiableList(Arrays.asList(SPRING_SECURITY_ALLOWED_URLS));
 
+	public static final String COUNTRY_PK = "COUNTRY";
+	
 	public static final String USER_ID_PARAM = "userId";
 	public static final String USER_PREFIX = "u-";
 	public static final String RECIPE_PREFIX = "r-";

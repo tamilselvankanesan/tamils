@@ -3,6 +3,7 @@ package com.oster.recipes.utils;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.oster.recipes.dtos.RecipeDto;
@@ -27,6 +28,7 @@ public class DataMapper {
 		dto.setTags(data.getTags());
 		dto.setTitle(data.getCategoryName());
 		dto.setVideoUrl(data.getVideoUrl());
+		dto.setCountries(data.getCountries());
 		if(data.getSeoSettings()!=null) {
 			dto.setSeoSettings(Arrays.asList(data.getSeoSettings()).stream().map(s-> new RecipeDto.SettingsDto(s.getTitle(), s.getDescription())).findFirst().orElse(null));	
 		}
@@ -54,6 +56,10 @@ public class DataMapper {
 		entity.setTags(dto.getTags());
 		entity.setCategoryName(dto.getTitle());
 		entity.setVideoUrl(dto.getVideoUrl());
+		entity.setCountries(dto.getCountries());
+		if(dto.getCountries()!=null) {
+			entity.setCountryGsiPk(StringUtils.join(dto.getCountries(), ","));
+		}
 		if(dto.getSeoSettings()!=null) {
 			entity.setSeoSettings(Arrays.asList(dto.getSeoSettings()).stream().map(s-> new Data.Settings(s.getTitle(), s.getDescription())).findFirst().orElse(null));	
 		}

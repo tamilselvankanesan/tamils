@@ -18,6 +18,7 @@ public class RecipeDto {
 	private String ingredients;
 	private String preparation;
 	private List<String> tags;
+	private List<String> countries;
 	private List<String> collections;
 	private Float rating;
 	private String createdOn;

@@ -1,6 +1,8 @@
 package com.oster.recipes.controllers;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,9 +41,14 @@ public class RecipeController {
 			HttpServletResponse response) {
 		return service.login(userName, password, response);
 	}
+	
+	@PostMapping("/add-countries")
+	public Result<String> addCountries(@RequestBody List<Map<String, String>> countries) {
+		return service.addCountries(countries);
+	}
 
 	@PostMapping("/add-user")
-	public Result<UserDto> adddUser(@RequestBody UserDto user) {
+	public Result<UserDto> addUser(@RequestBody UserDto user) {
 		return service.addUser(user);
 	}
 
@@ -54,6 +61,16 @@ public class RecipeController {
 	@PostMapping("/create-recipe")
 	public Result<RecipeDto> createRecipe(@RequestBody RecipeDto dto, HttpServletRequest request) {
 		return service.createOrUpdateRecipe(dto, request);
+	}
+	
+	@GetMapping("/get-recipe/{recipeId}")
+	public Result<RecipeDto> getRecipe(@PathVariable String recipeId, HttpServletRequest request) {
+		return service.getRecipe(recipeId, request);
+	}
+	
+	@GetMapping("/get-recipes/all")
+	public Result<List<RecipeDto>> getAllRecipes(HttpServletRequest request, @RequestParam(required = false) String collection, @RequestParam(required = false) String country) {
+		return service.getRecipes(request, collection, country);
 	}
 	
 	@PutMapping("/update-recipe-all")
@@ -71,9 +88,8 @@ public class RecipeController {
 		return service.deleteRecipe(recipeId, request);
 	}
 	
-	@DeleteMapping("/delete-collection/{collectionId}")
-	public Result<String> deleteCollection(@PathVariable String collectionId, HttpServletRequest request){
-//		return service.deleteRecipe(recipeId, request);
-		return null;
+	@DeleteMapping("/delete-collection/{collection}")
+	public Result<String> deleteCollection(@PathVariable String collection, HttpServletRequest request){
+		return service.deleteCollection(collection, request);
 	}
 }
