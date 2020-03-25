@@ -1,7 +1,6 @@
 package com.oster.recipes.dtos;
 
 import java.util.List;
-import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class RecipeDto {
 	private String ingredients;
 	private String preparation;
 	private List<String> tags;
-	private Map<String, String> collections;
+	private List<String> collections;
 	private Float rating;
 	private String createdOn;
 	private String postedOn;

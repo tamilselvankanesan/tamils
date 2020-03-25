@@ -150,17 +150,25 @@ public class RecipeService {
 		return result;
 	}
 
-	public Result<RecipeDto> createRecipe(RecipeDto dto, HttpServletRequest request){
+	public Result<RecipeDto> createOrUpdateRecipe(RecipeDto dto, HttpServletRequest request){
 		if(StringUtils.isAnyBlank(dto.getTitle(), dto.getIngredients(), dto.getPreparation())) {
 			return new Result<RecipeDto>(Messages.RECIPE_MANDATORY_FIELDS);
 		}
 		Data entity = mapper.fromRecipeDto(dto);
 		entity.setPk(jwtUtil.getClaimFromToken(request, Constants.USER_ID_PARAM));
-		entity.setRecipeId(UUID.randomUUID().toString());
-		entity.setCreatedOn(DateUtils.getCurrentDateString());
+		if(StringUtils.isBlank(dto.getRecipeId())) {
+			entity.setRecipeId(UUID.randomUUID().toString());
+			entity.setCreatedOn(DateUtils.getCurrentDateString());	
+		}
 		repo.save(entity);
-		dto.setRecipeId(entity.getRecipeId());
-		dto.setPk(entity.getPk());
-		return new Result<RecipeDto>(true, Messages.RECIPE_CREATE_SUCCESS, dto);
+		return new Result<RecipeDto>(true, Messages.RECIPE_SAVE_SUCCESS, mapper.toRecipeDto(entity));
+	}
+	
+	public Result<String> deleteRecipe(String recipeId, HttpServletRequest request){
+		Data entity = new Data();
+		entity.setRecipeId(recipeId);
+		entity.setPk(jwtUtil.getClaimFromToken(request, Constants.USER_ID_PARAM));
+		repo.delete(entity);
+		return new Result<String>(true, Messages.RECIPE_DELETE_SUCCESS);
 	}
 }

@@ -13,5 +13,6 @@ public final class Messages {
 	public static final String INVALID_CREDENTIALS = "username or password incorrect";
 	
 	public static final String RECIPE_MANDATORY_FIELDS = "title, ingredients and preparation fields required";
-	public static final String RECIPE_CREATE_SUCCESS = "recipe created successfully";
+	public static final String RECIPE_SAVE_SUCCESS = "recipe saved successfully";
+	public static final String RECIPE_DELETE_SUCCESS = "recipe deleted successfully";
 }

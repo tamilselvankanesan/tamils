@@ -2,7 +2,6 @@ package com.oster.recipes.entities.dynamodb;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 
@@ -32,7 +31,7 @@ public class Data {
 	private String ingredients;
 	private String preparation;
 	private List<String> tags;
-	private Map<String, String> collections;
+	private List<String> collections;
 	private Float rating;
 	private List<PublicationSettings> publications;
 	private String createdOn;
@@ -294,11 +293,11 @@ public class Data {
 		this.rating = rating;
 	}
 
-	public Map<String, String> getCollections() {
+	public List<String> getCollections() {
 		return collections;
 	}
 
-	public void setCollections(Map<String, String> collections) {
+	public void setCollections(List<String> collections) {
 		this.collections = collections;
 	}
 
