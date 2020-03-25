@@ -2,7 +2,8 @@ package com.success.ndb.service;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserDAO dao;
-	private static Logger logger = Logger.getLogger(CustomUserDetailsService.class);
+	private static Logger logger = LogManager.getLogger(CustomUserDetailsService.class);
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
