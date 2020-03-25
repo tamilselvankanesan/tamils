@@ -1,0 +1,127 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",   
+    "Resources": {
+        "DockerHubSecretManagerPolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "ManagedPolicyName": "DockerHubSecretManagerPolicy",
+                "Description": "",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": "secretsmanager:GetSecretValue",
+                            "Resource": {
+                                "Fn::Join": [
+                                    "",
+                                    [
+                                        "arn:aws:secretsmanager:",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        },
+                                        ":",
+                                        {
+                                            "Ref": "AWS::AccountId"
+                                        },
+                                        ":secret:*"
+                                    ]
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "RecipeCloudWatchLogsPolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "ManagedPolicyName": "RecipeCloudWatchLogsPolicy",
+                "Description": "",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "logs:CreateLogStream",
+                                "logs:CreateLogGroup",
+                                "logs:PutLogEvents"
+                            ],
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "RecipeECSExecutionRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": "ecsTaskExecutionRole",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ecs-tasks.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    }
+                ],
+                "Path": "/",
+                "ManagedPolicyArns": [
+                    {
+                        "Ref": "RecipeCloudWatchLogsPolicy"
+                    },
+                    {
+                        "Ref": "DockerHubSecretManagerPolicy"
+                    },
+                    "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "IAM": {
+            "Description": "Created below Policies and Roles",
+            "Value": {
+                "Fn::Join": [
+                    ", ",
+                    [
+                        {
+                            "Ref": "RecipeCloudWatchLogsPolicy"
+                        },
+                        {
+                            "Ref": "DockerHubSecretManagerPolicy"
+                        },
+                        {
+                            "Ref": "RecipeECSExecutionRole"
+                        }
+                    ]
+                ]
+            }
+        },
+        "RecipeECSExecutionRole": {
+            "Description": "RecipeECSExecutionRole",
+            "Value": { "Fn::GetAtt": ["RecipeECSExecutionRole", "Arn"] },
+            "Export": {
+                "Name": { 
+                    "Fn::Sub": "${AWS::StackName}-RecipeECSExecutionRole" 
+                    
+                }
+            }
+        }
+    }
+}

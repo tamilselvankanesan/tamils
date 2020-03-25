@@ -44,7 +44,7 @@
 
 	</dependencies>
 
-	<build>
+	<!-- <build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -57,20 +57,8 @@
 					<compilerArgument>-Werror</compilerArgument>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>sample.plugin</groupId>
-				<artifactId>hello-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>sayhi</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

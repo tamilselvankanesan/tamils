@@ -1,0 +1,41 @@
+{
+    "AttributeDefinitions": [
+        {
+			"AttributeName": "pk", "AttributeType": "S"
+		},
+		{
+			"AttributeName": "category", "AttributeType": "S"
+		}
+    ],
+    "TableName": "data",
+    "KeySchema": [
+        {
+			"AttributeName": "pk", "KeyType": "HASH"
+		},
+		{
+			"AttributeName": "category", "KeyType": "RANGE"
+		}
+    ],
+    "GlobalSecondaryIndexes": [
+        {
+			"IndexName": "CategoryGsi",
+			"KeySchema": [
+				{
+					"AttributeName": "category", "KeyType": "HASH"
+				}
+			],
+			"Projection": {"ProjectionType": "ALL"},
+			"ProvisionedThroughput": {"ReadCapacityUnits": 4, "WriteCapacityUnits": 1}
+		}    ],
+    "BillingMode": "PROVISIONED",
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 4,
+        "WriteCapacityUnits": 1
+    },
+    "Tags": [
+        {
+            "Key": "att",
+            "Value": "att"
+        }
+    ]
+}

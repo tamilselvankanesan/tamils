@@ -1,0 +1,97 @@
+{
+    "AttributeDefinitions": [
+        {
+			"AttributeName": "pk", "AttributeType": "S"
+		},
+		{
+			"AttributeName": "category", "AttributeType": "S"
+		},
+		{
+			"AttributeName": "lsi1-sk", "AttributeType": "S"
+		},
+		{
+			"AttributeName": "lsi2_sk", "AttributeType": "S"
+		},
+		{
+			"AttributeName": "gsi1_pk", "AttributeType": "S"
+		}
+    ],
+    "TableName": "recipe",
+    "KeySchema": [
+        {
+			"AttributeName": "pk", "KeyType": "HASH"
+		},
+		{
+			"AttributeName": "category", "KeyType": "RANGE"
+		}
+    ],
+    "LocalSecondaryIndexes": [
+        {
+			"IndexName": "LSI-1",
+			"KeySchema": [
+				{
+					"AttributeName": "pk",
+					"KeyType": "HASH"
+				},
+				{
+					"AttributeName": "lsi1-sk",
+					"KeyType": "RANGE"
+				}
+			],
+			"Projection": {"ProjectionType": "ALL"}
+		},
+		{
+			"IndexName": "LSI-2",
+			"KeySchema": [
+				{
+					"AttributeName": "pk",
+					"KeyType": "HASH"
+				},
+				{
+					"AttributeName": "lsi2_sk",
+					"KeyType": "RANGE"
+				}
+			],
+			"Projection": {"ProjectionType": "ALL"}
+		}
+    ],
+    "GlobalSecondaryIndexes": [
+        {
+			"IndexName": "GSI-1",
+			"KeySchema": [
+				{
+					"AttributeName": "gsi1_pk", "KeyType": "HASH"
+				},
+				{
+					"AttributeName": "category", "KeyType": "RANGE"
+				}
+			],
+			"Projection": {"ProjectionType": "ALL"},
+			"ProvisionedThroughput": {"ReadCapacityUnits": 4, "WriteCapacityUnits": 1}
+		},
+		{
+			"IndexName": "GSI-2",
+			"KeySchema": [
+				{
+					"AttributeName": "category", "KeyType": "HASH"
+				},
+				{
+					"AttributeName": "category", "KeyType": "RANGE"
+				}
+			],
+			"Projection": {"ProjectionType": "ALL"},
+			"ProvisionedThroughput": {"ReadCapacityUnits": 4, "WriteCapacityUnits": 1}
+		}
+    ],
+    "BillingMode": "PROVISIONED",
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 4,
+        "WriteCapacityUnits": 1
+    },
+    "Tags": [
+        {
+            "Key": "att",
+            "Value": "att"
+        }
+    ]
+}

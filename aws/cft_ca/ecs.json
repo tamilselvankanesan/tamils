@@ -1,0 +1,280 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "SecretsStackName": {
+            "Type": "String",
+            "Default": "RSecret",
+            "Description": "Enter Dockerhub Secrets Stack Name"
+        },
+        "IamStackName": {
+            "Type": "String",
+            "Default": "RIam",
+            "Description": "Enter Iam Stack Name"
+        },
+        "VpcStackName": {
+            "Type": "String",
+            "Default": "RVpc",
+            "Description": "Enter Vpc Stack Name"
+        },
+        "RecipeContainerName": {
+            "Type": "String",
+            "Default": "RecipeContainer",
+            "Description": "Enter Container Name"
+        },
+		"RecipeContainerImageName": {
+            "Type": "String",
+            "Default": "btamilselvan/recipes:latest",
+            "Description": "Enter Container Image Name"
+        }
+    },
+    "Resources": {
+        "ALB": {
+            "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+            "Properties": {
+                "Name": "ECSTG",
+                "Type": "application",
+                "Scheme": "internet-facing",
+                "Subnets": [
+                    {
+                        "Fn::ImportValue": {
+                            "Fn::Sub": "${VpcStackName}-PublicSubnet1Id"
+                        }
+                    },
+                    {
+                        "Fn::ImportValue": {
+                            "Fn::Sub": "${VpcStackName}-PublicSubnet2Id"
+                        }
+                    }
+                ],
+                "SecurityGroups": [
+                    {
+                        "Fn::ImportValue": {
+                            "Fn::Sub": "${VpcStackName}-ALBSG"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "ALB"
+                    },
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    }
+                ]
+            }
+        },
+        "ECSTG": {
+            "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+            "Properties": {
+                "Name": "ECSTG",
+                "VpcId": {
+                    "Fn::ImportValue": {
+                        "Fn::Sub": "${VpcStackName}-VPC"
+                    }
+                },
+                "Protocol": "HTTP",
+                "Port": "8080",
+				"TargetType": "ip",
+                "HealthCheckEnabled": "true",
+                "HealthCheckPath": "/ping",
+                "HealthCheckIntervalSeconds": "300",
+                "HealthCheckProtocol": "HTTP",
+                "HealthCheckTimeoutSeconds": "15",
+                "HealthyThresholdCount": "2",
+                "UnhealthyThresholdCount": "3",
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+					{
+                        "Key": "Name",
+                        "Value": "ECSTG"
+                    }
+                ]
+            }
+        },
+        "HTTPListener": {
+            "Type": "AWS::ElasticLoadBalancingV2::Listener",
+            "Properties": {
+                "Port": "80",
+                "Protocol": "HTTP",
+                "LoadBalancerArn": {
+                    "Ref": "ALB"
+                },
+                "DefaultActions": [{
+                    "Type": "fixed-response",
+                    "FixedResponseConfig": {
+                        "StatusCode": "403",
+                        "ContentType": "text/html",
+                        "MessageBody": "Access to this URL is denied."
+                    }
+                }]
+            }
+        },
+        "MainRule": {
+            "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
+            "Properties": {
+                "ListenerArn": {
+                    "Ref": "HTTPListener"
+                },
+                "Priority": "1",
+                "Conditions": [
+                    {
+                        "Field": "path-pattern",
+                        "PathPatternConfig": {
+                            "Values": [
+                                "/**"
+                            ]
+                        }
+                    }
+                ],
+                "Actions": [
+                    {
+                        "TargetGroupArn": {"Ref": "ECSTG"},
+                        "Type": "forward"
+                    }
+                ]
+            }
+        },
+        "RecipeCluster": {
+            "Type": "AWS::ECS::Cluster",
+            "Properties": {
+                "ClusterName": "RecipeCluster",
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+					{
+                        "Key": "Name",
+                        "Value": "RecipeCluster"
+                    }
+                ]
+            }
+        },
+        "RecipeTaskDef": {
+            "Type": "AWS::ECS::TaskDefinition",
+            "Properties": {
+                "ContainerDefinitions": [
+                    {
+                        "Name": {"Ref": "RecipeContainerName"},
+                        "Image": {"Ref": "RecipeContainerImageName"},
+                        "RepositoryCredentials": {
+                            "CredentialsParameter": {
+                                "Fn::ImportValue": {
+                                    "Fn::Sub": "${SecretsStackName}-DockerhubCredentials"
+                                }
+                            }
+                        },
+                        "PortMappings": [
+                            {
+                                "ContainerPort": 8080,
+                                "HostPort": 8080,
+                                "Protocol": "tcp"
+                            }
+                        ],
+                        "HealthCheck": {
+                            "Command": ["CMD-SHELL","wget -qO-  http://localhost:8080/ping | grep Hello || exit 1"],
+                            "Interval": 300,
+                            "Timeout": 5,
+                            "StartPeriod": 30,
+                            "Retries": 2
+                        },
+                        "Essential": "true",
+						"LogConfiguration": {
+							"LogDriver": "awslogs",
+							"Options": {
+							    "awslogs-region": "us-east-1",
+								"awslogs-create-group": "true",
+							    "awslogs-group": "/ecs/recipes",
+								"awslogs-stream-prefix": "ecs"
+							}
+						} 
+                    }
+                ],
+                "Cpu": "512",
+                "Memory": "1024",
+                "NetworkMode": "awsvpc",
+                "RequiresCompatibilities": [
+                    "FARGATE"
+                ],
+				"TaskRoleArn": {
+                    "Fn::ImportValue": {
+                        "Fn::Sub": "${IamStackName}-RecipeECSExecutionRole"
+                    }
+                },
+				"ExecutionRoleArn": {
+                    "Fn::ImportValue": {
+                        "Fn::Sub": "${IamStackName}-RecipeECSExecutionRole"
+                    }
+                },
+                "Tags": [
+                    {
+                        "Key": "att",
+                        "Value": "att"
+                    },
+					{
+                        "Key": "Name",
+                        "Value": "RecipeTaskDef"
+                    }
+                ]
+            }
+        },
+        "RecipeService": {
+            "Type": "AWS::ECS::Service",
+            "DependsOn": "HTTPListener",
+            "Properties": {
+                "ServiceName": "RecipeService",
+                "Cluster": {
+                    "Ref": "RecipeCluster"
+                },
+                "LaunchType": "FARGATE",
+                "TaskDefinition": {"Ref": "RecipeTaskDef"},
+                "DeploymentConfiguration": {
+                    "MaximumPercent": 200,
+                    "MinimumHealthyPercent": 100
+                },
+                "DesiredCount": 1,
+                "LoadBalancers": [
+                    {
+                     "ContainerName": {"Ref": "RecipeContainerName"},
+                     "ContainerPort": 8080,
+                     "TargetGroupArn": {"Ref": "ECSTG"}
+                    }
+                ],
+                "NetworkConfiguration": {
+                    "AwsvpcConfiguration": {
+                        "AssignPublicIp": "ENABLED",
+                        "SecurityGroups": [{
+                            "Fn::ImportValue": {"Fn::Sub": "${VpcStackName}-ECSSG"}
+                        }],
+                       "Subnets": [
+                           {
+                               "Fn::ImportValue": {"Fn::Sub": "${VpcStackName}-PublicSubnet1Id"}
+                           },
+                           {
+                               "Fn::ImportValue": {"Fn::Sub": "${VpcStackName}-PublicSubnet2Id"}
+                           }
+                        ] 
+                    }
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "RecipeTaskDefArn": {
+            "Description": "Recipe Task Def Arn",
+            "Value": {
+                "Ref": "RecipeTaskDef"
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Sub": "${AWS::StackName}-RecipeTaskDefArn"
+                }
+            }
+        }
+    }
+}
