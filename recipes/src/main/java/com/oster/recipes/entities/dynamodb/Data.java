@@ -15,6 +15,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.oster.recipes.utils.Constants;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,12 +49,21 @@ public class Data {
 	
 	@Getter @Setter
 	private String password;
+	
+	@Getter @Setter
+	private List<DataMap> fbPageMapList;
 
 	public Data() {}
 	
 	public Data(String pk, String category) {
 		this.setPk(pk);
 		this.setCategory(category);
+	}
+	
+	public Data(String pk, String category, String categoryName) {
+		this.setPk(pk);
+		this.setCategory(category);
+		this.categoryName = categoryName;
 	}
 	
 	@DynamoDBDocument
@@ -113,6 +123,25 @@ public class Data {
 		}
 		public void setDescription(String description) {
 			this.description = description;
+		}
+	}
+	
+	@DynamoDBDocument
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	@EqualsAndHashCode
+	public static class DataMap{
+		@EqualsAndHashCode.Exclude
+		private String key;
+		
+		@EqualsAndHashCode.Exclude
+		private String value;
+		
+		private String id;
+		
+		public DataMap(String id) {
+			this.id = id;
 		}
 	}
 	
