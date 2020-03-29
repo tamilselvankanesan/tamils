@@ -34,10 +34,10 @@ public class TwitterUtil {
 		cb.setDebugEnabled(true)
 		  .setOAuthConsumerKey("DXIKf06dbix8doHHaKPDvCjal")
 		  .setOAuthConsumerSecret("pFyjwo9s6aQAcwU05q5qJS9LtF8rPBjPzHiGkaWmOBKa4TdM6I")
-//		  .setOAuthAccessToken("1244059013064658950-TdAqoA5IN4I31L4DL6QTYzIvJ5U6M3")
-//		  .setOAuthAccessTokenSecret("OUtTdeFlhVCEioYzFcRDT2lr8RqoA20uBqP78QcA9gcI2");
-		  .setOAuthAccessToken("1244059013064658950-TdAqoA5IN4I31L4DL6QTYzIvJ5U6M3")
-		  .setOAuthAccessTokenSecret("OUtTdeFlhVCEioYzFcRDT2lr8RqoA20uBqP78QcA9gcI2");
+//		  .setOAuthAccessToken("TdAqoA5IN4I31L4DL6QTYzIvJ5U6M3")
+//		  .setOAuthAccessTokenSecret("RDT2lr8RqoA20uBqP78QcA9gcI2");
+		  .setOAuthAccessToken("-")
+		  .setOAuthAccessTokenSecret("");
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		client = tf.getInstance();
 	}
