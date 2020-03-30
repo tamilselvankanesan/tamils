@@ -29,6 +29,12 @@ export class SocialAuthComponent implements OnInit {
     });
   }
 
+  signInWithTwiter(){
+    //step -1 
+    //get oauth token by sending signed request
+    this.socialAuthService.getOauthTokenFromTwitter();
+    
+  }
   signInWithGoogle() {
     //    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
