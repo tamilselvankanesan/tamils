@@ -29,18 +29,23 @@ public class DataMapper {
 		dto.setTitle(data.getCategoryName());
 		dto.setVideoUrl(data.getVideoUrl());
 		dto.setCountries(data.getCountries());
-		if(data.getSeoSettings()!=null) {
-			dto.setSeoSettings(Arrays.asList(data.getSeoSettings()).stream().map(s-> new RecipeDto.SettingsDto(s.getTitle(), s.getDescription())).findFirst().orElse(null));	
+		if (data.getSeoSettings() != null) {
+			dto.setSeoSettings(Arrays.asList(data.getSeoSettings()).stream()
+					.map(s -> new RecipeDto.SettingsDto(s.getTitle(), s.getDescription())).findFirst().orElse(null));
 		}
-		if(data.getOpenGraphSettings()!=null) {
-			dto.setOpenGraphSettings(Arrays.asList(data.getOpenGraphSettings()).stream().map(s-> new RecipeDto.SettingsDto(s.getTitle(), s.getDescription())).findFirst().orElse(null));	
+		if (data.getOpenGraphSettings() != null) {
+			dto.setOpenGraphSettings(Arrays.asList(data.getOpenGraphSettings()).stream()
+					.map(s -> new RecipeDto.SettingsDto(s.getTitle(), s.getDescription())).findFirst().orElse(null));
 		}
-		if(data.getPublications()!=null) {
-			dto.setPublications(data.getPublications().stream().map(p-> new RecipeDto.PublicationSettingsDto(p.getCountry(), p.getSocialMedia(), p.getProductRelation(), p.getCollection())).collect(Collectors.toList()));	
+		if (data.getPublications() != null) {
+			dto.setPublications(data
+					.getPublications().stream().map(p -> new RecipeDto.PublicationSettingsDto(p.getCountry(),
+							p.getSocialMedia(), p.getProductRelation(), p.getCollection()))
+					.collect(Collectors.toList()));
 		}
 		return dto;
 	}
-	
+
 	public Data fromRecipeDto(RecipeDto dto) {
 		Data entity = new Data();
 		entity.setCollections(dto.getCollections());
@@ -57,21 +62,26 @@ public class DataMapper {
 		entity.setCategoryName(dto.getTitle());
 		entity.setVideoUrl(dto.getVideoUrl());
 		entity.setCountries(dto.getCountries());
-		if(dto.getCountries()!=null) {
+		if (dto.getCountries() != null) {
 			entity.setCountryGsiPk(StringUtils.join(dto.getCountries(), ","));
 		}
-		if(dto.getSeoSettings()!=null) {
-			entity.setSeoSettings(Arrays.asList(dto.getSeoSettings()).stream().map(s-> new Data.Settings(s.getTitle(), s.getDescription())).findFirst().orElse(null));	
+		if (dto.getSeoSettings() != null) {
+			entity.setSeoSettings(Arrays.asList(dto.getSeoSettings()).stream()
+					.map(s -> new Data.Settings(s.getTitle(), s.getDescription())).findFirst().orElse(null));
 		}
-		if(dto.getOpenGraphSettings()!=null) {
-			entity.setOpenGraphSettings(Arrays.asList(dto.getOpenGraphSettings()).stream().map(s-> new Data.Settings(s.getTitle(), s.getDescription())).findFirst().orElse(null));	
+		if (dto.getOpenGraphSettings() != null) {
+			entity.setOpenGraphSettings(Arrays.asList(dto.getOpenGraphSettings()).stream()
+					.map(s -> new Data.Settings(s.getTitle(), s.getDescription())).findFirst().orElse(null));
 		}
-		if(dto.getPublications()!=null) {
-			entity.setPublications(dto.getPublications().stream().map(p-> new Data.PublicationSettings(p.getCountry(), p.getSocialMedia(), p.getProductRelation(), p.getCollection())).collect(Collectors.toList()));	
+		if (dto.getPublications() != null) {
+			entity.setPublications(dto
+					.getPublications().stream().map(p -> new Data.PublicationSettings(p.getCountry(),
+							p.getSocialMedia(), p.getProductRelation(), p.getCollection()))
+					.collect(Collectors.toList()));
 		}
 		return entity;
 	}
-	
+
 	public UserDto toUserDto(Data data) {
 		UserDto dto = new UserDto();
 		dto.setFirstName(data.getFirstName());
@@ -80,7 +90,7 @@ public class DataMapper {
 		dto.setUserName(data.getCategory());
 		return dto;
 	}
-	
+
 	public Data fromUserDto(UserDto dto) {
 		Data entity = new Data();
 		entity.setFirstName(dto.getFirstName());
@@ -90,5 +100,5 @@ public class DataMapper {
 		entity.setCategory(dto.getUserName());
 		return entity;
 	}
-	
+
 }

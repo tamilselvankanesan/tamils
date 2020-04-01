@@ -27,4 +27,11 @@ public final class Messages {
 	public static final String FB_USER_ACCESS_TOKEN_REQUIRED = "facebook user access token and page name required";
 	public static final String FB_GET_PAGE_ACCESS_TOKEN_FAILED = "unable to get page access token. try again";
 	public static final String FB_INTEGRATION_SUCCESS = "facebook integration successful";
+	
+	public static final String TWITTER_OAUTH_FAILED ="oauth token creation failed";
+	public static final String TWITTER_OAUTH_SUCCESS ="oauth token creation successful";
+	public static final String TWITTER_OAUTH_ACCESS_TOKEN_FAILED ="unable to get access token";
+	public static final String TWITTER_LINK_SUCCESS ="account linked successfully";
+	public static final String TWITTER_ACCESS_TOKEN_NOT_FOUND = "access token not found";
+	public static final String PUBLISH_FAILED_FOR_SOME_ACCOUNTS = "post failed for some accounts";
 }

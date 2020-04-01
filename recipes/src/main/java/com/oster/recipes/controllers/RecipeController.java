@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,15 +37,13 @@ public class RecipeController {
 	}
 
 	@PostMapping("/login")
-	public Result<UserDto> login(@RequestParam("username") String userName,
-			@RequestParam("password") String password,
+	public Result<UserDto> login(@RequestParam("username") String userName, @RequestParam("password") String password,
 			HttpServletResponse response) {
 		return service.login(userName, password, response);
 	}
 
 	@PostMapping("/add-countries")
-	public Result<String> addCountries(
-			@RequestBody List<Map<String, String>> countries) {
+	public Result<String> addCountries(@RequestBody List<Map<String, String>> countries) {
 		return service.addCountries(countries);
 	}
 
@@ -54,73 +53,76 @@ public class RecipeController {
 	}
 
 	@PostMapping("/create-collection")
-	public Result<CollectionDto> createCollection(
-			@RequestBody CollectionDto dto, HttpServletRequest request) {
+	public Result<CollectionDto> createCollection(@RequestBody CollectionDto dto, HttpServletRequest request) {
 		return service.createCollection(dto, request);
 	}
 
 	@PostMapping("/create-recipe")
-	public Result<RecipeDto> createRecipe(@RequestBody RecipeDto dto,
-			HttpServletRequest request) {
+	public Result<RecipeDto> createRecipe(@RequestBody RecipeDto dto, HttpServletRequest request) {
 		return service.createOrUpdateRecipe(dto, request);
 	}
 
 	@GetMapping("/get-recipe/{recipeId}")
-	public Result<RecipeDto> getRecipe(@PathVariable String recipeId,
-			HttpServletRequest request) {
+	public Result<RecipeDto> getRecipe(@PathVariable String recipeId, HttpServletRequest request) {
 		return service.getRecipe(recipeId, request);
 	}
 
 	@GetMapping("/get-recipes/all")
 	public Result<List<RecipeDto>> getAllRecipes(HttpServletRequest request,
-			@RequestParam(required = false) String collection,
-			@RequestParam(required = false) String country) {
+			@RequestParam(required = false) String collection, @RequestParam(required = false) String country) {
 		return service.getRecipes(request, collection, country);
 	}
 
 	@PutMapping("/update-recipe-all")
-	public Result<RecipeDto> updateRecipe(@RequestBody RecipeDto dto,
-			HttpServletRequest request) {
+	public Result<RecipeDto> updateRecipe(@RequestBody RecipeDto dto, HttpServletRequest request) {
 		return service.createOrUpdateRecipe(dto, request);
 	}
 
 	@PatchMapping("/update-recipe")
-	public Result<RecipeDto> updateRecipePartial(@RequestBody RecipeDto dto,
-			HttpServletRequest request) {
+	public Result<RecipeDto> updateRecipePartial(@RequestBody RecipeDto dto, HttpServletRequest request) {
 		return service.createOrUpdateRecipe(dto, request);
 	}
 
 	@DeleteMapping("/delete-recipe/{recipeId}")
-	public Result<String> deleteRecipe(@PathVariable String recipeId,
-			HttpServletRequest request) {
+	public Result<String> deleteRecipe(@PathVariable String recipeId, HttpServletRequest request) {
 		return service.deleteRecipe(recipeId, request);
 	}
 
 	@DeleteMapping("/delete-collection/{collection}")
-	public Result<String> deleteCollection(@PathVariable String collection,
-			HttpServletRequest request) {
+	public Result<String> deleteCollection(@PathVariable String collection, HttpServletRequest request) {
 		return service.deleteCollection(collection, request);
 	}
 
 	@PutMapping("/link-with-facebook")
-	public Result<String> linkWithFacebook(
-			@RequestParam("access_token") String userAccessToken,
-			@RequestParam("page_name") String pageName,
-			HttpServletRequest request) {
+	public Result<String> linkWithFacebook(@RequestParam("access_token") String userAccessToken,
+			@RequestParam("page_name") String pageName, HttpServletRequest request) {
 		return service.linkWithFacebook(userAccessToken, pageName, request);
 	}
 
 	@GetMapping("/fbtest")
-	public void fbTest(@RequestParam("access_token") String accessToken,
-			@RequestParam("page_name") String pageName) {
+	public void fbTest(@RequestParam("access_token") String accessToken, @RequestParam("page_name") String pageName) {
 		service.fbTest(accessToken, pageName);
 	}
 
 	@PostMapping("/fb-publish")
-	public Result<String> publishPostInFacebook(
-			@RequestParam("page_name") String pageName,
-			@RequestParam("message") String message,
-			HttpServletRequest request) {
+	public Result<String> publishPostInFacebook(@RequestParam("page_name") String pageName,
+			@RequestParam("message") String message, HttpServletRequest request) {
 		return service.publishToFb(pageName, message, request);
+	}
+
+	@PostMapping("/get-twitter-oauth-token")
+	public Result<String> getTwitterOauthToken() {
+		return service.getTwitterOauthToken();
+	}
+
+	@PutMapping(path = "/link-with-twitter", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public Result<String> linkWithTwitter(String oauth_token, String token_secret, String oauth_verifier,
+			HttpServletRequest request) {
+		return service.linkWithTwitter(oauth_token, token_secret, oauth_verifier, request);
+	}
+
+	@PostMapping("/twitter-publish")
+	public Result<String> publishPostInTwitter(@RequestParam("message") String message, HttpServletRequest request) {
+		return service.tweet(message, request);
 	}
 }

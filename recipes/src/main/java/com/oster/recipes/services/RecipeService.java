@@ -31,12 +31,15 @@ import com.oster.recipes.entities.dynamodb.Data;
 import com.oster.recipes.entities.dynamodb.Data.DataMap;
 import com.oster.recipes.repositories.dynamodb.DataRepository;
 import com.oster.recipes.social.FacebookUtil;
+import com.oster.recipes.social.TwitterUtil;
 import com.oster.recipes.utils.Constants;
 import com.oster.recipes.utils.DataMapper;
 import com.oster.recipes.utils.DateUtils;
 import com.oster.recipes.utils.JwtUtil;
 import com.oster.recipes.utils.Messages;
 import com.oster.recipes.utils.Result;
+
+import twitter4j.auth.AccessToken;
 
 @Service
 @Transactional
@@ -58,6 +61,9 @@ public class RecipeService {
 	private FacebookUtil fbUtil;
 
 	@Autowired
+	private TwitterUtil twitterUtil;
+
+	@Autowired
 	private DynamoDBMapper dynamoDbMmapper;
 	private static final String RANGE_KEY = "category";
 	private static final String CATEGORY_INDEX_NAME = "CategoryGsi";
@@ -65,11 +71,10 @@ public class RecipeService {
 	public Result<String> addCountries(List<Map<String, String>> countries) {
 		List<Data> entities = new ArrayList<>();
 
-		countries.forEach(m -> entities.addAll(m.entrySet().stream()
-				.filter(e -> StringUtils.isNoneBlank(e.getKey(), e.getValue()))
-				.map(e -> new Data(Constants.COUNTRY_PK,
-						e.getKey().trim().toUpperCase(), e.getValue().trim()))
-				.collect(Collectors.toList())));
+		countries.forEach(m -> entities
+				.addAll(m.entrySet().stream().filter(e -> StringUtils.isNoneBlank(e.getKey(), e.getValue()))
+						.map(e -> new Data(Constants.COUNTRY_PK, e.getKey().trim().toUpperCase(), e.getValue().trim()))
+						.collect(Collectors.toList())));
 		if (!entities.isEmpty()) {
 			dynamoDbMmapper.batchSave(entities);
 		}
@@ -91,14 +96,12 @@ public class RecipeService {
 			entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 			repo.save(entity);
 			dto.setPk(entity.getPk());
-			response = new Result<UserDto>(true, Messages.USER_CREATE_SUCCESS,
-					dto);
+			response = new Result<UserDto>(true, Messages.USER_CREATE_SUCCESS, dto);
 		}
 		return response;
 	}
 
-	public Result<UserDto> login(String userName, String password,
-			HttpServletResponse response) {
+	public Result<UserDto> login(String userName, String password, HttpServletResponse response) {
 		UserDto dto = new UserDto();
 		dto.setUserName(userName);
 		dto.setPassword(password);
@@ -119,23 +122,20 @@ public class RecipeService {
 	}
 
 	private Data findByUserName(HttpServletRequest request) {
-		String userName = jwtUtil
-				.getUsernameFromToken(jwtUtil.getToken(request));
+		String userName = jwtUtil.getUsernameFromToken(jwtUtil.getToken(request));
 		UserDto dto = new UserDto();
 		dto.setUserName(userName);
 		return findUserByUsername(dto);
 	}
-	
+
 	private Data findUserByUsername(UserDto dto) {
 		Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
-		expressionAttributeValues.put(":category", new AttributeValue()
-				.withS(dto.getUserName().toLowerCase().trim()));
+		expressionAttributeValues.put(":category", new AttributeValue().withS(dto.getUserName().toLowerCase().trim()));
 
 		Data entity = new Data();
 		entity.setCategory(dto.getUserName().toLowerCase().trim());
-		DynamoDBQueryExpression<Data> ex = new DynamoDBQueryExpression<Data>()
-				.withIndexName(CATEGORY_INDEX_NAME).withConsistentRead(false)
-				.withKeyConditionExpression("category = :category")
+		DynamoDBQueryExpression<Data> ex = new DynamoDBQueryExpression<Data>().withIndexName(CATEGORY_INDEX_NAME)
+				.withConsistentRead(false).withKeyConditionExpression("category = :category")
 				.withExpressionAttributeValues(expressionAttributeValues);
 		List<Data> queryResults = dynamoDbMmapper.query(Data.class, ex);
 		return queryResults.size() > 0 ? queryResults.get(0) : null;
@@ -145,8 +145,7 @@ public class RecipeService {
 		return "success";
 	}
 
-	public Result<CollectionDto> createCollection(CollectionDto dto,
-			HttpServletRequest request) {
+	public Result<CollectionDto> createCollection(CollectionDto dto, HttpServletRequest request) {
 		Result<CollectionDto> result = null;
 
 		if (StringUtils.isBlank(dto.getName())) {
@@ -159,11 +158,10 @@ public class RecipeService {
 
 		Condition rk = new Condition();
 		rk.withComparisonOperator(ComparisonOperator.BEGINS_WITH)
-				.withAttributeValueList(new AttributeValue()
-						.withS(Constants.COLLECTION_PREFIX));
+				.withAttributeValueList(new AttributeValue().withS(Constants.COLLECTION_PREFIX));
 
-		DynamoDBQueryExpression<Data> ex = new DynamoDBQueryExpression<Data>()
-				.withHashKeyValues(entity).withRangeKeyCondition(RANGE_KEY, rk);
+		DynamoDBQueryExpression<Data> ex = new DynamoDBQueryExpression<Data>().withHashKeyValues(entity)
+				.withRangeKeyCondition(RANGE_KEY, rk);
 		/*
 		 * Map<String, AttributeValue> collAttrValMap = new HashMap<>();
 		 * collAttrValMap.put(":collName", new AttributeValue(dto.getName()));
@@ -171,8 +169,8 @@ public class RecipeService {
 		 */
 
 		List<Data> queryResults = dynamoDbMmapper.query(Data.class, ex);
-		exists = queryResults.stream().anyMatch(r -> dto.getName().trim()
-				.equalsIgnoreCase(r.getCategoryName().toLowerCase()));
+		exists = queryResults.stream()
+				.anyMatch(r -> dto.getName().trim().equalsIgnoreCase(r.getCategoryName().toLowerCase()));
 		if (exists) {
 			result = new Result<CollectionDto>(Messages.COLLECTION_EXISTS);
 		} else {
@@ -180,16 +178,13 @@ public class RecipeService {
 			entity.setCollectionId(UUID.randomUUID().toString());
 			repo.save(entity);
 			dto.setCollectionId(entity.getCollectionId());
-			result = new Result<CollectionDto>(true,
-					Messages.COLLECTION_CREATE_SUCCESS, dto);
+			result = new Result<CollectionDto>(true, Messages.COLLECTION_CREATE_SUCCESS, dto);
 		}
 		return result;
 	}
 
-	public Result<RecipeDto> createOrUpdateRecipe(RecipeDto dto,
-			HttpServletRequest request) {
-		if (StringUtils.isAnyBlank(dto.getTitle(), dto.getIngredients(),
-				dto.getPreparation())) {
+	public Result<RecipeDto> createOrUpdateRecipe(RecipeDto dto, HttpServletRequest request) {
+		if (StringUtils.isAnyBlank(dto.getTitle(), dto.getIngredients(), dto.getPreparation())) {
 			return new Result<RecipeDto>(Messages.RECIPE_MANDATORY_FIELDS);
 		}
 		Data entity = mapper.fromRecipeDto(dto);
@@ -199,55 +194,46 @@ public class RecipeService {
 			entity.setCreatedOn(DateUtils.getCurrentDateString());
 		}
 		repo.save(entity);
-		return new Result<RecipeDto>(true, Messages.RECIPE_SAVE_SUCCESS,
-				mapper.toRecipeDto(entity));
+		return new Result<RecipeDto>(true, Messages.RECIPE_SAVE_SUCCESS, mapper.toRecipeDto(entity));
 	}
 
-	public Result<RecipeDto> getRecipe(String recipeId,
-			HttpServletRequest request) {
+	public Result<RecipeDto> getRecipe(String recipeId, HttpServletRequest request) {
 		Data data = new Data();
 		data.setPk(getUserId(request));
 		data.setRecipeId(recipeId);
 		Optional<Data> entity = repo.findById(data.getKey());
 		if (entity.isPresent()) {
-			return new Result<RecipeDto>(true, Messages.RECIPE_FOUND,
-					mapper.toRecipeDto(entity.get()));
+			return new Result<RecipeDto>(true, Messages.RECIPE_FOUND, mapper.toRecipeDto(entity.get()));
 		} else {
 			return new Result<RecipeDto>(Messages.RECIPE_NOT_FOUND);
 		}
 	}
 
-	public Result<List<RecipeDto>> getRecipes(HttpServletRequest request,
-			String collection, String country) {
+	public Result<List<RecipeDto>> getRecipes(HttpServletRequest request, String collection, String country) {
 		List<Data> entities = getAllRecipes(request, collection, country);
-		List<RecipeDto> dtos = entities.stream().map(mapper::toRecipeDto)
-				.collect(Collectors.toList());
+		List<RecipeDto> dtos = entities.stream().map(mapper::toRecipeDto).collect(Collectors.toList());
 		return new Result<List<RecipeDto>>(true, Messages.RECIPE_FOUND, dtos);
 	}
 
-	private List<Data> getAllRecipes(HttpServletRequest request,
-			String collection, String country) {
+	private List<Data> getAllRecipes(HttpServletRequest request, String collection, String country) {
 		Data data = new Data();
 		data.setPk(getUserId(request));
 
 		Condition rk = new Condition();
 		rk.withComparisonOperator(ComparisonOperator.BEGINS_WITH)
-				.withAttributeValueList(
-						new AttributeValue().withS(Constants.RECIPE_PREFIX));
+				.withAttributeValueList(new AttributeValue().withS(Constants.RECIPE_PREFIX));
 
-		DynamoDBQueryExpression<Data> ex = new DynamoDBQueryExpression<Data>()
-				.withHashKeyValues(data).withRangeKeyCondition(RANGE_KEY, rk);
+		DynamoDBQueryExpression<Data> ex = new DynamoDBQueryExpression<Data>().withHashKeyValues(data)
+				.withRangeKeyCondition(RANGE_KEY, rk);
 
 		Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
 		if (StringUtils.isNotBlank(collection)) {
-			expressionAttributeValues.put(":collection",
-					new AttributeValue().withS(collection.trim()));
+			expressionAttributeValues.put(":collection", new AttributeValue().withS(collection.trim()));
 			ex = ex.withFilterExpression("contains (collections, :collection)");
 		}
 
 		if (StringUtils.isNotBlank(country)) {
-			expressionAttributeValues.put(":country",
-					new AttributeValue().withS(country.trim()));
+			expressionAttributeValues.put(":country", new AttributeValue().withS(country.trim()));
 			ex = ex.withFilterExpression("contains (countries, :country)");
 		}
 
@@ -258,8 +244,7 @@ public class RecipeService {
 
 	}
 
-	public Result<String> deleteRecipe(String recipeId,
-			HttpServletRequest request) {
+	public Result<String> deleteRecipe(String recipeId, HttpServletRequest request) {
 		Data entity = new Data();
 		entity.setRecipeId(recipeId);
 		entity.setPk(getUserId(request));
@@ -267,15 +252,16 @@ public class RecipeService {
 		return new Result<String>(true, Messages.RECIPE_DELETE_SUCCESS);
 	}
 
-	public Result<String> deleteCollection(String collection,
-			HttpServletRequest request) {
+	public Result<String> deleteCollection(String collection, HttpServletRequest request) {
 		// update all recipes that are part of this collection
 		List<Data> entitiesToUpdate = getAllRecipes(request, collection, null);
 		TransactionWriteRequest transactionWriteRequest = new TransactionWriteRequest();
-		entitiesToUpdate.forEach(e -> {
+
+		for (Data e : entitiesToUpdate) {
 			e.getCollections().remove(collection);
 			transactionWriteRequest.addPut(e);
-		});
+		}
+
 		Data entityToDelete = new Data();
 		entityToDelete.setPk(getUserId(request));
 		entityToDelete.setCollectionId(collection.split("_")[0]);
@@ -289,14 +275,12 @@ public class RecipeService {
 		fbUtil.getLongLivedPageAccessToken(accessToken, pageName);
 	}
 
-	public Result<String> publishToFb(String pageName, String message,
-			HttpServletRequest request) {
+	public Result<String> publishToFb(String pageName, String message, HttpServletRequest request) {
 		Data entity = findByUserName(request);
 		if (entity == null || entity.getFbPageMapList() == null) {
 			return new Result<String>(Messages.FB_GET_PAGE_ACCESS_TOKEN_FAILED);
 		}
-		DataMap map = entity.getFbPageMapList().stream()
-				.filter(e -> e.getKey().equals(pageName.trim())).findFirst()
+		DataMap map = entity.getFbPageMapList().stream().filter(e -> e.getKey().equals(pageName.trim())).findFirst()
 				.orElse(null);
 		if (map == null) {
 			return new Result<String>(Messages.FB_GET_PAGE_ACCESS_TOKEN_FAILED);
@@ -304,13 +288,11 @@ public class RecipeService {
 		return fbUtil.publishPost(map, message);
 	}
 
-	public Result<String> linkWithFacebook(String userAccessToken,
-			String pageName, HttpServletRequest request) {
+	public Result<String> linkWithFacebook(String userAccessToken, String pageName, HttpServletRequest request) {
 		if (StringUtils.isAnyBlank(userAccessToken, pageName)) {
 			return new Result<String>(Messages.FB_USER_ACCESS_TOKEN_REQUIRED);
 		}
-		JsonNode pageDetails = fbUtil.getPageDetails(userAccessToken,
-				pageName.trim());
+		JsonNode pageDetails = fbUtil.getPageDetails(userAccessToken, pageName.trim());
 		if (pageDetails == null || pageDetails.get("id") == null) {
 			return new Result<String>(Messages.FB_GET_PAGE_ACCESS_TOKEN_FAILED);
 		}
@@ -322,20 +304,65 @@ public class RecipeService {
 		if (pageMapList == null) {
 			pageMapList = new ArrayList<>();
 		}
-		DataMap pageMap = pageMapList.stream()
-				.filter(e -> e.getKey().equals(pageName.trim())).findFirst()
+		DataMap pageMap = pageMapList.stream().filter(e -> e.getKey().equals(pageName.trim())).findFirst()
 				.orElse(new DataMap(pageDetails.get("id").asText()));
 		pageMap.setKey(pageName.trim());
 		pageMap.setValue(pageDetails.get("access_token").asText());
 		if (pageMapList.contains(pageMap)) {
-			pageMapList.get(pageMapList.indexOf(pageMap))
-					.setValue(pageMap.getValue());
+			pageMapList.get(pageMapList.indexOf(pageMap)).setValue(pageMap.getValue());
 		} else {
 			pageMapList.add(pageMap);
 		}
 		entity.setFbPageMapList(pageMapList);
 		repo.save(entity);
 		return new Result<String>(true, Messages.FB_INTEGRATION_SUCCESS);
+	}
+
+	public Result<String> getTwitterOauthToken() {
+		return twitterUtil.getOauthToken();
+	}
+
+	public Result<String> linkWithTwitter(String oauthToken, String tokenSecret, String oauthVerifier,
+			HttpServletRequest request) {
+		AccessToken accessToken = twitterUtil.getUserToken(oauthToken, tokenSecret, oauthVerifier);
+		if (accessToken == null) {
+			return new Result<String>(Messages.TWITTER_OAUTH_ACCESS_TOKEN_FAILED);
+		}
+		Data entity = findByUserName(request);
+
+		List<DataMap> pageMapList = entity.getTwitterData();
+		if (pageMapList == null) {
+			pageMapList = new ArrayList<>();
+		}
+		DataMap pageMap = pageMapList.stream().filter(e -> e.getKey().equals(accessToken.getScreenName())).findFirst()
+				.orElse(new DataMap(accessToken.getScreenName()));
+		pageMap.setKey(accessToken.getToken());
+		pageMap.setValue(accessToken.getTokenSecret());
+		if (pageMapList.contains(pageMap)) {
+			pageMapList.get(pageMapList.indexOf(pageMap)).setValue(pageMap.getValue());
+		} else {
+			pageMapList.add(pageMap);
+		}
+		entity.setTwitterData(pageMapList);
+		repo.save(entity);
+
+		return new Result<String>(true, Messages.TWITTER_LINK_SUCCESS);
+	}
+
+	public Result<String> tweet(String message, HttpServletRequest request) {
+		Data entity = findByUserName(request);
+		if (entity.getTwitterData() == null) {
+			return new Result<String>(Messages.TWITTER_ACCESS_TOKEN_NOT_FOUND);
+		}
+		String failedAccounts = entity.getTwitterData().stream()
+				.map(e -> twitterUtil.tweet(message, e.getKey(), e.getValue()) == true ? null : e)
+				.filter(e -> e != null).map(e -> e.getId()).collect(Collectors.toList()).stream()
+				.reduce("", (result, e) -> result + ", " + e);
+		if (StringUtils.isBlank(failedAccounts)) {
+			return new Result<String>(true, Messages.POST_PUBLISH_SUCCESS);
+		} else {
+			return new Result<String>(Messages.PUBLISH_FAILED_FOR_SOME_ACCOUNTS + failedAccounts);
+		}
 	}
 
 	private String getUserId(HttpServletRequest request) {

@@ -31,6 +31,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, SocialLoginModule} from 'angularx-social-login';
 import {SocialAuthComponent} from './auth/social-auth/social-auth.component';
 import { SocialAuthService } from './auth/social-auth/social-auth.service';
+import { CallbackComponent } from './auth/twitter/callback/callback.component';
 
 let config = new AuthServiceConfig([
   {
@@ -55,7 +56,8 @@ export function provideConfig() {
     PersonSearchComponent,
     PersonDetailComponent,
     HomeComponent,
-    SocialAuthComponent
+    SocialAuthComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, HttpClientModule, CountryModule, AppRoutingModule, FormsModule, SharedModule, SocialLoginModule
