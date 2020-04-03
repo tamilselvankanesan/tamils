@@ -1,5 +1,8 @@
 package com.oster.recipes.aws;
 
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +29,9 @@ public class AwsConfigDev {
 
 	@Value("${aws.dynamodb.secretkey}")
 	private String dynamoDBSecretKey;
+
+	@Value("${aws.es.host}")
+	private String elasticsearchHost;
 
 	@Bean
 	public AWSCredentials amazonAWSCredentials() {
@@ -57,5 +63,12 @@ public class AwsConfigDev {
 
 	public AWSCredentialsProvider amazonAWSCredentialsProvider() {
 		return new AWSStaticCredentialsProvider(amazonAWSCredentials());
+	}
+
+	@Bean(destroyMethod = "close")
+	public RestHighLevelClient client() {
+		RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost(elasticsearchHost)));
+		return client;
+
 	}
 }

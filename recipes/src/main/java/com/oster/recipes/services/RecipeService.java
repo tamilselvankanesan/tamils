@@ -1,5 +1,6 @@
 package com.oster.recipes.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +31,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oster.recipes.dtos.CollectionDto;
 import com.oster.recipes.dtos.RecipeDto;
 import com.oster.recipes.dtos.UserDto;
@@ -39,8 +47,10 @@ import com.oster.recipes.utils.JwtUtil;
 import com.oster.recipes.utils.Messages;
 import com.oster.recipes.utils.Result;
 
+import lombok.extern.log4j.Log4j;
 import twitter4j.auth.AccessToken;
 
+@Log4j
 @Service
 @Transactional
 public class RecipeService {
@@ -56,12 +66,18 @@ public class RecipeService {
 
 	@Autowired
 	private DataMapper mapper;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Autowired
 	private FacebookUtil fbUtil;
 
 	@Autowired
 	private TwitterUtil twitterUtil;
+	
+	@Autowired
+	private RestHighLevelClient client;
 
 	@Autowired
 	private DynamoDBMapper dynamoDbMmapper;
@@ -362,6 +378,35 @@ public class RecipeService {
 			return new Result<String>(true, Messages.POST_PUBLISH_SUCCESS);
 		} else {
 			return new Result<String>(Messages.PUBLISH_FAILED_FOR_SOME_ACCOUNTS + failedAccounts);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")	
+	public Result<String> indexData(RecipeDto dto){
+		Data entity = mapper.fromRecipeDto(dto);
+		entity.setPk(UUID.randomUUID().toString());
+		entity.setRecipeId("r_"+UUID.randomUUID().toString());
+		Map<String, Object> dataMap = objectMapper.convertValue(entity, Map.class);
+		IndexRequest indexRequest = new IndexRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE, entity.getPk()).source(dataMap);
+		try {
+			IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+			return new Result<String>(true, "index success", indexResponse.getResult().name());
+		} catch (IOException e) {
+			log.error("unable to index .. ", e);
+			return new Result<String>("index failed");
+		}
+	}
+	
+	public Result<RecipeDto> getDataFromIndex(String id) {
+		GetRequest request = new GetRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE, id);
+		GetResponse response;
+		try {
+			response = client.get(request, RequestOptions.DEFAULT);
+			Map<String, Object> resultMap = response.getSource();
+			return new Result<RecipeDto>(true, "query success", mapper.toRecipeDto(objectMapper.convertValue(resultMap, Data.class)));
+		} catch (IOException e) {
+			log.error("unable to query index .. ", e);
+			return new Result<RecipeDto>(false, "query failed");
 		}
 	}
 

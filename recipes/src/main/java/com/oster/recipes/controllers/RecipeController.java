@@ -125,4 +125,14 @@ public class RecipeController {
 	public Result<String> publishPostInTwitter(@RequestParam("message") String message, HttpServletRequest request) {
 		return service.tweet(message, request);
 	}
+	
+	@PostMapping("/es-index")
+	public Result<String> indexData(@RequestBody RecipeDto dto){
+		return service.indexData(dto);
+	}
+	
+	@GetMapping("/es-index/{id}")
+	public Result<RecipeDto> getDataFromIndex(@PathVariable String id){
+		return service.getDataFromIndex(id);
+	}
 }
