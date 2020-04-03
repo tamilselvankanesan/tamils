@@ -125,14 +125,24 @@ public class RecipeController {
 	public Result<String> publishPostInTwitter(@RequestParam("message") String message, HttpServletRequest request) {
 		return service.tweet(message, request);
 	}
-	
+
 	@PostMapping("/es-index")
-	public Result<String> indexData(@RequestBody RecipeDto dto){
+	public Result<String> indexData(@RequestBody RecipeDto dto) {
 		return service.indexData(dto);
 	}
-	
+
 	@GetMapping("/es-index/{id}")
-	public Result<RecipeDto> getDataFromIndex(@PathVariable String id){
+	public Result<RecipeDto> getDataFromIndex(@PathVariable String id) {
 		return service.getDataFromIndex(id);
+	}
+
+	@GetMapping("/es-index/all")
+	public Result<List<RecipeDto>> findAll() {
+		return service.findAllFromIndex();
+	}
+	
+	@GetMapping("/es-index/params")
+	public Result<List<RecipeDto>> findByParamsFromIndex(@RequestParam(required = false) Map<String, String> paramsMap){
+		return service.findByParamsFromIndex(paramsMap);
 	}
 }

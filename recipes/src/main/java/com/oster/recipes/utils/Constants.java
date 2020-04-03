@@ -22,7 +22,7 @@ public final class Constants {
 	public static final String RECIPE_PREFIX = "r-";
 	public static final String COLLECTION_PREFIX = "c-";
 	
-	public static final String INDEX_NAME = "_recipe";
-	public static final String INDEX_TYPE = "_doc";
+	public static final String INDEX_NAME = "recipe";
+	public static final String INDEX_TYPE = "rdata";
 	
 }

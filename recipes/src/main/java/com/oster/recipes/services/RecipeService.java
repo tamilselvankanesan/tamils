@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +18,14 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -66,7 +73,7 @@ public class RecipeService {
 
 	@Autowired
 	private DataMapper mapper;
-	
+
 	@Autowired
 	private ObjectMapper objectMapper;
 
@@ -75,7 +82,7 @@ public class RecipeService {
 
 	@Autowired
 	private TwitterUtil twitterUtil;
-	
+
 	@Autowired
 	private RestHighLevelClient client;
 
@@ -380,14 +387,16 @@ public class RecipeService {
 			return new Result<String>(Messages.PUBLISH_FAILED_FOR_SOME_ACCOUNTS + failedAccounts);
 		}
 	}
-	
-	@SuppressWarnings("unchecked")	
-	public Result<String> indexData(RecipeDto dto){
+
+	@SuppressWarnings("unchecked")
+	public Result<String> indexData(RecipeDto dto) {
 		Data entity = mapper.fromRecipeDto(dto);
 		entity.setPk(UUID.randomUUID().toString());
-		entity.setRecipeId("r_"+UUID.randomUUID().toString());
+		entity.setRecipeId("r_" + UUID.randomUUID().toString());
 		Map<String, Object> dataMap = objectMapper.convertValue(entity, Map.class);
-		IndexRequest indexRequest = new IndexRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE, entity.getPk()).source(dataMap);
+		log.info("dataMap is " + dataMap);
+		IndexRequest indexRequest = new IndexRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE, entity.getPk())
+				.source(dataMap);
 		try {
 			IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
 			return new Result<String>(true, "index success", indexResponse.getResult().name());
@@ -396,21 +405,80 @@ public class RecipeService {
 			return new Result<String>("index failed");
 		}
 	}
-	
+
 	public Result<RecipeDto> getDataFromIndex(String id) {
 		GetRequest request = new GetRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE, id);
 		GetResponse response;
 		try {
 			response = client.get(request, RequestOptions.DEFAULT);
 			Map<String, Object> resultMap = response.getSource();
-			return new Result<RecipeDto>(true, "query success", mapper.toRecipeDto(objectMapper.convertValue(resultMap, Data.class)));
+			return new Result<RecipeDto>(true, "query success",
+					mapper.toRecipeDto(objectMapper.convertValue(resultMap, Data.class)));
 		} catch (IOException e) {
 			log.error("unable to query index .. ", e);
 			return new Result<RecipeDto>(false, "query failed");
 		}
 	}
 
+	public Result<List<RecipeDto>> findAllFromIndex() {
+		SearchRequest searchRequest = buildSearchRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+		searchRequest.source(searchSourceBuilder);
+		try {
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			List<RecipeDto> result = Stream.of(searchResponse.getHits().getHits()).map(e -> {
+				return mapper.toRecipeDto(objectMapper.convertValue(e.getSourceAsMap(), Data.class));
+			}).collect(Collectors.toList());
+			return new Result<List<RecipeDto>>(true, "", result);
+
+		} catch (IOException e) {
+			log.error("unable to find all from index .. ", e);
+			return new Result<List<RecipeDto>>(false, "query failed");
+		}
+	}
+
+	public Result<List<RecipeDto>> findByParamsFromIndex(Map<String, String> paramsMap) {
+		
+		if(paramsMap==null || paramsMap.values().isEmpty()) {
+			return findAllFromIndex();
+		}
+		
+		SearchRequest searchRequest = buildSearchRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE);
+
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		BoolQueryBuilder qBuilder = QueryBuilders.boolQuery();
+		List<MoreLikeThisQueryBuilder> moreLikeThisQueryBuilders = paramsMap.entrySet().stream()
+				.filter(e -> StringUtils.isNoneBlank(e.getKey(), e.getValue())).map(e -> {
+					return QueryBuilders.moreLikeThisQuery(new String[]{e.getKey()}, new String[]{e.getValue()}, null);
+				}).collect(Collectors.toList());
+		for(MoreLikeThisQueryBuilder like : moreLikeThisQueryBuilders) {
+			qBuilder = qBuilder.must(like);	
+		}
+		searchSourceBuilder.query(qBuilder);
+		
+		searchRequest.source(searchSourceBuilder);
+		try {
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			List<RecipeDto> result = Stream.of(searchResponse.getHits().getHits()).map(e -> {
+				return mapper.toRecipeDto(objectMapper.convertValue(e.getSourceAsMap(), Data.class));
+			}).collect(Collectors.toList());
+			return new Result<List<RecipeDto>>(true, "", result);
+
+		} catch (IOException e) {
+			log.error("unable to find all from index .. ", e);
+			return new Result<List<RecipeDto>>(false, "query failed");
+		}
+	}
+
 	private String getUserId(HttpServletRequest request) {
 		return jwtUtil.getClaimFromToken(request, Constants.USER_ID_PARAM);
+	}
+
+	private SearchRequest buildSearchRequest(String index, String type) {
+		SearchRequest searchRequest = new SearchRequest();
+		searchRequest.indices(index);
+		searchRequest.types(type);
+		return searchRequest;
 	}
 }
