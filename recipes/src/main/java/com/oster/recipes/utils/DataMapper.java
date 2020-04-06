@@ -29,6 +29,7 @@ public class DataMapper {
 		dto.setTitle(data.getCategoryName());
 		dto.setVideoUrl(data.getVideoUrl());
 		dto.setCountries(data.getCountries());
+		dto.setType(data.getType());
 		if (data.getSeoSettings() != null) {
 			dto.setSeoSettings(Arrays.asList(data.getSeoSettings()).stream()
 					.map(s -> new RecipeDto.SettingsDto(s.getTitle(), s.getDescription())).findFirst().orElse(null));
@@ -62,6 +63,7 @@ public class DataMapper {
 		entity.setCategoryName(dto.getTitle());
 		entity.setVideoUrl(dto.getVideoUrl());
 		entity.setCountries(dto.getCountries());
+		entity.setType(dto.getType());
 		if (dto.getCountries() != null) {
 			entity.setCountryGsiPk(StringUtils.join(dto.getCountries(), ","));
 		}

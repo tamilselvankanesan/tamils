@@ -52,6 +52,9 @@ public class Data {
 	@Getter
 	@Setter
 	private String password;
+	
+	@Getter @Setter
+	private String type;
 
 	/**
 	 * id -> page id key -> page name value -> page token

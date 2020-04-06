@@ -27,6 +27,7 @@ public class RecipeDto {
 	private SettingsDto seoSettings;
 	private SettingsDto openGraphSettings;
 	private List<PublicationSettingsDto> publications;
+	private String type;
 	
 	@Getter
 	@Setter

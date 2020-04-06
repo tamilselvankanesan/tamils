@@ -22,8 +22,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -439,24 +438,39 @@ public class RecipeService {
 	}
 
 	public Result<List<RecipeDto>> findByParamsFromIndex(Map<String, String> paramsMap) {
-		
-		if(paramsMap==null || paramsMap.values().isEmpty()) {
+
+		if (paramsMap == null || paramsMap.values().isEmpty()) {
 			return findAllFromIndex();
 		}
-		
+
 		SearchRequest searchRequest = buildSearchRequest(Constants.INDEX_NAME, Constants.INDEX_TYPE);
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		BoolQueryBuilder qBuilder = QueryBuilders.boolQuery();
-		List<MoreLikeThisQueryBuilder> moreLikeThisQueryBuilders = paramsMap.entrySet().stream()
-				.filter(e -> StringUtils.isNoneBlank(e.getKey(), e.getValue())).map(e -> {
-					return QueryBuilders.moreLikeThisQuery(new String[]{e.getKey()}, new String[]{e.getValue()}, null);
-				}).collect(Collectors.toList());
-		for(MoreLikeThisQueryBuilder like : moreLikeThisQueryBuilders) {
-			qBuilder = qBuilder.must(like);	
-		}
-		searchSourceBuilder.query(qBuilder);
+		QueryBuilder qb = QueryBuilders.multiMatchQuery(paramsMap.get("text"), paramsMap.get("fields").split(","));
+	
+		searchSourceBuilder.query(qb);
 		
+//		QueryBuilders.boolQuery().must(QueryBuilders.termQuery(name, value));
+		
+		QueryBuilders.boolQuery().should(QueryBuilders.matchQuery(paramsMap.get("text"), "")).must();
+//		QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("location", "experience")).must(QueryBuilders.matchQuery("12", "experience")).sh;
+
+		// BoolQueryBuilder qBuilder = QueryBuilders.boolQuery();
+
+		// BoolQueryBuilder qBuilder = QueryBuilders.boolQuery();
+		//
+		// List<MoreLikeThisQueryBuilder> moreLikeThisQueryBuilders =
+		// paramsMap.entrySet().stream()
+		// .filter(e -> StringUtils.isNoneBlank(e.getKey(), e.getValue())).map(e
+		// -> {
+		// return QueryBuilders.moreLikeThisQuery(new String[]{e.getKey()}, new
+		// String[]{e.getValue()}, null);
+		// }).collect(Collectors.toList());
+		// for(MoreLikeThisQueryBuilder like : moreLikeThisQueryBuilders) {
+		// qBuilder = qBuilder.must(like);
+		// }
+		// searchSourceBuilder.query(qBuilder);
+		log.info("query json " + searchSourceBuilder.toString());
 		searchRequest.source(searchSourceBuilder);
 		try {
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
