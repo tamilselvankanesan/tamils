@@ -28,6 +28,16 @@ public class RecipeDto {
 	private SettingsDto openGraphSettings;
 	private List<PublicationSettingsDto> publications;
 	private String type;
+	private List<PaymentDto> payments;
+	
+	@Getter @Setter
+	@AllArgsConstructor @NoArgsConstructor
+	public static class PaymentDto{
+		private String card;
+		private String exp;
+		private String name;
+		private String cvv;
+	}
 	
 	@Getter
 	@Setter

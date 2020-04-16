@@ -3,6 +3,7 @@ package com.oster.recipes.aws;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +17,15 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.datamodeling.AttributeEncryptor;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.SaveBehavior;
+import com.amazonaws.services.dynamodbv2.datamodeling.encryption.DynamoDBEncryptor;
+import com.amazonaws.services.dynamodbv2.datamodeling.encryption.providers.DirectKmsMaterialProvider;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.kms.AWSKMS;
+import com.amazonaws.services.kms.AWSKMSClientBuilder;
 
 @Configuration
 @Profile({"dev"})
@@ -32,6 +39,9 @@ public class AwsConfigDev {
 
 	@Value("${aws.es.host}")
 	private String elasticsearchHost;
+	
+	@Value("${aws.cmk.arn}")
+	private String cmkArn;
 
 	@Bean
 	public AWSCredentials amazonAWSCredentials() {
@@ -46,8 +56,16 @@ public class AwsConfigDev {
 
 	@Bean
 	@Primary
+	@Qualifier("dynamoMapper")
 	public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB amazonDynamoDB, DynamoDBMapperConfig config) {
 		return new DynamoDBMapper(amazonDynamoDB, config);
+	}
+	
+	@Bean
+	@Qualifier("dynamoMapperEncrypted")
+	public DynamoDBMapper dynamoDBMapperEncrypted(AmazonDynamoDB amazonDynamoDB, DynamoDBMapperConfig config) {
+		DynamoDBMapperConfig mapperConfig = DynamoDBMapperConfig.builder().withSaveBehavior(SaveBehavior.PUT).build();
+	    return new DynamoDBMapper(amazonDynamoDB(), mapperConfig, new AttributeEncryptor(dynamoEncryptor()));
 	}
 
 	@Bean
@@ -59,6 +77,13 @@ public class AwsConfigDev {
 	@Bean
 	public DynamoDB dynamoDB() {
 		return new DynamoDB(amazonDynamoDB());
+	}
+
+	private DynamoDBEncryptor dynamoEncryptor() {
+		final AWSKMS kms = AWSKMSClientBuilder.standard().withCredentials(amazonAWSCredentialsProvider())
+				.withRegion(Regions.US_EAST_1).build();
+		final DirectKmsMaterialProvider cmp = new DirectKmsMaterialProvider(kms, cmkArn);
+		return DynamoDBEncryptor.getInstance(cmp);
 	}
 
 	public AWSCredentialsProvider amazonAWSCredentialsProvider() {

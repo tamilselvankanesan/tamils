@@ -12,6 +12,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.encryption.DoNotTouch;
 import com.oster.recipes.utils.Constants;
 
 import lombok.AllArgsConstructor;
@@ -42,33 +43,22 @@ public class Data {
 	private String scheduledOn;
 	private Settings seoSettings;
 	private Settings openGraphSettings;
-	@Getter
-	@Setter
 	private String firstName;
-	@Getter
-	@Setter
 	private String lastName;
-
-	@Getter
-	@Setter
 	private String password;
-	
-	@Getter @Setter
 	private String type;
 
 	/**
 	 * id -> page id key -> page name value -> page token
 	 */
-	@Getter
-	@Setter
 	private List<DataMap> fbPageMapList;
 
 	/**
 	 * id -> page id key -> auth token value -> token secret
 	 */
-	@Getter
-	@Setter
 	private List<DataMap> twitterData;
+	
+	private List<Payment> payments;
 
 	public Data() {
 	}
@@ -83,7 +73,18 @@ public class Data {
 		this.setCategory(category);
 		this.categoryName = categoryName;
 	}
-
+	
+	@DynamoDBDocument
+	@Getter @Setter
+	@AllArgsConstructor @NoArgsConstructor
+	public static class Payment{
+		private String card;
+		private String exp;
+		private String name;
+		private String cvv;
+	}
+	
+	
 	@DynamoDBDocument
 	@NoArgsConstructor
 	@AllArgsConstructor
@@ -204,7 +205,8 @@ public class Data {
 	public void setKey(DataKey key) {
 		this.key = key;
 	}
-
+	
+	@DoNotTouch
 	public String getPictureUrl() {
 		return pictureUrl;
 	}
@@ -213,6 +215,7 @@ public class Data {
 		this.pictureUrl = pictureUrl;
 	}
 
+	@DoNotTouch
 	public String getVideoUrl() {
 		return videoUrl;
 	}
@@ -221,6 +224,7 @@ public class Data {
 		this.videoUrl = videoUrl;
 	}
 
+	@DoNotTouch
 	public String getIngredients() {
 		return ingredients;
 	}
@@ -229,6 +233,7 @@ public class Data {
 		this.ingredients = ingredients;
 	}
 
+	@DoNotTouch
 	public String getPreparation() {
 		return preparation;
 	}
@@ -237,6 +242,7 @@ public class Data {
 		this.preparation = preparation;
 	}
 
+	@DoNotTouch
 	public List<String> getTags() {
 		return tags;
 	}
@@ -245,6 +251,7 @@ public class Data {
 		this.tags = tags;
 	}
 
+	@DoNotTouch
 	public List<PublicationSettings> getPublications() {
 		return publications;
 	}
@@ -253,6 +260,7 @@ public class Data {
 		this.publications = publications;
 	}
 
+	@DoNotTouch
 	public String getCreatedOn() {
 		return createdOn;
 	}
@@ -261,6 +269,7 @@ public class Data {
 		this.createdOn = createdOn;
 	}
 
+	@DoNotTouch
 	public String getPostedOn() {
 		return postedOn;
 	}
@@ -269,6 +278,7 @@ public class Data {
 		this.postedOn = postedOn;
 	}
 
+	@DoNotTouch
 	public String getScheduledOn() {
 		return scheduledOn;
 	}
@@ -277,6 +287,7 @@ public class Data {
 		this.scheduledOn = scheduledOn;
 	}
 
+	@DoNotTouch
 	public Settings getSeoSettings() {
 		return seoSettings;
 	}
@@ -285,6 +296,7 @@ public class Data {
 		this.seoSettings = seoSettings;
 	}
 
+	@DoNotTouch
 	public Settings getOpenGraphSettings() {
 		return openGraphSettings;
 	}
@@ -341,6 +353,7 @@ public class Data {
 		return this.getCategory();
 	}
 
+	@DoNotTouch
 	public Float getRating() {
 		return rating;
 	}
@@ -349,6 +362,7 @@ public class Data {
 		this.rating = rating;
 	}
 
+	@DoNotTouch
 	public List<String> getCollections() {
 		return collections;
 	}
@@ -357,6 +371,7 @@ public class Data {
 		this.collections = collections;
 	}
 
+	@DoNotTouch
 	public String getCategoryName() {
 		return categoryName;
 	}
@@ -365,6 +380,7 @@ public class Data {
 		this.categoryName = categoryName;
 	}
 
+	@DoNotTouch
 	public List<String> getCountries() {
 		return countries;
 	}
@@ -373,11 +389,74 @@ public class Data {
 		this.countries = countries;
 	}
 
+	@DoNotTouch
 	public String getCountryGsiPk() {
 		return countryGsiPk;
 	}
 
 	public void setCountryGsiPk(String countryGsiPk) {
 		this.countryGsiPk = countryGsiPk;
+	}
+
+	@DoNotTouch
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@DoNotTouch
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@DoNotTouch
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@DoNotTouch
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@DoNotTouch
+	public List<DataMap> getFbPageMapList() {
+		return fbPageMapList;
+	}
+
+	public void setFbPageMapList(List<DataMap> fbPageMapList) {
+		this.fbPageMapList = fbPageMapList;
+	}
+
+	@DoNotTouch
+	public List<DataMap> getTwitterData() {
+		return twitterData;
+	}
+
+	public void setTwitterData(List<DataMap> twitterData) {
+		this.twitterData = twitterData;
+	}
+
+	public List<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(List<Payment> payments) {
+		this.payments = payments;
 	}
 }

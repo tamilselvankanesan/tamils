@@ -44,6 +44,9 @@ public class DataMapper {
 							p.getSocialMedia(), p.getProductRelation(), p.getCollection()))
 					.collect(Collectors.toList()));
 		}
+		if(data.getPayments()!=null) {
+			dto.setPayments(data.getPayments().stream().map(e -> new RecipeDto.PaymentDto(e.getCard(), e.getExp(), e.getName(), e.getCvv())).collect(Collectors.toList()));
+		}
 		return dto;
 	}
 
@@ -80,6 +83,9 @@ public class DataMapper {
 					.getPublications().stream().map(p -> new Data.PublicationSettings(p.getCountry(),
 							p.getSocialMedia(), p.getProductRelation(), p.getCollection()))
 					.collect(Collectors.toList()));
+		}
+		if(dto.getPayments()!=null) {
+			entity.setPayments(dto.getPayments().stream().map(e -> new Data.Payment(e.getCard(), e.getExp(), e.getName(), e.getCvv())).collect(Collectors.toList()));
 		}
 		return entity;
 	}

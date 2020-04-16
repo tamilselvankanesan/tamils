@@ -145,4 +145,9 @@ public class RecipeController {
 	public Result<List<RecipeDto>> findByParamsFromIndex(@RequestParam(required = false) Map<String, String> paramsMap){
 		return service.findByParamsFromIndex(paramsMap);
 	}
+	
+	@PostMapping("/store-cc")
+	public void storeCreditCard(@RequestBody RecipeDto dto) {
+		service.storeCreditCardData(dto);
+	}
 }

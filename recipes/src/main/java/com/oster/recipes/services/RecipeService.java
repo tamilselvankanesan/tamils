@@ -1,11 +1,14 @@
 package com.oster.recipes.services;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,6 +29,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +37,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.TransactionWriteRequest;
+import com.amazonaws.services.dynamodbv2.datamodeling.encryption.DynamoDBEncryptor;
+import com.amazonaws.services.dynamodbv2.datamodeling.encryption.EncryptionContext;
+import com.amazonaws.services.dynamodbv2.datamodeling.encryption.EncryptionFlags;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oster.recipes.dtos.CollectionDto;
@@ -86,7 +94,13 @@ public class RecipeService {
 	private RestHighLevelClient client;
 
 	@Autowired
+	@Qualifier("dynamoMapper")
 	private DynamoDBMapper dynamoDbMmapper;
+	
+	@Autowired
+	@Qualifier("dynamoMapperEncrypted")
+	private DynamoDBMapper dynamoDbMmapperEncrypted;
+	
 	private static final String RANGE_KEY = "category";
 	private static final String CATEGORY_INDEX_NAME = "CategoryGsi";
 
@@ -447,13 +461,14 @@ public class RecipeService {
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		QueryBuilder qb = QueryBuilders.multiMatchQuery(paramsMap.get("text"), paramsMap.get("fields").split(","));
-	
+
 		searchSourceBuilder.query(qb);
-		
-//		QueryBuilders.boolQuery().must(QueryBuilders.termQuery(name, value));
-		
+
+		// QueryBuilders.boolQuery().must(QueryBuilders.termQuery(name, value));
+
 		QueryBuilders.boolQuery().should(QueryBuilders.matchQuery(paramsMap.get("text"), "")).must();
-//		QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("location", "experience")).must(QueryBuilders.matchQuery("12", "experience")).sh;
+		// QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("location",
+		// "experience")).must(QueryBuilders.matchQuery("12", "experience")).sh;
 
 		// BoolQueryBuilder qBuilder = QueryBuilders.boolQuery();
 
@@ -483,6 +498,42 @@ public class RecipeService {
 			log.error("unable to find all from index .. ", e);
 			return new Result<List<RecipeDto>>(false, "query failed");
 		}
+	}
+
+	public void storeCreditCardData_old(RecipeDto dto) {
+		final EncryptionContext encryptionContext = new EncryptionContext.Builder().withTableName("data")
+				.withHashKeyName("pk").withRangeKeyName("category").build();
+		final EnumSet<EncryptionFlags> encryptOnly = EnumSet.of(EncryptionFlags.SIGN, EncryptionFlags.ENCRYPT);
+		final Map<String, Set<EncryptionFlags>> actions = new HashMap<>();
+		final Map<String, AttributeValue> record = new HashMap<>();
+	    record.put("pk", new AttributeValue().withS(dto.getPk()));
+	    record.put("category", new AttributeValue().withS("p_"+UUID.randomUUID().toString()));
+	    try {
+	    	DynamoDBEncryptor dynamoEncryptor = null;
+	    	log.info(objectMapper.writeValueAsString(dto.getPayments()));
+	    	record.put("payments", new AttributeValue().withS(objectMapper.writeValueAsString(dto.getPayments())));
+	    	actions.put("payments", encryptOnly);
+			Map<String, AttributeValue> encryptedRecord = dynamoEncryptor.encryptRecord(record, actions, encryptionContext);
+			log.info(encryptedRecord);
+			
+			final Map<String, AttributeValue> decryptedRecord = dynamoEncryptor.decryptRecord(encryptedRecord, actions, encryptionContext);
+			
+		    log.info(decryptedRecord);
+			
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void storeCreditCardData(RecipeDto dto) {
+		Data entity = mapper.fromRecipeDto(dto);
+//		entity.getKey().setCategory("p_"+UUID.randomUUID().toString());
+		dynamoDbMmapperEncrypted.save(entity);
+		
+		Data savedEntity = dynamoDbMmapperEncrypted.load(Data.class, entity.getPk(), entity.getCategory());
+		log.info("saved data "+savedEntity);
 	}
 
 	private String getUserId(HttpServletRequest request) {
