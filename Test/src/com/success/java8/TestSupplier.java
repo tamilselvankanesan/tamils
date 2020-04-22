@@ -15,6 +15,8 @@ public class TestSupplier {
 		Supplier<Integer> sup1 = () -> someMethod(num);
 		System.out.println("afte sup1");
 		sup1.get();
+		
+		sup1.get();
 	}
 	
 	private static Integer someMethod(int x) {
