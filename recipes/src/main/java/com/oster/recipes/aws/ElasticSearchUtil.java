@@ -11,16 +11,15 @@ import com.amazonaws.services.elasticsearch.AWSElasticsearchClientBuilder;
 @Component
 public class ElasticSearchUtil {
 
-	private final String domainName = "tamils";
-	
-	private void createClient() {
-		AWSElasticsearch client = AWSElasticsearchClientBuilder
-                .standard()
-                // Unnecessary, but lets you use a region different than your default.
-                .withRegion(Regions.US_WEST_2)
-                // Unnecessary, but if desired, you can use a different provider chain.
-                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("", "")))
-                .build();
-		
-	}
+  private final String domainName = "tamils";
+
+  private void createClient() {
+    AWSElasticsearch client =
+        AWSElasticsearchClientBuilder.standard()
+            // Unnecessary, but lets you use a region different than your default.
+            .withRegion(Regions.US_WEST_2)
+            // Unnecessary, but if desired, you can use a different provider chain.
+            .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials("", "")))
+            .build();
+  }
 }

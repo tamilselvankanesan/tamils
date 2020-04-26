@@ -15,12 +15,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Profile({"dev"})
 public class ApiDocumentation {
 
-	@Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.basePackage("com.oster.recipes.services"))              
-          .paths(PathSelectors.any())                          
-          .build();                                           
-    }
+  @Bean
+  public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("com.oster.recipes.services"))
+        .paths(PathSelectors.any())
+        .build();
+  }
 }

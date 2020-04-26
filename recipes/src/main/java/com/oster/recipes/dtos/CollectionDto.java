@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CollectionDto {
-	private String pk;
-	private String collectionId;
-	private String name;
-	private List<String> countries;
+  private String pk;
+  private String collectionId;
+  private String name;
+  private List<String> countries;
 }

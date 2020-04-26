@@ -20,36 +20,38 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 @Profile({"local"})
 public class AwsConfigLocal {
 
-	@Bean
-	@Primary
-	public DynamoDBMapperConfig dynamoDBMapperConfig() {
-		return DynamoDBMapperConfig.DEFAULT;
-	}
+  @Bean
+  @Primary
+  public DynamoDBMapperConfig dynamoDBMapperConfig() {
+    return DynamoDBMapperConfig.DEFAULT;
+  }
 
-	@Bean
-	@Primary
-	public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB amazonDynamoDB, DynamoDBMapperConfig config) {
-		return new DynamoDBMapper(amazonDynamoDB, config);
-	}
+  @Bean
+  @Primary
+  public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB amazonDynamoDB, DynamoDBMapperConfig config) {
+    return new DynamoDBMapper(amazonDynamoDB, config);
+  }
 
-	@Bean
-	public AmazonDynamoDB amazonDynamoDB() {
-		return AmazonDynamoDBClientBuilder.standard().withCredentials(amazonAWSCredentialsProvider()).
-				withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-east-1")).build();
-	}
+  @Bean
+  public AmazonDynamoDB amazonDynamoDB() {
+    return AmazonDynamoDBClientBuilder.standard()
+        .withCredentials(amazonAWSCredentialsProvider())
+        .withEndpointConfiguration(
+            new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-east-1"))
+        .build();
+  }
 
-	@Bean
-	public DynamoDB dynamoDB() {
-		return new DynamoDB(amazonDynamoDB());
-	}
-	
-	@Bean
-    public AWSCredentials amazonAWSCredentials() {
-        return new BasicAWSCredentials(
-          "fakeaccesskey", "fakesecretkey");
-    }
-	
-	public AWSCredentialsProvider amazonAWSCredentialsProvider() {
-		return new AWSStaticCredentialsProvider(amazonAWSCredentials());
-	}
+  @Bean
+  public DynamoDB dynamoDB() {
+    return new DynamoDB(amazonDynamoDB());
+  }
+
+  @Bean
+  public AWSCredentials amazonAWSCredentials() {
+    return new BasicAWSCredentials("fakeaccesskey", "fakesecretkey");
+  }
+
+  public AWSCredentialsProvider amazonAWSCredentialsProvider() {
+    return new AWSStaticCredentialsProvider(amazonAWSCredentials());
+  }
 }

@@ -10,13 +10,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class AppConfiguration {
 
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-	   return builder.build();
-	}
-	
-	@Bean
-	public ObjectMapper mapper() {
-		return new ObjectMapper();
-	}
+  @Bean
+  public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    return builder.build();
+  }
+
+  @Bean
+  public ObjectMapper mapper() {
+    return new ObjectMapper();
+  }
 }
