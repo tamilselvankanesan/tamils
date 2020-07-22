@@ -4,7 +4,7 @@
 var stompClient = null;
 
 function setConnected(connected) {
-	$("#connect").prop("disabled", connected);
+	$("#connect1").prop("disabled", connected);
 	$("#disconnect").prop("disabled", !connected);
 	if (connected) {
 		$("#conversation").show();
@@ -14,18 +14,18 @@ function setConnected(connected) {
 	$("#greetings").html("");
 }
 
-function connect() {
+function connect(username, authToken) {
+	console.log('username ', username);
 	var socket = new SockJS('/myendpoint');
 	stompClient = Stomp.over(socket);
 	stompClient.connect({
-		'userId' : $("#name").val()
-	}, function(frame) {
+		'userId' : $("#name").val(), 'X-Authorization': authToken}, function(frame) {
 		var url = stompClient.ws._transport.url;
 		console.log('url is:', url);
 		setConnected(true);
 		console.log('Connected: ' + frame);
 		// /user/T1/mychat
-		stompClient.subscribe('/user/'+$("#name").val()+'/mychat', function(greeting) {
+		stompClient.subscribe('/user/'+username+'/mychat1', function(greeting) {
 			showGreeting(JSON.parse(greeting.body).content);
 		});
 	});
@@ -56,9 +56,9 @@ $(function() {
 	$("form").on('submit', function(e) {
 		e.preventDefault();
 	});
-	$("#connect").click(function() {
+	/*$("#connect").click(function() {
 		connect();
-	});
+	});*/
 	$("#disconnect").click(function() {
 		disconnect();
 	});
