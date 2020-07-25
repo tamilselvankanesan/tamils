@@ -2,6 +2,7 @@ package com.success.websocket.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,10 +12,12 @@ import com.success.websocket.utils.Constants;
 
 @Configuration
 @EnableWebSecurity
+@Profile({"regular"})
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+//	  http.authorizeRequests().anyRequest().permitAll();
     /*
      * Allow websocket connections to go thru here.. will be validated in websocket security during inbound channel...
      */
@@ -34,7 +37,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     //        .and()
     //        .addFilterBefore(getAuthFilterBean(), UsernamePasswordAuthenticationFilter.class);
     // enable auth filters for non-websocket related requests (for rest controllers if any)
-    //    http.csrf().disable(); //for non-origin requests
+        http.csrf().disable(); //for non-origin requests
 //    http.headers().frameOptions().disable(); // this is needed for h2
   }
 

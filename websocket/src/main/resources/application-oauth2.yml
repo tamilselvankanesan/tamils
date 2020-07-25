@@ -1,0 +1,63 @@
+spring:
+   security:
+      oauth2:
+         client:
+            registration:
+               github:
+                  clientId: ad69770274e9a8f746ea
+                  clientSecret: ff3cebb9aba9a73b853a80362781e23e7238b4fa
+                  redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
+                  scope:
+                     - user:email
+                     - read:user
+               facebook:
+                  clientId: 244313950037633
+                  clientSecret: f40de6bb56e7f475b5f33fd74691a2db
+                  redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+                  scope:
+                     - email
+                     - public_profile
+               google:
+                  clientId: 336119533592-n24lvu4trdacd3b0iaj7b6c9ge9d9kb6.apps.googleusercontent.com
+                  clientSecret: u0br824lfnAUObI9aZYK_ssE
+                  redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
+                  scope:
+                  - email
+                  - profile
+               okta:
+                  clientId: 0oac4ye85rNw8C48D4x6
+                  clientSecret: pCgB_h66zRzEFJdUX_eBdmk1aPnWrd8C_Zf630eE
+                  redirectUri: 'http://localhost:8080/oauth2/callback/{registrationId}'
+                  client-name: okta
+               linkedin:
+                  clientId: 775mpjo5wmscm5
+                  clientSecret: 0J34LAgA4ryhwNtr
+                  redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
+                  authorizationGrantType: authorization_code
+                  clientAuthenticationMethod: post
+                  scope:
+                  - r_emailaddress
+                  - r_liteprofile
+            provider:
+               linkedin:
+                  authorizationUri: https://www.linkedin.com/oauth/v2/authorization
+                  tokenUri: https://www.linkedin.com/oauth/v2/accessToken
+                  userInfoUri: https://api.linkedin.com/v2/me
+                  userNameAttribute: id
+               okta:
+                  issuer-uri: https://dev-746530.okta.com/oauth2/default
+                  token-uri: https://dev-746530.okta.com/oauth2/default/v1/token
+                  user-info-uri: https://dev-746530.okta.com/oauth2/default/v1/userinfo
+               facebook:
+                  authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+                  tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+                  userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+app:
+   auth:
+      tokenSecret: kI16722MJuhTGFRDsdqazD
+      tokenExpirationMsec: 864000000
+   oauth2:
+      authorizedRedirectUris:
+      - http://localhost:8080/public/ls
+      - androidapp://oauth2/redirect
+      - iosapp://oauth2/redirect

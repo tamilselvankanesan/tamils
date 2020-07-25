@@ -7,10 +7,7 @@ import java.util.List;
 public final class Constants {
   private static final String[] SPRING_SECURITY_ALLOWED_URLS =
       new String[] {
-        "/p/**",
-        "/favicon.ico",
-        "/scripts/**",
-        "/myendpoint/**"
+        "/p/**", "/favicon.ico", "/scripts/**", "/myendpoint/**", "/", "/auth/**", "/oauth2/**"
       };
 
   public static final List<String> ALLOWED_URLS_LIST =

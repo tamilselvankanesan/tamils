@@ -3,6 +3,7 @@ package com.success.websocket.security;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -28,6 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class WebsocketMessageBrokerAuthentication implements WebSocketMessageBrokerConfigurer {
 
+  @Autowired private TokenProvider tokenProvider;
+
+  @Override
   public void configureClientInboundChannel(ChannelRegistration registration) {
     registration.interceptors(
         new ChannelInterceptor() {
@@ -38,18 +42,28 @@ public class WebsocketMessageBrokerAuthentication implements WebSocketMessageBro
             /*
              * Intercept connect command and verify the authToken
              */
+            List<String> authorization = accessor.getNativeHeader("X-Authorization");
             if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-              List<String> authorization = accessor.getNativeHeader("X-Authorization");
-              log.info("authtoken", authorization);
-              // validate token
-              Authentication authentication =
-                  new UsernamePasswordAuthenticationToken(
-                      authorization.get(0), null, Collections.emptyList());
-              accessor.setUser(authentication);
-            }
-            if (StompCommand.SUBSCRIBE.equals(accessor.getCommand())) {
-              // validate token corresponding against the subscription request
-              log.info("testing...");
+              if (tokenProvider.validateToken(authorization.get(0))) {
+                log.info("authtoken", authorization.get(0));
+                // validate token
+                Authentication authentication =
+                    new UsernamePasswordAuthenticationToken(
+                        tokenProvider.getSubjectFromToken(authorization.get(0)),
+                        null,
+                        Collections.emptyList());
+                accessor.setUser(authentication);
+              } else {
+                log.error("invalid crdentials");
+                accessor.setUser(null);
+              }
+            } else if (StompCommand.SUBSCRIBE.equals(accessor.getCommand())) {
+              if (tokenProvider.validateToken(authorization.get(0))) {
+                String email = tokenProvider.getSubjectFromToken(authorization.get(0));
+                log.info("email is ", email);
+              } else {
+                accessor.setUser(null);
+              }
             }
             return message;
           }

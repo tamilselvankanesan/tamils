@@ -1,6 +1,7 @@
 package com.success.websocket.security;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 
@@ -8,7 +9,9 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 public class WebsocketSecurity extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
   protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
+//	  messages.simpTypeMatchers(SimpMessageType.DISCONNECT).permitAll().anyMessage().authenticated();
     messages.anyMessage().authenticated();
+//	  messages.anyMessage().permitAll();
   }
 
   protected boolean sameOriginDisabled() {
