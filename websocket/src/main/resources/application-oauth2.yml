@@ -4,34 +4,34 @@ spring:
          client:
             registration:
                github:
-                  clientId: ad69770274e9a8f746ea
-                  clientSecret: ff3cebb9aba9a73b853a80362781e23e7238b4fa
+                  clientId: 1*****
+                  clientSecret: 2**********
                   redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
                   scope:
                      - user:email
                      - read:user
                facebook:
-                  clientId: 244313950037633
-                  clientSecret: f40de6bb56e7f475b5f33fd74691a2db
+                  clientId: 3**********
+                  clientSecret: 4**********
                   redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
                   scope:
                      - email
                      - public_profile
                google:
-                  clientId: 336119533592-n24lvu4trdacd3b0iaj7b6c9ge9d9kb6.apps.googleusercontent.com
-                  clientSecret: u0br824lfnAUObI9aZYK_ssE
+                  clientId: 5**********
+                  clientSecret: 6**********
                   redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
                   scope:
                   - email
                   - profile
                okta:
-                  clientId: 0oac4ye85rNw8C48D4x6
-                  clientSecret: pCgB_h66zRzEFJdUX_eBdmk1aPnWrd8C_Zf630eE
+                  clientId: 7**********
+                  clientSecret: 7**********
                   redirectUri: 'http://localhost:8080/oauth2/callback/{registrationId}'
                   client-name: okta
                linkedin:
-                  clientId: 78zmxju74ey7jh
-                  clientSecret: urqHDyZj1OEIbSFD
+                  clientId: 8**********
+                  clientSecret: 9**********
                   redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
                   authorizationGrantType: authorization_code
                   clientAuthenticationMethod: post
@@ -54,8 +54,8 @@ spring:
                   userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
 app:
    auth:
-      tokenSecret: kI16722MJuhTGFRDsdqazD
-      tokenExpirationMsec: 864000000
+      tokenSecret: kJuhTGFRDsdqazD
+      tokenExpirationMsec: 64000000
    oauth2:
       authorizedRedirectUris:
       - /home
