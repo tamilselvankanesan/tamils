@@ -30,8 +30,8 @@ spring:
                   redirectUri: 'http://localhost:8080/oauth2/callback/{registrationId}'
                   client-name: okta
                linkedin:
-                  clientId: 775mpjo5wmscm5
-                  clientSecret: 0J34LAgA4ryhwNtr
+                  clientId: 78zmxju74ey7jh
+                  clientSecret: urqHDyZj1OEIbSFD
                   redirectUri: '{baseUrl}/oauth2/callback/{registrationId}'
                   authorizationGrantType: authorization_code
                   clientAuthenticationMethod: post
@@ -58,6 +58,6 @@ app:
       tokenExpirationMsec: 864000000
    oauth2:
       authorizedRedirectUris:
-      - http://localhost:8080/public/ls
+      - /home
       - androidapp://oauth2/redirect
       - iosapp://oauth2/redirect

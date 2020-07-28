@@ -36,7 +36,7 @@ public class LoginController {
 
   @PostMapping(path = "/p/autenticate")
   public ModelAndView login(UserDto user, HttpServletResponse response) {
-    user.setPassword("T1Password");
+//    user.setPassword("T1Password");
     service.authenticate(user.getEmail(), user.getPassword(), response);
     return new ModelAndView("redirect:/home");
   }

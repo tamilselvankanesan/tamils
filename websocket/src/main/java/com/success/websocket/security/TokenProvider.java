@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +41,14 @@ public class TokenProvider {
     return null;
   }
 
-  public String createToken(String email) {
-    //        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+  public void setTokenInResponse(HttpServletResponse response, String token) {
+    Cookie c = new Cookie("AuthToken", token);
+    c.setHttpOnly(true);
+    c.setPath("/");
+    response.addCookie(c);
+  }
 
+  public String createToken(String email) {
     Date now = new Date();
     Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 

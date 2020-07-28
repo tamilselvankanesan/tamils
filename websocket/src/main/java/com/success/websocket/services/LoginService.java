@@ -2,7 +2,6 @@ package com.success.websocket.services;
 
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
@@ -31,11 +30,7 @@ public class LoginService {
     if (user.getPassword().equals(password)) {
       // generate token
       String token = tokenProvider.createToken(user.getEmail());
-      Cookie c = new Cookie("AuthToken", token);
-      c.setHttpOnly(true);
-//      c.setDomain("localhost");
-      c.setPath("/");
-      response.addCookie(c);
+      tokenProvider.setTokenInResponse(response, token);
     } else {
       throw new RuntimeException("wrong credentials");
     }

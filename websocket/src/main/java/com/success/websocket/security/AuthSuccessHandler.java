@@ -1,7 +1,6 @@
 package com.success.websocket.security;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -15,30 +14,40 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.success.websocket.security.services.WebsocketOAuthUserService;
+import com.success.websocket.security.user.OAuth2UserInfo;
 import com.success.websocket.utils.CookieUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
   @Autowired private TokenProvider tokenProvider;
   @Autowired private AppProperties appProperties;
   @Autowired private AuthRequestRepoisotry httpCookieOAuth2AuthorizationRequestRepository;
+  @Autowired private WebsocketOAuthUserService oauthService;
 
   @Override
   public void onAuthenticationSuccess(
       HttpServletRequest request, HttpServletResponse response, Authentication authentication)
       throws IOException, ServletException {
     String targetUrl = determineTargetUrl(request, response, authentication);
-    System.out.println("success.......");
+    log.info("success.......");
+    OAuth2UserInfo userInfo = oauthService.processOAuthUser(request, response);
     if (response.isCommitted()) {
       logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
       return;
     }
+    String token = tokenProvider.createToken(userInfo.getEmail());
+    tokenProvider.setTokenInResponse(response, token);
 
     clearAuthenticationAttributes(request, response);
     getRedirectStrategy().sendRedirect(request, response, targetUrl);
   }
 
+  @Override
   protected String determineTargetUrl(
       HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
     Optional<String> redirectUri =
@@ -52,12 +61,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
-    String token = tokenProvider.createToken(authentication.getName());
-
-    return UriComponentsBuilder.fromUriString(targetUrl)
-        .queryParam("token", token)
-        .build()
-        .toUriString();
+    return UriComponentsBuilder.fromUriString(targetUrl).build().toUriString();
   }
 
   protected void clearAuthenticationAttributes(
@@ -68,21 +72,22 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
   }
 
   private boolean isAuthorizedRedirectUri(String uri) {
-    URI clientRedirectUri = URI.create(uri);
 
     return appProperties
         .getOauth2()
         .getAuthorizedRedirectUris()
         .stream()
-        .anyMatch(
-            authorizedRedirectUri -> {
-              // Only validate host and port. Let the clients use different paths if they want to
-              URI authorizedURI = URI.create(authorizedRedirectUri);
-              if (authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                  && authorizedURI.getPort() == clientRedirectUri.getPort()) {
-                return true;
-              }
-              return false;
-            });
+        .anyMatch(authorizedRedirectUri -> authorizedRedirectUri.equals(uri));
+    /*return appProperties
+    .getOauth2()
+    .getAuthorizedRedirectUris()
+    .stream()
+    .anyMatch(
+        authorizedRedirectUri -> {
+          // Only validate host and port. Let the clients use different paths if they want to
+          URI authorizedURI = URI.create(authorizedRedirectUri);
+          return authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
+              && authorizedURI.getPort() == clientRedirectUri.getPort();
+        });*/
   }
 }

@@ -82,6 +82,9 @@ public class SecurityConfigOAuth2 extends WebSecurityConfigurerAdapter {
         .accessTokenResponseClient(authorizationCodeTokenResponseClient())
         .and()
         .loginPage("/p/mylogin");
+
+    http.headers().frameOptions().disable(); // for h2-console
+    http.csrf().disable(); //for h2-console
   }
 
   @Bean

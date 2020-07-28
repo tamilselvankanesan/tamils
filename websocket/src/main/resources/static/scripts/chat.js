@@ -26,7 +26,7 @@ function connect(username, authToken) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
 		// /user/T1/mychat
-		stompClient.subscribe('/user/' + username + '/mychat1', function(
+		stompClient.subscribe('/user/' + username + '/mychat', function(
 				greeting) {
 			showGreeting(JSON.parse(greeting.body).content);
 		}, {
@@ -43,9 +43,10 @@ function disconnect() {
 	console.log("Disconnected");
 }
 
-function sendName() {
+function sendMessage(authToken) {
+	console.log('send auth token is ', authToken);
 	showGreeting('Me: ' + $("#message").val());
-	stompClient.send("/chat/cincoming", {}, JSON.stringify({
+	stompClient.send("/chat/trocks", {'X-Authorization' : authToken}, JSON.stringify({
 		'name' : $("#name").val(),
 		'content' : $("#message").val(),
 		'to' : $("#to").val()
@@ -66,9 +67,9 @@ $(function() {
 	$("#disconnect").click(function() {
 		disconnect();
 	});
-	$("#send").click(function() {
+	/*$("#send").click(function() {
 		sendName();
-	});
+	});*/
 	
 	$(window).on('beforeunload', function() {
 		socket.close();

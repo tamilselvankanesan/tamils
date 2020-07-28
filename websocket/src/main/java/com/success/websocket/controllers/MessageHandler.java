@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import com.success.websocket.models.Message;
 import com.success.websocket.models.Reply;
+import com.success.websocket.utils.Constants;
 
 @Controller
 public class MessageHandler {
@@ -26,11 +27,15 @@ public class MessageHandler {
     return new Reply(message.getName() + ": " + message.getContent());
   }
 
-  @MessageMapping(value = "/cincoming")
+  @MessageMapping(value = "/trocks")
   public void handleChatMessage(Message message) {
+    // the icoming messages with /trocks path (for e.g. /chat/trocks where /chat is app prefix) are
+    // mapped to this method..
     // /mychat destination will be transformed to, /user/{message.getTo()}/mychat -> this is exactly
     // the path, the client subscribes to
     mt.convertAndSendToUser(
-        message.getTo(), "/mychat", new Reply(message.getName() + ": " + message.getContent()));
+        message.getTo(),
+        Constants.CHAT_DESTINATION_SUFFIX,
+        new Reply(message.getName() + ": " + message.getContent()));
   }
 }

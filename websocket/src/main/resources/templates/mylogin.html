@@ -57,8 +57,12 @@
 					name="password" required="required" th:field="*{password}">
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-block">Log
-					in</button>
+				<button type="submit" class="btn btn-primary btn-block">Login</button>
+				<a href="/oauth2/authorize/google?redirect_uri=/home" class="btn btn-primary btn-block">Login using Google</a>
+				<a href="/oauth2/authorize/facebook?redirect_uri=/home" class="btn btn-primary btn-block">Login using Facebook</a>
+				<a href="/oauth2/authorize/github?redirect_uri=/home" class="btn btn-primary btn-block">Login using Github</a>
+				<a href="/oauth2/authorize/linkedin?redirect_uri=/home" class="btn btn-primary btn-block">Login using LinkedIn</a>
+				<a href="/oauth2/authorize/okta?redirect_uri=/home" class="btn btn-primary btn-block">Login using Okta</a>
 			</div>
 
 		</form>
