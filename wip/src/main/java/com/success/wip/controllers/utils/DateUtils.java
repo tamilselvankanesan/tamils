@@ -30,9 +30,9 @@ public class DateUtils {
   public static Date getDateFromString(String source) {
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     try {
-    	return sdf.parse(source);
+      return sdf.parse(source);
     } catch (ParseException e) {
-    	e.printStackTrace();
+      e.printStackTrace();
     }
     return null;
   }
@@ -54,4 +54,11 @@ public class DateUtils {
     c.add(Calendar.DAY_OF_MONTH, plus);
     return c.getTime();
   }
+
+  public static void main1(String[] args) {
+    System.out.println(Instant.now());
+  }
+  public static void main(String[] args) {
+	
+}
 }
