@@ -79,14 +79,45 @@ public class SimpleS3 {
   //    System.out.println(result.getCredentials().getAccessKeyId());*/
   //  }
 
+  private static void compareBuckets() {
+    try {
+      final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.SA_EAST_1).build();
+      ListObjectsV2Result r1 = s3.listObjectsV2("recipe-original-pics-dev");
+      r1 = s3.listObjectsV2("rpicsd");
+      Set<String> rpicsd =
+          r1.getObjectSummaries()
+              .parallelStream()
+              .filter(os -> os.getKey().contains("optimized") && os.getKey().split("/").length == 2)
+              .map(S3ObjectSummary::getKey)
+              .map(key -> key.split("/")[1])
+              .collect(Collectors.toSet());
+
+      r1 = s3.listObjectsV2("recipe-original-pics-dev");
+      r1.getObjectSummaries()
+          .parallelStream()
+          .filter(os -> os.getKey().contains("original") && os.getKey().split("/").length == 2)
+          .map(S3ObjectSummary::getKey)
+          .map(key -> key.split("/")[1])
+          .filter(key -> !rpicsd.contains(key))
+          .collect(Collectors.toSet())
+          .forEach(System.out::println);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   private static void listObjects() {
 
     final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.SA_EAST_1).build();
     List<Bucket> buckets = s3.listBuckets();
     buckets.forEach(b -> System.out.println(b.getName()));
 
-    ListObjectsV2Result r1 = s3.listObjectsV2("recipe-original-pics-dev");
+    ListObjectsV2Result r1 = s3.listObjectsV2("recipe-original-pics-dev/original");
     r1.getObjectSummaries().forEach(os -> System.out.println(os.getKey()));
+    r1.getObjectSummaries().parallelStream().map(os -> os.getKey()).collect(Collectors.toSet());
+
+    //    ListObjectsV2Result r1 = s3.listObjectsV2("");
 
     //    obj.getObjectContent();
 
@@ -115,7 +146,7 @@ public class SimpleS3 {
         Files.copy(new ByteArrayInputStream(content), Paths.get("T:\\temp\\rfiles", fileName));
       }
 
-    } catch (IOException e) { // TODO Auto-generated catch block
+    } catch (IOException e) {
       e.printStackTrace();
     }
 
@@ -142,7 +173,8 @@ public class SimpleS3 {
     System.out.println("testing");
     boolean flag = true;
 
-    listObjects();
+    compareBuckets();
+    //    listObjects();
 
     if (flag) {
       return;
