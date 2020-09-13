@@ -55,7 +55,7 @@ exports.handler = async (event, context, callback) => {
         //     });
         //   sharpImageBuffer.
 
-        await S3.putObject({
+        await s3.putObject({
             Body: sharpImageBuffer,
             Bucket: destBucket,
             ContentType: 'image/webp',
