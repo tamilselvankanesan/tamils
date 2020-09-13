@@ -13,7 +13,7 @@
 				   console.log(jqxhr);
 				});
 				*/
-				$("#testbutton").click(function(){
+				/*$("#testbutton").click(function(){
 					$.ajax({url: "http://localhost:8080/health-check",
 					beforeSend: function(xhr){
 						xhr.setRequestHeader('X-api-key', 'test-value');
@@ -21,6 +21,22 @@
 					},
 					success: function(result){
 					$("#div1").html(result);
+				  }});
+				});*/
+				$("#testbutton").click(function(){
+					 
+					/*$.ajax({url: "https://api.tamils.rocks/services/recipe/services/download-template", */
+					/*$.ajax({url: "http://localhost:8080/p/cache-check", */
+					/*$.ajax({url: "https://api.tamils.rocks/services/recipe/services/p/cache-check",*/
+					/*$.ajax({url: "https://d1oznh04eufgjs.cloudfront.net/services/recipe/p/cache-check", */
+					$.ajax({url: "https://api.tamils.rocks/services/recipe/services/p/download-template",
+					beforeSend: function(xhr){
+						xhr.setRequestHeader('z-api-key', 'test-value5');
+						xhr.setRequestHeader('z-api-ky', 'test-value10');
+						xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0QHRhbWlscy5yb2NrcyIsInJvbGUiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX0NSRUFURV9SRUNJUEUsUk9MRV9DUkVBVEVfQ09MTEVDVElPTiIsIm9mZnNldCI6MCwiY291bnRyaWVzIjoiTEFUQU0sQVIsUEUsQ0wsTVgsQ08iLCJleHAiOjE1OTkyNTk2NjYsImlhdCI6MTU5OTI1NjA2NiwiZW1haWwiOiJ0QHRhbWlscy5yb2NrcyIsImp0aSI6IjVkMmIxYWJhLTY5OWUtNGJjOC04MTA2LTQ0YjI1MGI5OWQ4NSJ9.tRNHPzeJtH0-E7g0jzmq16rHRrUkGk3XjaLTf7i79-X-SwAvAqsli8DK6yPNCFMIP-_F6BHaEdfc2zLK6BMOqA');
+					},
+					success: function(result){
+					// $("#div1").html(result);
 				  }});
 				});
 			});
@@ -31,6 +47,7 @@
         <div>
             <p class="greeting-id">The ID is </p>
             <p class="greeting-content">The content is </p>
+			<div id="div1"></div>
 			<button id="testbutton">Get External Content</button>
         </div>
     </body>

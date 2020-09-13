@@ -101,6 +101,23 @@ public class SimpleS3 {
           .filter(key -> !rpicsd.contains(key))
           .collect(Collectors.toSet())
           .forEach(System.out::println);
+      
+//      Smoothie de frambuesa y chocolate para un corazon saludable.jpg
+//      Smoothie de manzana y canela con indice glicemico bajo.jpg
+//      Smoothie verde de mango para un corazon saludable.jpg
+//      Smoothie desintoxicante citrico con frutos silvestres y jengibre.jpg
+//      Smoothie cremoso de naranja para fortalecer el sistema inmunologico.jpg
+//      crema de pesto a la menta.jpg
+//      BLSTXP7003 batido pera y yogur.jpg
+//      Smoothie de duraznos con crema para aumentar la masa muscular.jpg
+//      Smoothie de fresa y durazno con indice glicemico bajo.jpg
+//      Smoothie antioxidante de kiwi y mango para fortalecer el sistema inmunologico.jpg
+//      Smoothie de mango y papaya para una piel saludable.jpg
+//      Smoothie de proteina paraiso tropical para aumentar la masa muscular.jpg
+//      Smoothie con fresas y cerezas para propiciar el sueno.jpg
+//      BLSTXP7003Batido popeye.jpg
+//      Smoothie energizante de maca y menta.jpg
+
 
     } catch (Exception e) {
       e.printStackTrace();

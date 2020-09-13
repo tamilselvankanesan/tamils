@@ -9,6 +9,42 @@ public class Java8Test {
 
   public static void main(String[] args) {
 
+    Stream.iterate(1, i -> i + 1).limit(45).forEach(i -> 
+    System.out.println("insert into recipe_country values ('"+i+"','LATAM');"));
+
+    /*	  Function<Country, List<CollectionDto>> func =
+    		        entity ->
+    		            entity
+    		                .getCollectionList()
+    		                .stream()
+    		                .map(mapper::getDtoFromEntityLiteVersion)
+    		                .collect(Collectors.toList());
+
+    		    Function<Country, CountryCollectionDto> func2 =
+    		        entity ->
+    		            new CountryCollectionDto(
+    		                entity.getCountryCode(),
+    		                entity
+    		                    .getCollectionList()
+    		                    .stream()
+    		                    .map(mapper::getDtoFromEntityLiteVersion)
+    		                    .collect(Collectors.toList()));
+
+    		    Function<List<List<CollectionDto>>, List<CollectionDto>> func1 = list -> list.get(0);
+
+    		    countries.stream().map(c->func2).collect(Collectors.toList());
+
+    		    Map<String, List<CollectionDto>> result =
+    		        countries
+    		            .stream()
+    		            .collect(
+    		                Collectors.groupingBy(
+    		                    Country::getCountryCode,
+    		                    Collectors.mapping(
+    		                        func, Collectors.collectingAndThen(Collectors.toList(), func1))));
+
+    */
+
     Function<Integer, Integer> func =
         (x) -> {
           System.out.println("one");
