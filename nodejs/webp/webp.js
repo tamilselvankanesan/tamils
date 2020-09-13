@@ -1,8 +1,8 @@
 // dependencies
 const AWS = require('aws-sdk');
-// const webp = require('webp-converter');
-// const fs = require('fs');
-const Sharp = require('sharp');
+const webp = require('webp-converter');
+const fs = require('fs');
+// const Sharp = require('sharp');
 
 console.log('welcome...');
 // get reference to S3 client
@@ -29,7 +29,7 @@ exports.handler = async (event, context, callback) => {
         console.log("before get...");
         const img = await s3.getObject(params).promise();
         console.log("before write...");
-        // fs.writeFileSync(downloadPath, img.Body);
+        fs.writeFileSync(downloadPath, img.Body);
         console.log("download success");
 
         const destBucket = "picsbucket";
@@ -45,22 +45,24 @@ exports.handler = async (event, context, callback) => {
         const QUALITY = 75
 
         // let sharpImageBuffer;
+        /*
         const sharpImageBuffer = await Sharp(img.Body)
             .webp({ quality: +QUALITY })
             .toBuffer();
+        */
         // Sharp(img.Body)
         //     .webp({ quality: +QUALITY })
         //     .toBuffer().then(data => {
         //         sharpImageBuffer = data;
         //     });
         //   sharpImageBuffer.
-
+        /*
         await s3.putObject({
             Body: sharpImageBuffer,
             Bucket: destBucket,
             ContentType: 'image/webp',
             Key: destKey
-        }).promise();
+        }).promise(); */
 
         console.log("done...");
         // s3.putObject({
@@ -74,7 +76,7 @@ exports.handler = async (event, context, callback) => {
 
         // this will grant 755 permission to webp executables
         // webp.grant_permission();
-        /*
+        
         const result = await webp.cwebp(downloadPath, webpPath, "-q 80");
         result.then(response => {
             console.log('webp conversion result ' + response);
@@ -99,7 +101,7 @@ exports.handler = async (event, context, callback) => {
                     }
                 });
             });
-        }) */
+        })
     } catch (error) {
         console.log("download failed");
         console.log(error);
