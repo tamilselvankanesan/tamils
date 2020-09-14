@@ -3,16 +3,19 @@ package com.success;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.file.FileSystem;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.FileSystems;
-import java.nio.file.Paths;
+import java.security.cert.Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -38,6 +41,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLPeerUnverifiedException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -53,6 +59,121 @@ import org.json.simple.JSONObject;*/
 
 public class Test {
 
+	private static void jenieTest() {
+		String https_url = "https://websrv.stg.jenie.ao.dcn/JENIEApplicationAuthenticationService/services/ApplicationAuthentication?wsdl";
+		URL url;
+		try {
+
+			url = new URL(https_url);
+			HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+
+			// dumpl all cert info
+			printHttpsCert(con);
+
+			// dump all the content
+			printContent(con);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void printHttpsCert(HttpsURLConnection con) {
+
+		if (con != null) {
+
+			try {
+
+				System.out.println("Response Code : " + con.getResponseCode());
+				System.out.println("Cipher Suite : " + con.getCipherSuite());
+				System.out.println("\n");
+
+				Certificate[] certs = con.getServerCertificates();
+				for (Certificate cert : certs) {
+					System.out.println("Cert Type : " + cert.getType());
+					System.out.println("Cert Hash Code : " + cert.hashCode());
+					System.out.println("Cert Public Key Algorithm : " + cert.getPublicKey().getAlgorithm());
+					System.out.println("Cert Public Key Format : " + cert.getPublicKey().getFormat());
+//					cert.
+					System.out.println("\n");
+				}
+
+			} catch (SSLPeerUnverifiedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	private static void printContent(HttpsURLConnection con) {
+		if (con != null) {
+
+			try {
+
+				System.out.println("****** Content of the URL ********");
+				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+				String input;
+
+				while ((input = br.readLine()) != null) {
+					System.out.println(input);
+				}
+				br.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	private static void asciiCheck() {
+		String text = "IPR2018-01680 Fed. Cir. Notice of Appeal, ┲ A13-34379-921.pdf";
+		text.chars().allMatch(c -> c < 128);
+
+		// strips off all non-ASCII characters
+		text = text.replaceAll("[^\\x00-\\x7F]", "");
+
+		// erases all the ASCII control characters
+		text = text.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "");
+
+		// removes non-printable characters from Unicode
+		text = text.replaceAll("\\p{C}", "");
+		System.out.println(text);
+
+	}
+
+	private static void cmecffile() {
+		try {
+			BufferedReader r = new BufferedReader(new FileReader("C:\\Tamil\\temp\\dopost2206"));
+			String line = null;
+			List<String> f = new ArrayList<>();
+			while ((line = r.readLine()) != null) {
+//				System.out.println(line);
+//				System.out.println(line.substring(line.indexOf("processing")+11));
+				if (line.indexOf("processing") != -1) {
+					f.add(line.substring(line.indexOf("processing") + 11));
+				}
+				if (line.indexOf("finished") != -1) {
+					f.remove(line.substring(line.indexOf("finished") + 9));
+				}
+			}
+			System.out.println(f);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
   private static void sendRequest() throws IOException {
     CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -881,7 +1002,8 @@ public class Test {
    * @throws IOException
    */
   public static void main(String[] args) throws IOException {
-    stringSplit();
+	  jenieTest();
+//    stringSplit();
     //    sendRequest();
     //    intTest();
     //    fileSizePrint();
