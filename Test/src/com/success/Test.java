@@ -60,7 +60,7 @@ import org.json.simple.JSONObject;*/
 public class Test {
 
 	private static void jenieTest() {
-		String https_url = "https://websrv.stg.jenie.ao.dcn/JENIEApplicationAuthenticationService/services/ApplicationAuthentication?wsdl";
+		String https_url = "https://www.google.com";
 		URL url;
 		try {
 
